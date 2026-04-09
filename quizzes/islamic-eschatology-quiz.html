@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Eschatology Quiz - Tadbeer Studio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .quiz-question {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 4px solid #2e7d32;
+        }
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1a472a;
+        }
+        .quiz-option {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .quiz-option:hover {
+            background: #e8f0fe;
+        }
+        .quiz-option input {
+            margin-right: 12px;
+        }
+        .submit-btn {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 20px 0;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .submit-btn:hover {
+            background: #1a472a;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 16px;
+            display: none;
+            text-align: center;
+        }
+        .result.correct {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        .result.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        .score-highlight {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 8px;
+            margin: 20px 0;
+        }
+        .progress-fill {
+            background: #2e7d32;
+            border-radius: 10px;
+            height: 8px;
+            width: 0%;
+        }
+        @media (max-width: 768px) {
+            .quiz-question {
+                padding: 15px;
+            }
+            .quiz-option {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="bismillah">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+
+    <div class="container">
+        <div class="quiz-container">
+            <h1 class="page-title">🕌 Islamic Eschatology Quiz</h1>
+            <p class="page-subtitle">Test your knowledge of major signs, minor signs, and key figures. 30 questions.</p>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <form id="quizForm">
+                <!-- Questions 1-10: Major Signs -->
+                <div class="quiz-question">
+                    <div class="question-text">1. What is the FIRST major sign of the Last Day according to Sahih Muslim?</div>
+                    <label class="quiz-option"><input type="radio" name="q1" value="a"> A) The Smoke</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="b"> B) The Appearance of the Mahdi</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="c"> C) The Beast</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="d"> D) The Rising of the Sun from the West</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">2. The Mahdi will be from the descendants of which Prophet?</div>
+                    <label class="quiz-option"><input type="radio" name="q2" value="a"> A) Prophet Musa (Moses)</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="b"> B) Prophet Ibrahim (Abraham)</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="c"> C) Prophet Muhammad (ﷺ)</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="d"> D) Prophet 'Isa (Jesus)</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">3. What will the Mahdi fill the earth with?</div>
+                    <label class="quiz-option"><input type="radio" name="q3" value="a"> A) Wealth and gold</label>
+                    <label class="quiz-option"><input type="radio" name="q3" value="b"> B) Justice after oppression</label>
+                    <label class="quiz-option"><input type="radio" name="q3" value="c"> C) War and conquest</label>
+                    <label class="quiz-option"><input type="radio" name="q3" value="d"> D) Knowledge and learning</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">4. The Dajjal will be known for having how many eyes?</div>
+                    <label class="quiz-option"><input type="radio" name="q4" value="a"> A) One eye (blind in the other)</label>
+                    <label class="quiz-option"><input type="radio" name="q4" value="b"> B) Three eyes</label>
+                    <label class="quiz-option"><input type="radio" name="q4" value="c"> C) Normal two eyes</label>
+                    <label class="quiz-option"><input type="radio" name="q4" value="d"> D) No eyes</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">5. Where will Prophet 'Isa (Jesus) descend?</div>
+                    <label class="quiz-option"><input type="radio" name="q5" value="a"> A) Jerusalem</label>
+                    <label class="quiz-option"><input type="radio" name="q5" value="b"> B) Mecca</label>
+                    <label class="quiz-option"><input type="radio" name="q5" value="c"> C) The white minaret in Damascus</label>
+                    <label class="quiz-option"><input type="radio" name="q5" value="d"> D) Medina</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">6. Who built the wall that contains Yajuj wa Majuj?</div>
+                    <label class="quiz-option"><input type="radio" name="q6" value="a"> A) Solomon (Sulayman)</label>
+                    <label class="quiz-option"><input type="radio" name="q6" value="b"> B) Alexander the Great</label>
+                    <label class="quiz-option"><input type="radio" name="q6" value="c"> C) Dhul-Qarnayn</label>
+                    <label class="quiz-option"><input type="radio" name="q6" value="d"> D) Cyrus the Great</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">7. What happens when the sun rises from the West?</div>
+                    <label class="quiz-option"><input type="radio" name="q7" value="a"> A) The Dajjal appears</label>
+                    <label class="quiz-option"><input type="radio" name="q7" value="b"> B) The door of repentance is closed</label>
+                    <label class="quiz-option"><input type="radio" name="q7" value="c"> C) The Mahdi dies</label>
+                    <label class="quiz-option"><input type="radio" name="q7" value="d"> D) The Beast emerges</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">8. What is the name of the Beast that will emerge from the earth?</div>
+                    <label class="quiz-option"><input type="radio" name="q8" value="a"> A) Dabbat al-Ard</label>
+                    <label class="quiz-option"><input type="radio" name="q8" value="b"> B) Al-Jassasah</label>
+                    <label class="quiz-option"><input type="radio" name="q8" value="c"> C) Al-Ghuraba</label>
+                    <label class="quiz-option"><input type="radio" name="q8" value="d"> D) Al-Masih</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">9. The Smoke (Dukhan) will affect disbelievers with what?</div>
+                    <label class="quiz-option"><input type="radio" name="q9" value="a"> A) A cold-like illness</label>
+                    <label class="quiz-option"><input type="radio" name="q9" value="b"> B) Severe suffocation</label>
+                    <label class="quiz-option"><input type="radio" name="q9" value="c"> C) Blindness</label>
+                    <label class="quiz-option"><input type="radio" name="q9" value="d"> D) Deafness</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">10. From where will the final fire drive people to their gathering place?</div>
+                    <label class="quiz-option"><input type="radio" name="q10" value="a"> A) Jerusalem</label>
+                    <label class="quiz-option"><input type="radio" name="q10" value="b"> B) Hadramawt (Yemen)</label>
+                    <label class="quiz-option"><input type="radio" name="q10" value="c"> C) Medina</label>
+                    <label class="quiz-option"><input type="radio" name="q10" value="d"> D) Damascus</label>
+                </div>
+
+                <!-- Questions 11-20: Minor Signs -->
+                <div class="quiz-question">
+                    <div class="question-text">11. Which of these is a minor sign of the Hour?</div>
+                    <label class="quiz-option"><input type="radio" name="q11" value="a"> A) Widespread of ignorance</label>
+                    <label class="quiz-option"><input type="radio" name="q11" value="b"> B) Competition in building tall structures</label>
+                    <label class="quiz-option"><input type="radio" name="q11" value="c"> C) Increase in killing and murder</label>
+                    <label class="quiz-option"><input type="radio" name="q11" value="d"> D) All of the above</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">12. The Prophet (ﷺ) said: "The Hour will not come until..."</div>
+                    <label class="quiz-option"><input type="radio" name="q12" value="a"> A) The sun rises from the East</label>
+                    <label class="quiz-option"><input type="radio" name="q12" value="b"> B) A woman gives birth to her master</label>
+                    <label class="quiz-option"><input type="radio" name="q12" value="c"> C) The moon splits</label>
+                    <label class="quiz-option"><input type="radio" name="q12" value="d"> D) The Kaaba is destroyed</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">13. What did the Prophet (ﷺ) say about the "barefoot, naked, shepherds" competing in building tall buildings?</div>
+                    <label class="quiz-option"><input type="radio" name="q13" value="a"> A) It is a minor sign</label>
+                    <label class="quiz-option"><input type="radio" name="q13" value="b"> B) It is a major sign</label>
+                    <label class="quiz-option"><input type="radio" name="q13" value="c"> C) It will not happen</label>
+                    <label class="quiz-option"><input type="radio" name="q13" value="d"> D) It is a myth</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">14. The spread of ______ is a minor sign.</div>
+                    <label class="quiz-option"><input type="radio" name="q14" value="a"> A) Peace</label>
+                    <label class="quiz-option"><input type="radio" name="q14" value="b"> B) Wealth</label>
+                    <label class="quiz-option"><input type="radio" name="q14" value="c"> C) Riba (interest) and zina</label>
+                    <label class="quiz-option"><input type="radio" name="q14" value="d"> D) Education</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">15. Which of the following is a minor sign that has already occurred?</div>
+                    <label class="quiz-option"><input type="radio" name="q15" value="a"> A) The splitting of the moon</label>
+                    <label class="quiz-option"><input type="radio" name="q15" value="b"> B) The death of the Prophet (ﷺ)</label>
+                    <label class="quiz-option"><input type="radio" name="q15" value="c"> C) The conquest of Jerusalem</label>
+                    <label class="quiz-option"><input type="radio" name="q15" value="d"> D) All of the above</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">16. The Prophet (ﷺ) said that before the Hour, there will be an increase in...</div>
+                    <label class="quiz-option"><input type="radio" name="q16" value="a"> A) Earthquakes</label>
+                    <label class="quiz-option"><input type="radio" name="q16" value="b"> B) Sudden death</label>
+                    <label class="quiz-option"><input type="radio" name="q16" value="c"> C) Natural disasters</label>
+                    <label class="quiz-option"><input type="radio" name="q16" value="d"> D) All of the above</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">17. What did the Prophet (ﷺ) say about time towards the end?</div>
+                    <label class="quiz-option"><input type="radio" name="q17" value="a"> A) It will pass quickly</label>
+                    <label class="quiz-option"><input type="radio" name="q17" value="b"> B) A year will feel like a month</label>
+                    <label class="quiz-option"><input type="radio" name="q17" value="c"> C) A month will feel like a week</label>
+                    <label class="quiz-option"><input type="radio" name="q17" value="d"> D) All of the above</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">18. The minor signs are numerous. Which is a correct example?</div>
+                    <label class="quiz-option"><input type="radio" name="q18" value="a"> A) The spread of music and alcohol</label>
+                    <label class="quiz-option"><input type="radio" name="q18" value="b"> B) The increase of women relative to men</label>
+                    <label class="quiz-option"><input type="radio" name="q18" value="c"> C) The loss of trustworthiness</label>
+                    <label class="quiz-option"><input type="radio" name="q18" value="d"> D) All of the above</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">19. Which companion narrated the famous Hadith of Jibril about the signs of the Hour?</div>
+                    <label class="quiz-option"><input type="radio" name="q19" value="a"> A) Abu Bakr</label>
+                    <label class="quiz-option"><input type="radio" name="q19" value="b"> B) Umar ibn al-Khattab</label>
+                    <label class="quiz-option"><input type="radio" name="q19" value="c"> C) Uthman</label>
+                    <label class="quiz-option"><input type="radio" name="q19" value="d"> D) Ali</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">20. What did the Prophet (ﷺ) say would be considered "forbidden" near the end of times?</div>
+                    <label class="quiz-option"><input type="radio" name="q20" value="a"> A) Giving charity</label>
+                    <label class="quiz-option"><input type="radio" name="q20" value="b"> B) Learning knowledge</label>
+                    <label class="quiz-option"><input type="radio" name="q20" value="c"> C) Speaking the truth</label>
+                    <label class="quiz-option"><input type="radio" name="q20" value="d"> D) Fighting injustice</label>
+                </div>
+
+                <!-- Questions 21-30: Key Figures -->
+                <div class="quiz-question">
+                    <div class="question-text">21. Who will kill the Dajjal?</div>
+                    <label class="quiz-option"><input type="radio" name="q21" value="a"> A) The Mahdi</label>
+                    <label class="quiz-option"><input type="radio" name="q21" value="b"> B) Prophet 'Isa (Jesus)</label>
+                    <label class="quiz-option"><input type="radio" name="q21" value="c"> C) An army of Muslims</label>
+                    <label class="quiz-option"><input type="radio" name="q21" value="d"> D) An angel</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">22. Where will the Dajjal be killed?</div>
+                    <label class="quiz-option"><input type="radio" name="q22" value="a"> A) Mecca</label>
+                    <label class="quiz-option"><input type="radio" name="q22" value="b"> B) Medina</label>
+                    <label class="quiz-option"><input type="radio" name="q22" value="c"> C) The gate of Lud (Lod, Israel)</label>
+                    <label class="quiz-option"><input type="radio" name="q22" value="d"> D) Damascus</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">23. How long will the Mahdi rule?</div>
+                    <label class="quiz-option"><input type="radio" name="q23" value="a"> A) 5 years</label>
+                    <label class="quiz-option"><input type="radio" name="q23" value="b"> B) 7 years</label>
+                    <label class="quiz-option"><input type="radio" name="q23" value="c"> C) 10 years</label>
+                    <label class="quiz-option"><input type="radio" name="q23" value="d"> D) 40 years</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">24. After killing the Dajjal, Prophet 'Isa will...</div>
+                    <label class="quiz-option"><input type="radio" name="q24" value="a"> A) Return to heaven immediately</label>
+                    <label class="quiz-option"><input type="radio" name="q24" value="b"> B) Rule as a just leader, break the cross, kill the pig</label>
+                    <label class="quiz-option"><input type="radio" name="q24" value="c"> C) Go to Mecca to pray</label>
+                    <label class="quiz-option"><input type="radio" name="q24" value="d"> D) Fight the Romans</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">25. Yajuj wa Majuj will be destroyed by...</div>
+                    <label class="quiz-option"><input type="radio" name="q25" value="a"> A) Fire from the sky</label>
+                    <label class="quiz-option"><input type="radio" name="q25" value="b"> B) Insects sent by Allah</label>
+                    <label class="quiz-option"><input type="radio" name="q25" value="c"> C) A great flood</label>
+                    <label class="quiz-option"><input type="radio" name="q25" value="d"> D) The army of believers</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">26. The Dajjal will have "kafir" (disbeliever) written on his...</div>
+                    <label class="quiz-option"><input type="radio" name="q26" value="a"> A) Hand</label>
+                    <label class="quiz-option"><input type="radio" name="q26" value="b"> B) Forehead</label>
+                    <label class="quiz-option"><input type="radio" name="q26" value="c"> C) Back</label>
+                    <label class="quiz-option"><input type="radio" name="q26" value="d"> D) Chest</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">27. Which Sahabi was the first to recognize the Dajjal's deception?</div>
+                    <label class="quiz-option"><input type="radio" name="q27" value="a"> A) Abu Bakr</label>
+                    <label class="quiz-option"><input type="radio" name="q27" value="b"> B) Umar</label>
+                    <label class="quiz-option"><input type="radio" name="q27" value="c"> C) Tamim al-Dari</label>
+                    <label class="quiz-option"><input type="radio" name="q27" value="d"> D) Ibn Abbas</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">28. The number of major signs according to Sahih Muslim is...</div>
+                    <label class="quiz-option"><input type="radio" name="q28" value="a"> A) Five</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="b"> B) Seven</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="c"> C) Ten</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="d"> D) Fifteen</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">29. What is the name of the creature that will speak to mankind?</div>
+                    <label class="quiz-option"><input type="radio" name="q29" value="a"> A) Al-Jassasah</label>
+                    <label class="quiz-option"><input type="radio" name="q29" value="b"> B) Dabbat al-Ard</label>
+                    <label class="quiz-option"><input type="radio" name="q29" value="c"> C) Al-Buraq</label>
+                    <label class="quiz-option"><input type="radio" name="q29" value="d"> D) Al-Masih</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">30. Which Surah describes the wall of Yajuj wa Majuj?</div>
+                    <label class="quiz-option"><input type="radio" name="q28" value="a"> A) Surah Al-Kahf</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="b"> B) Surah Ya-Sin</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="c"> C) Surah Al-Baqarah</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="d"> D) Surah Al-Mulk</label>
+                </div>
+            </form>
+
+            <button class="submit-btn" onclick="checkQuiz()">Submit Answers</button>
+            <div id="quizResult" class="result"></div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/assets/js/components.js"></script>
+    <script>
+        const correctAnswers = {
+            q1: 'b', q2: 'c', q3: 'b', q4: 'a', q5: 'c', q6: 'c', q7: 'b', q8: 'a', q9: 'a', q10: 'b',
+            q11: 'd', q12: 'b', q13: 'a', q14: 'c', q15: 'd', q16: 'd', q17: 'd', q18: 'd', q19: 'b', q20: 'c',
+            q21: 'b', q22: 'c', q23: 'b', q24: 'b', q25: 'b', q26: 'b', q27: 'c', q28: 'c', q29: 'b', q30: 'a'
+        };
+
+        function checkQuiz() {
+            let score = 0;
+            let total = 30;
+
+            for (let i = 1; i <= total; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected && selected.value === correctAnswers[`q${i}`]) {
+                    score++;
+                }
+            }
+
+            const resultDiv = document.getElementById('quizResult');
+            resultDiv.style.display = 'block';
+            const percentage = (score / total) * 100;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = 'Excellent! You have mastered Islamic eschatology.';
+                resultDiv.classList.add('correct');
+                resultDiv.classList.remove('incorrect');
+            } else if (percentage >= 60) {
+                message = 'Good effort! Review the lessons on major and minor signs.';
+                resultDiv.classList.add('correct');
+                resultDiv.classList.remove('incorrect');
+            } else {
+                message = 'Review the lesson carefully. Pay attention to the chronological order and key figures.';
+                resultDiv.classList.add('incorrect');
+                resultDiv.classList.remove('correct');
+            }
+            
+            resultDiv.innerHTML = `<div class="score-highlight">${score}/${total}</div><p>${message}</p>`;
+            
+            // Update progress bar
+            const progressFill = document.getElementById('progressFill');
+            if (progressFill) {
+                progressFill.style.width = `${(score / total) * 100}%`;
+            }
+        }
+    </script>
+</body>
+</html>
