@@ -383,14 +383,59 @@
         function checkQuiz() {
             let score = 0;
             let total = 30;
-
+            let resultHtml = '<div style="text-align: left;"><strong>Results:</strong><ul style="margin-top: 10px;">';
+            
+            const correctAnswers = {
+                q1: 'b', q2: 'c', q3: 'b', q4: 'b', q5: 'c', q6: 'b', q7: 'a', q8: 'b', q9: 'c', q10: 'b',
+                q11: 'c', q12: 'b', q13: 'a', q14: 'b', q15: 'c', q16: 'b', q17: 'c', q18: 'c', q19: 'b', q20: 'c',
+                q21: 'c', q22: 'c', q23: 'b', q24: 'c', q25: 'b', q26: 'd', q27: 'd', q28: 'd', q29: 'b', q30: 'b'
+            };
+            
+            const explanations = {
+                q1: 'Correct! Jesus calls these events "the beginning of sorrows" (Matthew 24:8).',
+                q2: 'Correct! The falling away and revealing of the man of sin must come first (2 Thessalonians 2:3).',
+                q3: 'Correct! The Antichrist is the man of sin.',
+                q4: 'Correct! The covenant lasts 7 years (Daniel 9:27).',
+                q5: 'Correct! Revelation is the most detailed prophetic book.',
+                q6: 'Correct! The Rapture is described in 1 Thessalonians 4:17.',
+                q7: 'Correct! Satan is bound for 1,000 years (Revelation 20:2).',
+                q8: 'Correct! Armageddon is the final battle location (Revelation 16:16).',
+                q9: 'Correct! All the dead are judged according to their works.',
+                q10: 'Correct! The mark is required for buying and selling (Revelation 13:17).',
+                q11: 'Correct! Premillennialism teaches a literal 1,000-year reign.',
+                q12: 'Correct! Amillennialism sees the millennium symbolically.',
+                q13: 'Correct! Pre-Tribulation Rapture is common in dispensationalism.',
+                q14: 'Correct! Dispensationalism popularized the pre-trib rapture.',
+                q15: 'Correct! Preterism sees most prophecies fulfilled in 70 AD.',
+                q16: 'Correct! Christian Zionism supports modern Israel as prophecy.',
+                q17: 'Correct! C.I. Scofield popularized dispensationalism.',
+                q18: 'Correct! These books popularized dispensational premillennialism.',
+                q19: 'Correct! Roman Catholicism and Reformed churches hold amillennialism.',
+                q20: 'Correct! Genesis 12:3 is the key verse for Christian Zionism.',
+                q21: 'Correct! Jesus Himself spoke the Olivet Discourse.',
+                q22: 'Correct! Their identity is debated; they are empowered by God.',
+                q23: 'Correct! The Antichrist sets up an idol in the Temple.',
+                q24: 'Correct! Rome is associated with the Beast in Revelation.',
+                q25: 'Correct! The New Jerusalem is the eternal dwelling place.',
+                q26: 'Correct! All of these will be absent in the new creation.',
+                q27: 'Correct! All three are cast into the lake of fire at different times.',
+                q28: 'Correct! Multiple interpretations exist for 666.',
+                q29: 'Correct! The first resurrection is for believers to reign with Christ.',
+                q30: 'Correct! Revelation ends with "Come, Lord Jesus" (Revelation 22:20).'
+            };
+            
             for (let i = 1; i <= total; i++) {
                 const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                if (selected && selected.value === correctAnswers[`q${i}`]) {
+                const isCorrect = selected && selected.value === correctAnswers[`q${i}`];
+                if (isCorrect) {
                     score++;
                 }
+                resultHtml += `<li style="margin-bottom: 10px;"><strong>Question ${i}:</strong> ${isCorrect ? '✅ Correct' : '❌ Incorrect'}<br>`;
+                resultHtml += `<span style="font-size: 0.85rem; color: #475569;">${explanations[`q${i}`] || ''}</span></li>`;
             }
-
+            
+            resultHtml += '</ul></div>';
+            
             const resultDiv = document.getElementById('quizResult');
             resultDiv.style.display = 'block';
             const percentage = (score / total) * 100;
@@ -410,7 +455,7 @@
                 resultDiv.classList.remove('correct');
             }
             
-            resultDiv.innerHTML = `<div class="score-highlight">${score}/${total}</div><p>${message}</p>`;
+            resultDiv.innerHTML = `<div class="score-highlight">${score}/${total}</div><p>${message}</p>${resultHtml}`;
             
             const progressFill = document.getElementById('progressFill');
             if (progressFill) {

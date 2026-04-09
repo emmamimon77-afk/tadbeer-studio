@@ -383,14 +383,62 @@
         function checkQuiz() {
             let score = 0;
             let total = 30;
-
+            let resultHtml = '<div style="text-align: left;"><strong>Results:</strong><ul style="margin-top: 10px;">';
+            
+            const correctAnswers = {
+                q1: 'b', q2: 'c', q3: 'b', q4: 'a', q5: 'c', q6: 'c', q7: 'b', q8: 'a', q9: 'a', q10: 'b',
+                q11: 'd', q12: 'b', q13: 'a', q14: 'c', q15: 'd', q16: 'd', q17: 'd', q18: 'd', q19: 'b', q20: 'c',
+                q21: 'b', q22: 'c', q23: 'b', q24: 'b', q25: 'b', q26: 'b', q27: 'c', q28: 'c', q29: 'b', q30: 'a'
+            };
+            
+            const explanations = {
+                q1: 'Correct! The Mahdi appears first, followed by Dajjal, then 'Isa.',
+                q2: 'Correct! The Mahdi is from the Prophet\'s (ﷺ) family.',
+                q3: 'Correct! He will fill the earth with justice after oppression.',
+                q4: 'Correct! Dajjal is one-eyed (blind in his right eye).',
+                q5: 'Correct! He descends to the white minaret in Damascus.',
+                q6: 'Correct! Dhul-Qarnayn built the wall (Quran 18:94-98).',
+                q7: 'Correct! After the sun rises from the West, repentance is no longer accepted.',
+                q8: 'Correct! Dabbat al-Ard is the Beast of the Earth.',
+                q9: 'Correct! Disbelievers will be severely affected by the smoke.',
+                q10: 'Correct! The fire starts from Hadramawt in Yemen.',
+                q11: 'Correct! All are minor signs.',
+                q12: 'Correct! "A woman gives birth to her master" is a sign.',
+                q13: 'Correct! It is a minor sign.',
+                q14: 'Correct! The spread of riba and zina are minor signs.',
+                q15: 'Correct! All have occurred.',
+                q16: 'Correct! All are signs.',
+                q17: 'Correct! Time will pass quickly.',
+                q18: 'Correct! All are examples.',
+                q19: 'Correct! Umar ibn al-Khattab narrated the Hadith of Jibril.',
+                q20: 'Correct! Speaking the truth will be forbidden.',
+                q21: 'Correct! Prophet 'Isa (Jesus) will kill the Dajjal.',
+                q22: 'Correct! At the gate of Lud (Lod, Israel).',
+                q23: 'Correct! The Mahdi will rule for 7 years.',
+                q24: 'Correct! He will rule justly, break the cross, kill the pig.',
+                q25: 'Correct! Insects sent by Allah will destroy them.',
+                q26: 'Correct! On his forehead.',
+                q27: 'Correct! Tamim al-Dari saw the Dajjal.',
+                q28: 'Correct! Ten major signs according to Sahih Muslim.',
+                q29: 'Correct! Dabbat al-Ard is the Beast that speaks.',
+                q30: 'Correct! Surah Al-Kahf describes the wall.'
+            };
+            
             for (let i = 1; i <= total; i++) {
                 const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                if (selected && selected.value === correctAnswers[`q${i}`]) {
+                const isCorrect = selected && selected.value === correctAnswers[`q${i}`];
+                if (isCorrect) {
                     score++;
                 }
+                const correctLetter = correctAnswers[`q${i}`];
+                const correctText = document.querySelector(`input[name="q${i}"][value="${correctLetter}"]`)?.parentElement?.innerText || correctLetter;
+                
+                resultHtml += `<li style="margin-bottom: 10px;"><strong>Question ${i}:</strong> ${isCorrect ? '✅ Correct' : '❌ Incorrect'}<br>`;
+                resultHtml += `<span style="font-size: 0.85rem; color: #475569;">${explanations[`q${i}`] || ''}</span></li>`;
             }
-
+            
+            resultHtml += '</ul></div>';
+            
             const resultDiv = document.getElementById('quizResult');
             resultDiv.style.display = 'block';
             const percentage = (score / total) * 100;
@@ -410,9 +458,8 @@
                 resultDiv.classList.remove('correct');
             }
             
-            resultDiv.innerHTML = `<div class="score-highlight">${score}/${total}</div><p>${message}</p>`;
+            resultDiv.innerHTML = `<div class="score-highlight">${score}/${total}</div><p>${message}</p>${resultHtml}`;
             
-            // Update progress bar
             const progressFill = document.getElementById('progressFill');
             if (progressFill) {
                 progressFill.style.width = `${(score / total) * 100}%`;
