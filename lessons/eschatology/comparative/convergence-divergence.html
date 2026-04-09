@@ -304,7 +304,10 @@
     <script>
         function checkComparativeQuiz() {
             let score = 0;
-            const answers = {
+            let total = 5;
+            let resultHtml = '<div style="text-align: left;"><strong>Your Results:</strong><ul style="margin-top: 10px;">';
+            
+            const correctAnswers = {
                 c1: 'a',
                 c2: 'b',
                 c3: 'c',
@@ -312,19 +315,73 @@
                 c5: 'd'
             };
             
-            for (let i = 1; i <= 5; i++) {
+            const explanations = {
+                c1: 'All three traditions expect a false messiah figure: Dajjal (Islam), Antichrist (Christianity), Gog (Judaism).',
+                c2: 'Christians believe Jesus is divine (Son of God); Muslims believe he is a noble prophet, not divine.',
+                c3: 'Judaism teaches that the righteous of all nations have a share in Olam Ha-Ba (the World to Come).',
+                c4: 'Dajjal is the Islamic term for the False Messiah.',
+                c5: 'Sheikh Imran Hosein teaches that sincere truth-seekers from all communities who recognize the Dajjal\'s deception will follow the true Messiah, Isa (Jesus).'
+            };
+            
+            for (let i = 1; i <= total; i++) {
                 const selected = document.querySelector(`input[name="c${i}"]:checked`);
-                if (selected && selected.value === answers[`c${i}`]) {
+                const isCorrect = selected && selected.value === correctAnswers[`c${i}`];
+                if (isCorrect) {
                     score++;
                 }
+                
+                // Get the correct answer text
+                let correctAnswerText = '';
+                const correctValue = correctAnswers[`c${i}`];
+                const allOptions = document.querySelectorAll(`input[name="c${i}"]`);
+                for (let opt of allOptions) {
+                    if (opt.value === correctValue) {
+                        const label = opt.closest('label');
+                        if (label) correctAnswerText = label.innerText.trim();
+                        break;
+                    }
+                }
+                
+                resultHtml += `<li style="margin-bottom: 12px; padding: 8px; background: ${isCorrect ? '#d1fae5' : '#fee2e2'}; border-radius: 8px;">`;
+                resultHtml += `<strong>Question ${i}:</strong> ${isCorrect ? '✅ Correct' : '❌ Incorrect'}<br>`;
+                if (!isCorrect && correctAnswerText) {
+                    resultHtml += `<span style="font-size: 0.85rem;">Correct answer: ${correctAnswerText}</span><br>`;
+                }
+                resultHtml += `<span style="font-size: 0.8rem; color: #475569;">💡 ${explanations[`c${i}`]}</span>`;
+                resultHtml += `</li>`;
             }
             
+            resultHtml += '</ul></div>';
+            
             const resultDiv = document.getElementById('comparativeResult');
+            if (!resultDiv) {
+                console.error('Result div not found!');
+                alert('Error: Could not display results. Please refresh the page and try again.');
+                return;
+            }
+            
             resultDiv.style.display = 'block';
-            resultDiv.style.background = score >= 4 ? '#d1fae5' : '#fee2e2';
-            resultDiv.style.color = score >= 4 ? '#065f46' : '#991b1b';
-            resultDiv.innerHTML = `<strong>Your Score: ${score}/5</strong><br>${score >= 4 ? 'Excellent! You understand the convergences and divergences.' : 'Review the tables and try again.'}`;
+            const percentage = (score / total) * 100;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = '🎉 Excellent! You understand the convergences and divergences between the three faiths.';
+                resultDiv.style.background = '#d1fae5';
+                resultDiv.style.color = '#065f46';
+            } else if (percentage >= 60) {
+                message = '📚 Good effort! Review the comparison tables to deepen your understanding.';
+                resultDiv.style.background = '#d1fae5';
+                resultDiv.style.color = '#065f46';
+            } else {
+                message = '📖 Review the tables and try again. Focus on where the traditions converge and where they diverge.';
+                resultDiv.style.background = '#fee2e2';
+                resultDiv.style.color = '#991b1b';
+            }
+            
+            resultDiv.innerHTML = `<div class="score-highlight">${score}/${total}</div><p>${message}</p>${resultHtml}`;
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
+
     </script>
 </body>
 </html>

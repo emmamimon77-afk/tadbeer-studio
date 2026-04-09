@@ -374,94 +374,116 @@
 
     <script src="/assets/js/components.js"></script>
     <script>
-        const correctAnswers = {
-            q1: 'b', q2: 'a', q3: 'c', q4: 'b', q5: 'b', q6: 'c', q7: 'b', q8: 'b', q9: 'b', q10: 'b',
-            q11: 'b', q12: 'b', q13: 'c', q14: 'b', q15: 'b', q16: 'd', q17: 'b', q18: 'b', q19: 'c', q20: 'c',
-            q21: 'a', q22: 'b', q23: 'b', q24: 'a', q25: 'd', q26: 'c', q27: 'b', q28: 'b', q29: 'a', q30: 'c'
-        };
-
-        function checkQuiz() {
-            let score = 0;
-            let total = 30;
-            let resultHtml = '<div style="text-align: left;"><strong>Results:</strong><ul style="margin-top: 10px;">';
+         function checkQuiz() {
+             console.log('Jewish Quiz submitted!');
+             let score = 0;
+             let total = 30;
+             let resultHtml = '<div style="text-align: left;"><strong>Your Results:</strong><ul style="margin-top: 10px;">';
+        
+             const correctAnswers = {
+               q1: 'b', q2: 'a', q3: 'c', q4: 'b', q5: 'b', q6: 'c', q7: 'b', q8: 'b', q9: 'b', q10: 'b',
+               q11: 'b', q12: 'b', q13: 'c', q14: 'b', q15: 'b', q16: 'd', q17: 'b', q18: 'b', q19: 'c', q20: 'c',
+               q21: 'a', q22: 'b', q23: 'b', q24: 'a', q25: 'd', q26: 'c', q27: 'b', q28: 'b', q29: 'a', q30: 'c'
+             };
+        
+             const explanations = {
+                 q1: 'Acharit HaYamim is the Hebrew term for the End of Days.',
+                 q2: 'Mashiach is the Hebrew term for the Messiah.',
+                 q3: 'Daniel 12:2 explicitly states the resurrection of the dead.',
+                 q4: 'The Mashiach descends from King David.',
+                 q5: 'Olam Ha-Ba refers to the World to Come.',
+                 q6: 'Ezekiel 38-39 describes Gog and Magog.',
+                 q7: 'The Ingathering is the return of all Jews to the Land of Israel.',
+                 q8: 'The dry bones symbolize resurrection and restoration of Israel.',
+                 q9: 'Sanhedrin 90a-b discusses the resurrection of the dead.',
+                 q10: 'Techiyat HaMetim is the resurrection of the dead.',
+                 q11: 'Maimonides (Rambam) codified the 13 Principles of Faith.',
+                 q12: 'The Zohar is the foundational Kabbalistic text.',
+                 q13: 'Maimonides described the Messianic Age as a natural era of peace.',
+                 q14: 'Tikkun Olam means repairing the world through divine and human action.',
+                 q15: 'Maimonides argued the Messianic Age is natural, not supernatural.',
+                 q16: 'All of these are Talmudic views on the Messiah.',
+                 q17: 'Gehinnom is a place of purification, not eternal hell.',
+                 q18: 'Religious Zionism sees the establishment of Israel as the beginning of redemption.',
+                 q19: 'The Third Temple will be rebuilt in the Messianic Age.',
+                 q20: 'Isaiah 11:9 describes universal knowledge of God.',
+                 q21: 'Ezekiel 40-48 describes the rebuilt Temple.',
+                 q22: 'Isaiah 2:4 describes universal peace.',
+                 q23: 'Moshiach ben David is the Messiah from the lineage of King David.',
+                 q24: 'Malachi ends with the promise of the "sun of righteousness".',
+                 q25: 'Views vary; some say the Messianic Age lasts forever.',
+                 q26: 'All Jews speaking Hebrew is NOT a biblical prophecy.',
+                 q27: 'The Aleinu prayer expresses hope for the Messianic Age.',
+                 q28: 'Russia is identified with Magog in some Jewish interpretations.',
+                 q29: 'Pirkei Avot teaches that the Messiah comes when Israel repents.',
+                 q30: 'Daniel 12:2 is the key resurrection verse.'
+             };
+        
+             for (let i = 1; i <= total; i++) {
+                  const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                  const isCorrect = selected && selected.value === correctAnswers[`q${i}`];
+                  if (isCorrect) {
+                      score++;
+                  }
             
-            const correctAnswers = {
-                q1: 'b', q2: 'a', q3: 'c', q4: 'b', q5: 'b', q6: 'c', q7: 'b', q8: 'b', q9: 'b', q10: 'b',
-                q11: 'b', q12: 'b', q13: 'c', q14: 'b', q15: 'b', q16: 'd', q17: 'b', q18: 'b', q19: 'c', q20: 'c',
-                q21: 'a', q22: 'b', q23: 'b', q24: 'a', q25: 'd', q26: 'c', q27: 'b', q28: 'b', q29: 'a', q30: 'c'
-            };
+                  // Get the correct answer text
+                  let correctAnswerText = '';
+                  const correctValue = correctAnswers[`q${i}`];
+                  const allOptions = document.querySelectorAll(`input[name="q${i}"]`);
+                  for (let opt of allOptions) {
+                      if (opt.value === correctValue) {
+                          const label = opt.closest('label');
+                          if (label) correctAnswerText = label.innerText.trim();
+                          break;
+                      }
+                  }
             
-            const explanations = {
-                q1: 'Correct! Acharit HaYamim is the Hebrew term for the End of Days.',
-                q2: 'Correct! Mashiach is the Hebrew term for the Messiah.',
-                q3: 'Correct! Daniel 12:2 explicitly states the resurrection.',
-                q4: 'Correct! The Mashiach descends from King David.',
-                q5: 'Correct! Olam Ha-Ba refers to the World to Come.',
-                q6: 'Correct! Ezekiel 38-39 describes Gog and Magog.',
-                q7: 'Correct! The Ingathering is the return of Jews to Israel.',
-                q8: 'Correct! The dry bones symbolize resurrection and restoration.',
-                q9: 'Correct! Sanhedrin 90a-b discusses the resurrection.',
-                q10: 'Correct! Techiyat HaMetim is the resurrection of the dead.',
-                q11: 'Correct! Maimonides (Rambam) codified the 13 Principles.',
-                q12: 'Correct! The Zohar is the foundational Kabbalistic text.',
-                q13: 'Correct! Maimonides described a natural era of peace.',
-                q14: 'Correct! Tikkun Olam means repairing the world.',
-                q15: 'Correct! Maimonides argued the Messianic Age is natural.',
-                q16: 'Correct! All of these are Talmudic views on the Messiah.',
-                q17: 'Correct! Gehinnom is a place of purification, not eternal.',
-                q18: 'Correct! Religious Zionism sees Israel as the beginning of redemption.',
-                q19: 'Correct! The Third Temple will be rebuilt.',
-                q20: 'Correct! Isaiah 11:9 describes universal knowledge of God.',
-                q21: 'Correct! Ezekiel 40-48 describes the rebuilt Temple.',
-                q22: 'Correct! Isaiah 2:4 describes universal peace.',
-                q23: 'Correct! Moshiach ben David is from the lineage of David.',
-                q24: 'Correct! Malachi ends with the promise of the "sun of righteousness".',
-                q25: 'Correct! Views vary; some say the Messianic Age lasts forever.',
-                q26: 'Correct! All Jews speaking Hebrew is NOT a biblical prophecy.',
-                q27: 'Correct! The Aleinu prayer expresses hope for the Messianic Age.',
-                q28: 'Correct! Russia is identified with Magog in some Jewish interpretations.',
-                q29: 'Correct! Pirkei Avot teaches that the Messiah comes when Israel repents.',
-                q30: 'Correct! Daniel 12:2 is the key resurrection verse.'
-            };
-            
-            for (let i = 1; i <= total; i++) {
-                const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                const isCorrect = selected && selected.value === correctAnswers[`q${i}`];
-                if (isCorrect) {
-                    score++;
-                }
-                resultHtml += `<li style="margin-bottom: 10px;"><strong>Question ${i}:</strong> ${isCorrect ? '✅ Correct' : '❌ Incorrect'}<br>`;
-                resultHtml += `<span style="font-size: 0.85rem; color: #475569;">${explanations[`q${i}`] || ''}</span></li>`;
-            }
-            
-            resultHtml += '</ul></div>';
-            
-            const resultDiv = document.getElementById('quizResult');
-            resultDiv.style.display = 'block';
-            const percentage = (score / total) * 100;
-            
-            let message = '';
-            if (percentage >= 80) {
-                message = 'Excellent! You have a deep understanding of Jewish eschatology.';
-                resultDiv.classList.add('correct');
-                resultDiv.classList.remove('incorrect');
-            } else if (percentage >= 60) {
-                message = 'Good effort! Review the prophecies in Isaiah, Ezekiel, and Daniel.';
-                resultDiv.classList.add('correct');
-                resultDiv.classList.remove('incorrect');
-            } else {
-                message = 'Review the lesson carefully. Focus on the core concepts: Mashiach, resurrection, and the Messianic Age.';
-                resultDiv.classList.add('incorrect');
-                resultDiv.classList.remove('correct');
-            }
-            
-            resultDiv.innerHTML = `<div class="score-highlight">${score}/${total}</div><p>${message}</p>${resultHtml}`;
-            
-            const progressFill = document.getElementById('progressFill');
-            if (progressFill) {
-                progressFill.style.width = `${(score / total) * 100}%`;
-            }
-        }
+                  resultHtml += `<li style="margin-bottom: 12px; padding: 8px; background: ${isCorrect ? '#d1fae5' : '#fee2e2'}; border-radius: 8px;">`;
+                  resultHtml += `<strong>Question ${i}:</strong> ${isCorrect ? '✅ Correct' : '❌ Incorrect'}<br>`;
+                  if (!isCorrect && correctAnswerText) {
+                      resultHtml += `<span style="font-size: 0.85rem;">Correct answer: ${correctAnswerText}</span><br>`;
+                  }
+                  resultHtml += `<span style="font-size: 0.8rem; color: #475569;">💡 ${explanations[`q${i}`]}</span>`;
+                  resultHtml += `</li>`;
+             }
+        
+             resultHtml += '</ul></div>';
+        
+             const resultDiv = document.getElementById('quizResult');
+             if (!resultDiv) {
+                 console.error('Quiz result div not found!');
+                 alert('Error: Could not display results. Please refresh the page and try again.');
+                 return;
+             }
+        
+             resultDiv.style.display = 'block';
+             const percentage = (score / total) * 100;
+        
+             let message = '';
+             if (percentage >= 80) {
+                 message = '🎉 Excellent! You have a deep understanding of Jewish eschatology.';
+                 resultDiv.classList.add('correct');
+                 resultDiv.classList.remove('incorrect');
+             } else if (percentage >= 60) {
+                 message = '📚 Good effort! Review the prophecies in Isaiah, Ezekiel, and Daniel.';
+                 resultDiv.classList.add('correct');
+                 resultDiv.classList.remove('incorrect');
+             } else {
+                 message = '📖 Review the lesson carefully. Focus on the core concepts: Mashiach, resurrection, and the Messianic Age.';
+                 resultDiv.classList.add('incorrect');
+                 resultDiv.classList.remove('correct');
+             }
+        
+             resultDiv.innerHTML = `<div class="score-highlight">${score}/${total}</div><p>${message}</p>${resultHtml}`;
+        
+             const progressFill = document.getElementById('progressFill');
+             if (progressFill) {
+                 progressFill.style.width = `${(score / total) * 100}%`;
+             }
+        
+             resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+         }
     </script>
+
 </body>
 </html>
