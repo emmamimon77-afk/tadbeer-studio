@@ -1,0 +1,14 @@
+{
+  "quiz": "Islamic Eschatology",
+  "totalQuestions": 30,
+  "questions": [
+    {
+      "id": 1,
+      "category": "Major Signs",
+      "question": "Which major sign involves the sun rising from the West?",
+      "options": ["Dajjal", "Yajuj & Majuj", "Sun rising from West", "Smoke"],
+      "correct": 2,
+      "explanation": "The Prophet ﷺ said: 'The first of the signs will be the rising of the sun from the West.'"
+    }
+  ]
+}
