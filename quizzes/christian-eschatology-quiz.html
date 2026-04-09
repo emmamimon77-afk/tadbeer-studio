@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christian Eschatology Quiz - Tadbeer Studio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .quiz-question {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 4px solid #7c3aed;
+        }
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #4c1d95;
+        }
+        .quiz-option {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .quiz-option:hover {
+            background: #f3e8ff;
+        }
+        .quiz-option input {
+            margin-right: 12px;
+        }
+        .submit-btn {
+            background: #7c3aed;
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 20px 0;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .submit-btn:hover {
+            background: #5b21b6;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 16px;
+            display: none;
+            text-align: center;
+        }
+        .result.correct {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        .result.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        .score-highlight {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 8px;
+            margin: 20px 0;
+        }
+        .progress-fill {
+            background: #7c3aed;
+            border-radius: 10px;
+            height: 8px;
+            width: 0%;
+        }
+        @media (max-width: 768px) {
+            .quiz-question {
+                padding: 15px;
+            }
+            .quiz-option {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="bismillah">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+
+    <div class="container">
+        <div class="quiz-container">
+            <h1 class="page-title">⛪ Christian Eschatology Quiz</h1>
+            <p class="page-subtitle">Test your knowledge of end-times events, theological perspectives, and biblical prophecy. 30 questions.</p>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <form id="quizForm">
+                <!-- Questions 1-10: Major Events & Timeline -->
+                <div class="quiz-question">
+                    <div class="question-text">1. What does Jesus call the period of wars, famines, and earthquakes in Matthew 24?</div>
+                    <label class="quiz-option"><input type="radio" name="q1" value="a"> A) The Great Tribulation</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="b"> B) The beginning of sorrows</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="c"> C) The Day of the Lord</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="d"> D) The final judgment</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">2. According to 2 Thessalonians 2, what must happen before the Day of the Lord?</div>
+                    <label class="quiz-option"><input type="radio" name="q2" value="a"> A) The rebuilding of the Temple</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="b"> B) A great revival</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="c"> C) The falling away and revealing of the man of sin</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="d"> D) The rapture of the church</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">3. Who is the "man of sin" described in 2 Thessalonians 2?</div>
+                    <label class="quiz-option"><input type="radio" name="q3" value="a"> A) The False Prophet</label>
+                    <label class="quiz-option"><input type="radio" name="q3" value="b"> B) The Antichrist</label>
+                    <label class="quiz-option"><input type="radio" name="q3" value="c"> C) Satan himself</label>
+                    <label class="quiz-option"><input type="radio" name="q3" value="d"> D) The Beast from the earth</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">4. How long will the Antichrist's covenant with Israel last according to Daniel 9:27?</div>
+                    <label class="quiz-option"><input type="radio" name="q4" value="a"> A) 3.5 years</label>
+                    <label class="quiz-option"><input type="radio" name="q4" value="b"> B) 7 years</label>
+                    <label class="quiz-option"><input type="radio" name="q4" value="c"> C) 10 years</label>
+                    <label class="quiz-option"><input type="radio" name="q4" value="d"> D) 40 years</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">5. Which book of the Bible contains the most detailed description of the end times?</div>
+                    <label class="quiz-option"><input type="radio" name="q5" value="a"> A) Daniel</label>
+                    <label class="quiz-option"><input type="radio" name="q5" value="b"> B) Ezekiel</label>
+                    <label class="quiz-option"><input type="radio" name="q5" value="c"> C) Revelation</label>
+                    <label class="quiz-option"><input type="radio" name="q5" value="d"> D) Matthew</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">6. What event does 1 Thessalonians 4:17 describe?</div>
+                    <label class="quiz-option"><input type="radio" name="q6" value="a"> A) The Second Coming</label>
+                    <label class="quiz-option"><input type="radio" name="q6" value="b"> B) The Rapture</label>
+                    <label class="quiz-option"><input type="radio" name="q6" value="c"> C) The Resurrection of the Dead</label>
+                    <label class="quiz-option"><input type="radio" name="q6" value="d"> D) The Final Judgment</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">7. According to Revelation 20, how long will Satan be bound?</div>
+                    <label class="quiz-option"><input type="radio" name="q7" value="a"> A) 1,000 years</label>
+                    <label class="quiz-option"><input type="radio" name="q7" value="b"> B) 7 years</label>
+                    <label class="quiz-option"><input type="radio" name="q7" value="c"> C) 40 years</label>
+                    <label class="quiz-option"><input type="radio" name="q7" value="d"> D) 3.5 years</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">8. Where will the final battle against the Antichrist take place?</div>
+                    <label class="quiz-option"><input type="radio" name="q8" value="a"> A) Jerusalem</label>
+                    <label class="quiz-option"><input type="radio" name="q8" value="b"> B) Megiddo (Armageddon)</label>
+                    <label class="quiz-option"><input type="radio" name="q8" value="c"> C) Babylon</label>
+                    <label class="quiz-option"><input type="radio" name="q8" value="d"> D) Rome</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">9. What happens at the Great White Throne Judgment (Revelation 20:11-15)?</div>
+                    <label class="quiz-option"><input type="radio" name="q9" value="a"> A) Believers are rewarded</label>
+                    <label class="quiz-option"><input type="radio" name="q9" value="b"> B) The Antichrist is judged</label>
+                    <label class="quiz-option"><input type="radio" name="q9" value="c"> C) All the dead are judged according to their works</label>
+                    <label class="quiz-option"><input type="radio" name="q9" value="d"> D) Satan is cast into the lake of fire</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">10. What is the "mark of the beast" primarily associated with (Revelation 13)?</div>
+                    <label class="quiz-option"><input type="radio" name="q10" value="a"> A) Worship of the Antichrist</label>
+                    <label class="quiz-option"><input type="radio" name="q10" value="b"> B) Economic participation (buying and selling)</label>
+                    <label class="quiz-option"><input type="radio" name="q10" value="c"> C) Religious persecution</label>
+                    <label class="quiz-option"><input type="radio" name="q10" value="d"> D) Military conscription</label>
+                </div>
+
+                <!-- Questions 11-20: Theological Perspectives -->
+                <div class="quiz-question">
+                    <div class="question-text">11. Which view teaches that Christ returns before a literal 1,000-year reign on earth?</div>
+                    <label class="quiz-option"><input type="radio" name="q11" value="a"> A) Amillennialism</label>
+                    <label class="quiz-option"><input type="radio" name="q11" value="b"> B) Postmillennialism</label>
+                    <label class="quiz-option"><input type="radio" name="q11" value="c"> C) Premillennialism</label>
+                    <label class="quiz-option"><input type="radio" name="q11" value="d"> D) Preterism</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">12. Which view holds that the "millennium" is symbolic of Christ's current reign in heaven?</div>
+                    <label class="quiz-option"><input type="radio" name="q12" value="a"> A) Premillennialism</label>
+                    <label class="quiz-option"><input type="radio" name="q12" value="b"> B) Amillennialism</label>
+                    <label class="quiz-option"><input type="radio" name="q12" value="c"> C) Postmillennialism</label>
+                    <label class="quiz-option"><input type="radio" name="q12" value="d"> D) Dispensationalism</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">13. Which view teaches that the church will be raptured before the Tribulation?</div>
+                    <label class="quiz-option"><input type="radio" name="q13" value="a"> A) Pre-Tribulation Rapture</label>
+                    <label class="quiz-option"><input type="radio" name="q13" value="b"> B) Mid-Tribulation Rapture</label>
+                    <label class="quiz-option"><input type="radio" name="q13" value="c"> C) Post-Tribulation Rapture</label>
+                    <label class="quiz-option"><input type="radio" name="q13" value="d"> D) Pre-Wrath Rapture</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">14. Which theological system popularized the pre-tribulation rapture and dispensations?</div>
+                    <label class="quiz-option"><input type="radio" name="q14" value="a"> A) Covenant Theology</label>
+                    <label class="quiz-option"><input type="radio" name="q14" value="b"> B) Dispensationalism</label>
+                    <label class="quiz-option"><input type="radio" name="q14" value="c"> C) Reformed Theology</label>
+                    <label class="quiz-option"><input type="radio" name="q14" value="d"> D) Liberation Theology</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">15. Which view believes that most end-times prophecies were fulfilled in 70 AD?</div>
+                    <label class="quiz-option"><input type="radio" name="q15" value="a"> A) Futurism</label>
+                    <label class="quiz-option"><input type="radio" name="q15" value="b"> B) Historicism</label>
+                    <label class="quiz-option"><input type="radio" name="q15" value="c"> C) Preterism</label>
+                    <label class="quiz-option"><input type="radio" name="q15" value="d"> D) Idealism</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">16. Christian Zionism is the belief that...</div>
+                    <label class="quiz-option"><input type="radio" name="q16" value="a"> A) All Christians should move to Israel</label>
+                    <label class="quiz-option"><input type="radio" name="q16" value="b"> B) Modern Israel fulfills biblical prophecy</label>
+                    <label class="quiz-option"><input type="radio" name="q16" value="c"> C) The church has replaced Israel</label>
+                    <label class="quiz-option"><input type="radio" name="q16" value="d"> D) The Temple must be rebuilt</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">17. Which theologian is most associated with modern dispensationalism?</div>
+                    <label class="quiz-option"><input type="radio" name="q17" value="a"> A) John Calvin</label>
+                    <label class="quiz-option"><input type="radio" name="q17" value="b"> B) Martin Luther</label>
+                    <label class="quiz-option"><input type="radio" name="q17" value="c"> C) C.I. Scofield</label>
+                    <label class="quiz-option"><input type="radio" name="q17" value="d"> D) Augustine</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">18. The book "The Late Great Planet Earth" and "Left Behind" series popularized which view?</div>
+                    <label class="quiz-option"><input type="radio" name="q18" value="a"> A) Amillennialism</label>
+                    <label class="quiz-option"><input type="radio" name="q18" value="b"> B) Postmillennialism</label>
+                    <label class="quiz-option"><input type="radio" name="q18" value="c"> C) Dispensational Premillennialism</label>
+                    <label class="quiz-option"><input type="radio" name="q18" value="d"> D) Preterism</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">19. Which branch of Christianity is most associated with amillennialism?</div>
+                    <label class="quiz-option"><input type="radio" name="q19" value="a"> A) Evangelicalism</label>
+                    <label class="quiz-option"><input type="radio" name="q19" value="b"> B) Roman Catholicism and Reformed churches</label>
+                    <label class="quiz-option"><input type="radio" name="q19" value="c"> C) Pentecostalism</label>
+                    <label class="quiz-option"><input type="radio" name="q19" value="d"> D) Baptist Fundamentalism</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">20. Which verse is most often cited by Christian Zionists to support their position?</div>
+                    <label class="quiz-option"><input type="radio" name="q20" value="a"> A) Matthew 24:14</label>
+                    <label class="quiz-option"><input type="radio" name="q20" value="b"> B) Romans 11:26</label>
+                    <label class="quiz-option"><input type="radio" name="q20" value="c"> C) Genesis 12:3</label>
+                    <label class="quiz-option"><input type="radio" name="q20" value="d"> D) Revelation 20:4</label>
+                </div>
+
+                <!-- Questions 21-30: Key Figures and Details -->
+                <div class="quiz-question">
+                    <div class="question-text">21. Who wrote the Olivet Discourse (Matthew 24, Mark 13, Luke 21)?</div>
+                    <label class="quiz-option"><input type="radio" name="q21" value="a"> A) The Apostle Paul</label>
+                    <label class="quiz-option"><input type="radio" name="q21" value="b"> B) The Apostle Peter</label>
+                    <label class="quiz-option"><input type="radio" name="q21" value="c"> C) Jesus Christ</label>
+                    <label class="quiz-option"><input type="radio" name="q21" value="d"> D) The Prophet Daniel</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">22. Who is the "two witnesses" of Revelation 11?</div>
+                    <label class="quiz-option"><input type="radio" name="q22" value="a"> A) Moses and Elijah</label>
+                    <label class="quiz-option"><input type="radio" name="q22" value="b"> B) Two unknown prophets</label>
+                    <label class="quiz-option"><input type="radio" name="q22" value="c"> C) The identity is debated; they are empowered by God</label>
+                    <label class="quiz-option"><input type="radio" name="q22" value="d"> D) Peter and Paul</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">23. What does the "Abomination of Desolation" refer to?</div>
+                    <label class="quiz-option"><input type="radio" name="q23" value="a"> A) The destruction of Jerusalem</label>
+                    <label class="quiz-option"><input type="radio" name="q23" value="b"> B) The Antichrist setting up an idol in the Temple</label>
+                    <label class="quiz-option"><input type="radio" name="q23" value="c"> C) The death of the two witnesses</label>
+                    <label class="quiz-option"><input type="radio" name="q23" value="d"> D) The rise of false prophets</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">24. Which empire is often associated with the "Beast" in Revelation 13?</div>
+                    <label class="quiz-option"><input type="radio" name="q24" value="a"> A) Babylon</label>
+                    <label class="quiz-option"><input type="radio" name="q24" value="b"> B) Persia</label>
+                    <label class="quiz-option"><input type="radio" name="q24" value="c"> C) Rome</label>
+                    <label class="quiz-option"><input type="radio" name="q24" value="d"> D) Greece</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">25. What is the New Jerusalem?</div>
+                    <label class="quiz-option"><input type="radio" name="q25" value="a"> A) The rebuilt city of Jerusalem</label>
+                    <label class="quiz-option"><input type="radio" name="q25" value="b"> B) The eternal dwelling place of believers</label>
+                    <label class="quiz-option"><input type="radio" name="q25" value="c"> C) The capital of the millennial kingdom</label>
+                    <label class="quiz-option"><input type="radio" name="q25" value="d"> D) The heavenly temple</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">26. According to Revelation 21, what will be absent in the new creation?</div>
+                    <label class="quiz-option"><input type="radio" name="q26" value="a"> A) The sun and moon</label>
+                    <label class="quiz-option"><input type="radio" name="q26" value="b"> B) Death, sorrow, crying, and pain</label>
+                    <label class="quiz-option"><input type="radio" name="q26" value="c"> C) The sea</label>
+                    <label class="quiz-option"><input type="radio" name="q26" value="d"> D) All of the above</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">27. Who will be cast into the lake of fire according to Revelation 20:10?</div>
+                    <label class="quiz-option"><input type="radio" name="q27" value="a"> A) The Antichrist and False Prophet</label>
+                    <label class="quiz-option"><input type="radio" name="q27" value="b"> B) Satan</label>
+                    <label class="quiz-option"><input type="radio" name="q27" value="c"> C) Unbelievers</label>
+                    <label class="quiz-option"><input type="radio" name="q27" value="d"> D) All of the above (at different times)</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">28. What does the number 666 represent in Revelation 13?</div>
+                    <label class="quiz-option"><input type="radio" name="q28" value="a"> A) The number of the beast</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="b"> B) The number of the Antichrist</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="c"> C) Human imperfection (in contrast to 7)</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="d"> D) All of the above interpretations exist</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">29. What does the "First Resurrection" refer to in Revelation 20?</div>
+                    <label class="quiz-option"><input type="radio" name="q29" value="a"> A) Resurrection of all the dead</label>
+                    <label class="quiz-option"><input type="radio" name="q29" value="b"> B) Resurrection of believers to reign with Christ</label>
+                    <label class="quiz-option"><input type="radio" name="q29" value="c"> C) Resurrection of the martyrs</label>
+                    <label class="quiz-option"><input type="radio" name="q29" value="d"> D) The rapture</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">30. Which New Testament book ends with the prayer "Come, Lord Jesus"?</div>
+                    <label class="quiz-option"><input type="radio" name="q30" value="a"> A) Romans</label>
+                    <label class="quiz-option"><input type="radio" name="q30" value="b"> B) Revelation</label>
+                    <label class="quiz-option"><input type="radio" name="q30" value="c"> C) 1 Corinthians</label>
+                    <label class="quiz-option"><input type="radio" name="q30" value="d"> D) Hebrews</label>
+                </div>
+            </form>
+
+            <button class="submit-btn" onclick="checkQuiz()">Submit Answers</button>
+            <div id="quizResult" class="result"></div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/assets/js/components.js"></script>
+    <script>
+        const correctAnswers = {
+            q1: 'b', q2: 'c', q3: 'b', q4: 'b', q5: 'c', q6: 'b', q7: 'a', q8: 'b', q9: 'c', q10: 'b',
+            q11: 'c', q12: 'b', q13: 'a', q14: 'b', q15: 'c', q16: 'b', q17: 'c', q18: 'c', q19: 'b', q20: 'c',
+            q21: 'c', q22: 'c', q23: 'b', q24: 'c', q25: 'b', q26: 'd', q27: 'd', q28: 'd', q29: 'b', q30: 'b'
+        };
+
+        function checkQuiz() {
+            let score = 0;
+            let total = 30;
+
+            for (let i = 1; i <= total; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected && selected.value === correctAnswers[`q${i}`]) {
+                    score++;
+                }
+            }
+
+            const resultDiv = document.getElementById('quizResult');
+            resultDiv.style.display = 'block';
+            const percentage = (score / total) * 100;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = 'Excellent! You have a strong grasp of Christian eschatology.';
+                resultDiv.classList.add('correct');
+                resultDiv.classList.remove('incorrect');
+            } else if (percentage >= 60) {
+                message = 'Good effort! Review the theological perspectives and timelines.';
+                resultDiv.classList.add('correct');
+                resultDiv.classList.remove('incorrect');
+            } else {
+                message = 'Review the lesson carefully. Focus on the major events and differing views.';
+                resultDiv.classList.add('incorrect');
+                resultDiv.classList.remove('correct');
+            }
+            
+            resultDiv.innerHTML = `<div class="score-highlight">${score}/${total}</div><p>${message}</p>`;
+            
+            const progressFill = document.getElementById('progressFill');
+            if (progressFill) {
+                progressFill.style.width = `${(score / total) * 100}%`;
+            }
+        }
+    </script>
+</body>
+</html>
