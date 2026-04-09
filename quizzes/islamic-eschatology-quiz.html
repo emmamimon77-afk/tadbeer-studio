@@ -374,96 +374,117 @@
 
     <script src="/assets/js/components.js"></script>
     <script>
-        const correctAnswers = {
-            q1: 'b', q2: 'c', q3: 'b', q4: 'a', q5: 'c', q6: 'c', q7: 'b', q8: 'a', q9: 'a', q10: 'b',
-            q11: 'd', q12: 'b', q13: 'a', q14: 'c', q15: 'd', q16: 'd', q17: 'd', q18: 'd', q19: 'b', q20: 'c',
-            q21: 'b', q22: 'c', q23: 'b', q24: 'b', q25: 'b', q26: 'b', q27: 'c', q28: 'c', q29: 'b', q30: 'a'
-        };
-
         function checkQuiz() {
+            console.log('Quiz submitted!');
             let score = 0;
             let total = 30;
-            let resultHtml = '<div style="text-align: left;"><strong>Results:</strong><ul style="margin-top: 10px;">';
-            
+            let resultHtml = '<div style="text-align: left;"><strong>Your Results:</strong><ul style="margin-top: 10px;">';
+        
             const correctAnswers = {
                 q1: 'b', q2: 'c', q3: 'b', q4: 'a', q5: 'c', q6: 'c', q7: 'b', q8: 'a', q9: 'a', q10: 'b',
                 q11: 'd', q12: 'b', q13: 'a', q14: 'c', q15: 'd', q16: 'd', q17: 'd', q18: 'd', q19: 'b', q20: 'c',
                 q21: 'b', q22: 'c', q23: 'b', q24: 'b', q25: 'b', q26: 'b', q27: 'c', q28: 'c', q29: 'b', q30: 'a'
             };
-            
+           
             const explanations = {
-                q1: 'Correct! The Mahdi appears first, followed by Dajjal, then 'Isa.',
-                q2: 'Correct! The Mahdi is from the Prophet\'s (ﷺ) family.',
-                q3: 'Correct! He will fill the earth with justice after oppression.',
-                q4: 'Correct! Dajjal is one-eyed (blind in his right eye).',
-                q5: 'Correct! He descends to the white minaret in Damascus.',
-                q6: 'Correct! Dhul-Qarnayn built the wall (Quran 18:94-98).',
-                q7: 'Correct! After the sun rises from the West, repentance is no longer accepted.',
-                q8: 'Correct! Dabbat al-Ard is the Beast of the Earth.',
-                q9: 'Correct! Disbelievers will be severely affected by the smoke.',
-                q10: 'Correct! The fire starts from Hadramawt in Yemen.',
-                q11: 'Correct! All are minor signs.',
-                q12: 'Correct! "A woman gives birth to her master" is a sign.',
-                q13: 'Correct! It is a minor sign.',
-                q14: 'Correct! The spread of riba and zina are minor signs.',
-                q15: 'Correct! All have occurred.',
-                q16: 'Correct! All are signs.',
-                q17: 'Correct! Time will pass quickly.',
-                q18: 'Correct! All are examples.',
-                q19: 'Correct! Umar ibn al-Khattab narrated the Hadith of Jibril.',
-                q20: 'Correct! Speaking the truth will be forbidden.',
-                q21: 'Correct! Prophet 'Isa (Jesus) will kill the Dajjal.',
-                q22: 'Correct! At the gate of Lud (Lod, Israel).',
-                q23: 'Correct! The Mahdi will rule for 7 years.',
-                q24: 'Correct! He will rule justly, break the cross, kill the pig.',
-                q25: 'Correct! Insects sent by Allah will destroy them.',
-                q26: 'Correct! On his forehead.',
-                q27: 'Correct! Tamim al-Dari saw the Dajjal.',
-                q28: 'Correct! Ten major signs according to Sahih Muslim.',
-                q29: 'Correct! Dabbat al-Ard is the Beast that speaks.',
-                q30: 'Correct! Surah Al-Kahf describes the wall.'
+                q1: 'The Mahdi appears first, followed by Dajjal, then Isa.',
+                q2: 'The Mahdi is from the Prophet\'s (ﷺ) family (Ahl al-Bayt).',
+                q3: 'He will fill the earth with justice after it was filled with oppression.',
+                q4: 'Dajjal is one-eyed (blind in his right eye).',
+                q5: 'He descends to the white minaret in Damascus.',
+                q6: 'Dhul-Qarnayn built the wall (Quran 18:94-98).',
+                q7: 'After the sun rises from the West, the door of repentance is closed.',
+                q8: 'Dabbat al-Ard is the Beast of the Earth.',
+                q9: 'Disbelievers will be severely affected by the smoke.',
+                q10: 'The fire starts from Hadramawt in Yemen.',
+                q11: 'All are minor signs (widespread ignorance, tall buildings, killing).',
+                q12: '"A woman gives birth to her master" is a sign of the Hour.',
+                q13: 'Competition in building tall buildings is a minor sign.',
+                q14: 'The spread of riba (interest) and zina are minor signs.',
+                q15: 'All have occurred: splitting of the moon, Prophet\'s death, conquest of Jerusalem.',
+                q16: 'All are signs: earthquakes, sudden death, natural disasters.',
+                q17: 'Time will pass quickly — a year like a month, a month like a week.',
+                q18: 'All are examples: spread of music/alcohol, more women, loss of trust.',
+                q19: 'Umar ibn al-Khattab narrated the famous Hadith of Jibril.',
+                q20: 'Speaking the truth will be forbidden near the end of times.',
+                q21: 'Prophet Isa (Jesus) will kill the Dajjal.',
+                q22: 'At the gate of Lud (Lod, Israel).',
+                q23: 'The Mahdi will rule for 7 years.',
+                q24: 'He will rule justly, break the cross, kill the pig.',
+                q25: 'Insects sent by Allah will destroy Yajuj wa Majuj.',
+                q26: 'The word "kafir" (disbeliever) will be written on his forehead.',
+                q27: 'Tamim al-Dari was the companion who saw the Dajjal.',
+                q28: 'Ten major signs according to Sahih Muslim.',
+                q29: 'Dabbat al-Ard is the Beast that will speak to mankind.',
+                q30: 'Surah Al-Kahf describes the wall of Dhul-Qarnayn.'
             };
-            
+        
+            // Loop through all 30 questions
             for (let i = 1; i <= total; i++) {
                 const selected = document.querySelector(`input[name="q${i}"]:checked`);
                 const isCorrect = selected && selected.value === correctAnswers[`q${i}`];
                 if (isCorrect) {
                     score++;
                 }
-                const correctLetter = correctAnswers[`q${i}`];
-                const correctText = document.querySelector(`input[name="q${i}"][value="${correctLetter}"]`)?.parentElement?.innerText || correctLetter;
-                
-                resultHtml += `<li style="margin-bottom: 10px;"><strong>Question ${i}:</strong> ${isCorrect ? '✅ Correct' : '❌ Incorrect'}<br>`;
-                resultHtml += `<span style="font-size: 0.85rem; color: #475569;">${explanations[`q${i}`] || ''}</span></li>`;
+            
+                // Get the correct answer text
+                let correctAnswerText = '';
+                const correctValue = correctAnswers[`q${i}`];
+                const allOptions = document.querySelectorAll(`input[name="q${i}"]`);
+                for (let opt of allOptions) {
+                    if (opt.value === correctValue) {
+                        const label = opt.closest('label');
+                        if (label) correctAnswerText = label.innerText.trim();
+                        break;
+                    }
+                }
+            
+                resultHtml += `<li style="margin-bottom: 12px; padding: 8px; background: ${isCorrect ? '#d1fae5' : '#fee2e2'}; border-radius: 8px;">`;
+                resultHtml += `<strong>Question ${i}:</strong> ${isCorrect ? '✅ Correct' : '❌ Incorrect'}<br>`;
+                if (!isCorrect && correctAnswerText) {
+                    resultHtml += `<span style="font-size: 0.85rem;">Correct answer: ${correctAnswerText}</span><br>`;
+                }
+                resultHtml += `<span style="font-size: 0.8rem; color: #475569;">💡 ${explanations[`q${i}`]}</span>`;
+                resultHtml += `</li>`;
             }
-            
+        
             resultHtml += '</ul></div>';
-            
+        
             const resultDiv = document.getElementById('quizResult');
+            if (!resultDiv) {
+                console.error('Quiz result div not found!');
+                alert('Error: Could not display results. Please refresh the page and try again.');
+                return;
+            }
+        
             resultDiv.style.display = 'block';
             const percentage = (score / total) * 100;
-            
+        
             let message = '';
             if (percentage >= 80) {
-                message = 'Excellent! You have mastered Islamic eschatology.';
+                message = '🎉 Excellent! You have mastered Islamic eschatology.';
                 resultDiv.classList.add('correct');
                 resultDiv.classList.remove('incorrect');
             } else if (percentage >= 60) {
-                message = 'Good effort! Review the lessons on major and minor signs.';
-                resultDiv.classList.add('correct');
-                resultDiv.classList.remove('incorrect');
+               message = '📚 Good effort! Review the lessons on major and minor signs.';
+               resultDiv.classList.add('correct');
+               resultDiv.classList.remove('incorrect');
             } else {
-                message = 'Review the lesson carefully. Pay attention to the chronological order and key figures.';
+                message = '📖 Review the lesson carefully. Pay attention to the chronological order and key figures.';
                 resultDiv.classList.add('incorrect');
                 resultDiv.classList.remove('correct');
             }
-            
+        
             resultDiv.innerHTML = `<div class="score-highlight">${score}/${total}</div><p>${message}</p>${resultHtml}`;
-            
+        
+            // Update progress bar
             const progressFill = document.getElementById('progressFill');
             if (progressFill) {
                 progressFill.style.width = `${(score / total) * 100}%`;
             }
+        
+            // Scroll to results
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     </script>
 </body>
