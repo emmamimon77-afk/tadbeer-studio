@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewish Eschatology Quiz - Tadbeer Studio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .quiz-question {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 4px solid #d97706;
+        }
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #92400e;
+        }
+        .quiz-option {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .quiz-option:hover {
+            background: #fffbeb;
+        }
+        .quiz-option input {
+            margin-right: 12px;
+        }
+        .submit-btn {
+            background: #d97706;
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 20px 0;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .submit-btn:hover {
+            background: #b45309;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 16px;
+            display: none;
+            text-align: center;
+        }
+        .result.correct {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        .result.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        .score-highlight {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 8px;
+            margin: 20px 0;
+        }
+        .progress-fill {
+            background: #d97706;
+            border-radius: 10px;
+            height: 8px;
+            width: 0%;
+        }
+        @media (max-width: 768px) {
+            .quiz-question {
+                padding: 15px;
+            }
+            .quiz-option {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="bismillah">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+
+    <div class="container">
+        <div class="quiz-container">
+            <h1 class="page-title">🕎 Jewish Eschatology Quiz</h1>
+            <p class="page-subtitle">Test your knowledge of the End of Days, Messianic Age, resurrection, and rabbinic traditions. 30 questions.</p>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <form id="quizForm">
+                <!-- Questions 1-10: Core Concepts -->
+                <div class="quiz-question">
+                    <div class="question-text">1. What is the Hebrew term for the "End of Days"?</div>
+                    <label class="quiz-option"><input type="radio" name="q1" value="a"> A) Olam Ha-Ba</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="b"> B) Acharit HaYamim</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="c"> C) Tikkun Olam</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="d"> D) Gehinnom</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">2. What is the traditional Jewish term for the Messiah?</div>
+                    <label class="quiz-option"><input type="radio" name="q2" value="a"> A) Mashiach</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="b"> B) Son of God</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="c"> C) Redeemer</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="d"> D) Prophet</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">3. Which book of the Hebrew Bible contains the clearest statement of the resurrection of the dead?</div>
+                    <label class="quiz-option"><input type="radio" name="q3" value="a"> A) Isaiah</label>
+                    <label class="quiz-option"><input type="radio" name="q3" value="b"> B) Ezekiel</label>
+                    <label class="quiz-option"><input type="radio" name="q3" value="c"> C) Daniel</label>
+                    <label class="quiz-option"><input type="radio" name="q3" value="d"> D) Psalms</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">4. According to Jewish tradition, from which lineage will the Mashiach descend?</div>
+                    <label class="quiz-option"><input type="radio" name="q4" value="a"> A) Aaron</label>
+                    <label class="quiz-option"><input type="radio" name="q4" value="b"> B) David</label>
+                    <label class="quiz-option"><input type="radio" name="q4" value="c"> C) Abraham</label>
+                    <label class="quiz-option"><input type="radio" name="q4" value="d"> D) Moses</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">5. What does "Olam Ha-Ba" refer to?</div>
+                    <label class="quiz-option"><input type="radio" name="q5" value="a"> A) The physical world</label>
+                    <label class="quiz-option"><input type="radio" name="q5" value="b"> B) The World to Come (Messianic Age or afterlife)</label>
+                    <label class="quiz-option"><input type="radio" name="q5" value="c"> C) The Temple</label>
+                    <label class="quiz-option"><input type="radio" name="q5" value="d"> D) The resurrection</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">6. Which prophet describes the war of Gog and Magog in detail?</div>
+                    <label class="quiz-option"><input type="radio" name="q6" value="a"> A) Isaiah</label>
+                    <label class="quiz-option"><input type="radio" name="q6" value="b"> B) Jeremiah</label>
+                    <label class="quiz-option"><input type="radio" name="q6" value="c"> C) Ezekiel</label>
+                    <label class="quiz-option"><input type="radio" name="q6" value="d"> D) Zechariah</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">7. What is the "Ingathering of the Exiles"?</div>
+                    <label class="quiz-option"><input type="radio" name="q7" value="a"> A) The rebuilding of the Temple</label>
+                    <label class="quiz-option"><input type="radio" name="q7" value="b"> B) The return of all Jews to the Land of Israel</label>
+                    <label class="quiz-option"><input type="radio" name="q7" value="c"> C) The resurrection of the dead</label>
+                    <label class="quiz-option"><input type="radio" name="q7" value="d"> D) The final judgment</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">8. According to Ezekiel 37, what does the vision of the dry bones symbolize?</div>
+                    <label class="quiz-option"><input type="radio" name="q8" value="a"> A) The destruction of the Temple</label>
+                    <label class="quiz-option"><input type="radio" name="q8" value="b"> B) The resurrection of the dead and restoration of Israel</label>
+                    <label class="quiz-option"><input type="radio" name="q8" value="c"> C) The war of Gog and Magog</label>
+                    <label class="quiz-option"><input type="radio" name="q8" value="d"> D) The coming of the Messiah</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">9. Which tractate of the Talmud discusses the resurrection of the dead?</div>
+                    <label class="quiz-option"><input type="radio" name="q9" value="a"> A) Berakhot</label>
+                    <label class="quiz-option"><input type="radio" name="q9" value="b"> B) Sanhedrin</label>
+                    <label class="quiz-option"><input type="radio" name="q9" value="c"> C) Shabbat</label>
+                    <label class="quiz-option"><input type="radio" name="q9" value="d"> D) Pesachim</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">10. What is the Hebrew term for the resurrection of the dead?</div>
+                    <label class="quiz-option"><input type="radio" name="q10" value="a"> A) Aliyah</label>
+                    <label class="quiz-option"><input type="radio" name="q10" value="b"> B) Techiyat HaMetim</label>
+                    <label class="quiz-option"><input type="radio" name="q10" value="c"> C) Kiddush HaShem</label>
+                    <label class="quiz-option"><input type="radio" name="q10" value="d"> D) Teshuvah</label>
+                </div>
+
+                <!-- Questions 11-20: Rabbinic & Medieval Views -->
+                <div class="quiz-question">
+                    <div class="question-text">11. Who codified belief in the coming of the Messiah as one of the 13 Principles of Faith?</div>
+                    <label class="quiz-option"><input type="radio" name="q11" value="a"> A) Rashi</label>
+                    <label class="quiz-option"><input type="radio" name="q11" value="b"> B) Maimonides (Rambam)</label>
+                    <label class="quiz-option"><input type="radio" name="q11" value="c"> C) Rabbi Akiva</label>
+                    <label class="quiz-option"><input type="radio" name="q11" value="d"> D) Nachmanides</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">12. Which mystical text describes the concept of "Tikkun Olam"?</div>
+                    <label class="quiz-option"><input type="radio" name="q12" value="a"> A) Mishnah</label>
+                    <label class="quiz-option"><input type="radio" name="q12" value="b"> B) Zohar</label>
+                    <label class="quiz-option"><input type="radio" name="q12" value="c"> C) Talmud</label>
+                    <label class="quiz-option"><input type="radio" name="q12" value="d"> D) Midrash Rabbah</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">13. According to Maimonides, the Messianic Age will be characterized by:</div>
+                    <label class="quiz-option"><input type="radio" name="q13" value="a"> A) Supernatural miracles</label>
+                    <label class="quiz-option"><input type="radio" name="q13" value="b"> B) The end of the physical world</label>
+                    <label class="quiz-option"><input type="radio" name="q13" value="c"> C) Universal peace and knowledge of God</label>
+                    <label class="quiz-option"><input type="radio" name="q13" value="d"> D) The destruction of all non-Jews</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">14. What does "Tikkun Olam" mean in Kabbalistic thought?</div>
+                    <label class="quiz-option"><input type="radio" name="q14" value="a"> A) Destroying the world</label>
+                    <label class="quiz-option"><input type="radio" name="q14" value="b"> B) Repairing the world through divine and human action</label>
+                    <label class="quiz-option"><input type="radio" name="q14" value="c"> C) Building the Temple</label>
+                    <label class="quiz-option"><input type="radio" name="q14" value="d"> D) Waiting for the Messiah</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">15. Which medieval Jewish philosopher argued that the Messianic Age is natural, not supernatural?</div>
+                    <label class="quiz-option"><input type="radio" name="q15" value="a"> A) Judah Halevi</label>
+                    <label class="quiz-option"><input type="radio" name="q15" value="b"> B) Maimonides</label>
+                    <label class="quiz-option"><input type="radio" name="q15" value="c"> C) Gersonides</label>
+                    <label class="quiz-option"><input type="radio" name="q15" value="d"> D) Saadia Gaon</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">16. The Talmud (Sanhedrin 98b) discusses which of the following about the Messiah?</div>
+                    <label class="quiz-option"><input type="radio" name="q16" value="a"> A) His name will be "Menahem" (comforter)</label>
+                    <label class="quiz-option"><input type="radio" name="q16" value="b"> B) He will come on a donkey (Zechariah 9:9)</label>
+                    <label class="quiz-option"><input type="radio" name="q16" value="c"> C) He is already born but hidden</label>
+                    <label class="quiz-option"><input type="radio" name="q16" value="d"> D) All of the above</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">17. What is "Gehinnom" in Jewish eschatology?</div>
+                    <label class="quiz-option"><input type="radio" name="q17" value="a"> A) The Garden of Eden</label>
+                    <label class="quiz-option"><input type="radio" name="q17" value="b"> B) A place of purification (not eternal hell)</label>
+                    <label class="quiz-option"><input type="radio" name="q17" value="c"> C) The final judgment</label>
+                    <label class="quiz-option"><input type="radio" name="q17" value="d"> D) The Temple Mount</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">18. Which modern movement saw the establishment of Israel as the "beginning of the redemption"?</div>
+                    <label class="quiz-option"><input type="radio" name="q18" value="a"> A) Reform Judaism</label>
+                    <label class="quiz-option"><input type="radio" name="q18" value="b"> B) Religious Zionism</label>
+                    <label class="quiz-option"><input type="radio" name="q18" value="c"> C) Conservative Judaism</label>
+                    <label class="quiz-option"><input type="radio" name="q18" value="d"> D) Haredi Judaism</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">19. According to Jewish tradition, what will happen to the Temple Mount in the Messianic Age?</div>
+                    <label class="quiz-option"><input type="radio" name="q19" value="a"> A) It will remain empty</label>
+                    <label class="quiz-option"><input type="radio" name="q19" value="b"> B) A mosque will be built there</label>
+                    <label class="quiz-option"><input type="radio" name="q19" value="c"> C) The Third Temple will be rebuilt</label>
+                    <label class="quiz-option"><input type="radio" name="q19" value="d"> D) It will be destroyed</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">20. Which prophet describes the universal knowledge of God in the End of Days?</div>
+                    <label class="quiz-option"><input type="radio" name="q20" value="a"> A) Amos</label>
+                    <label class="quiz-option"><input type="radio" name="q20" value="b"> B) Hosea</label>
+                    <label class="quiz-option"><input type="radio" name="q20" value="c"> C) Isaiah</label>
+                    <label class="quiz-option"><input type="radio" name="q20" value="d"> D) Jonah</label>
+                </div>
+
+                <!-- Questions 21-30: Detailed Prophecies & Concepts -->
+                <div class="quiz-question">
+                    <div class="question-text">21. According to Ezekiel 40-48, what will be the center of the Messianic Age?</div>
+                    <label class="quiz-option"><input type="radio" name="q21" value="a"> A) The rebuilt Temple</label>
+                    <label class="quiz-option"><input type="radio" name="q21" value="b"> B) The throne of David</label>
+                    <label class="quiz-option"><input type="radio" name="q21" value="c"> C) Mount Sinai</label>
+                    <label class="quiz-option"><input type="radio" name="q21" value="d"> D) The Sanhedrin</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">22. The phrase "Nation shall not lift up sword against nation" is from which book?</div>
+                    <label class="quiz-option"><input type="radio" name="q22" value="a"> A) Micah</label>
+                    <label class="quiz-option"><input type="radio" name="q22" value="b"> B) Isaiah</label>
+                    <label class="quiz-option"><input type="radio" name="q22" value="c"> C) Zechariah</label>
+                    <label class="quiz-option"><input type="radio" name="q22" value="d"> D) Joel</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">23. What does the term "Moshiach ben David" refer to?</div>
+                    <label class="quiz-option"><input type="radio" name="q23" value="a"> A) The Messiah from the tribe of Joseph</label>
+                    <label class="quiz-option"><input type="radio" name="q23" value="b"> B) The Messiah from the lineage of King David</label>
+                    <label class="quiz-option"><input type="radio" name="q23" value="c"> C) The Messiah from the tribe of Levi</label>
+                    <label class="quiz-option"><input type="radio" name="q23" value="d"> D) The Messiah from the house of Aaron</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">24. Which book of the Tanakh ends with the prophecy of the "sun of righteousness" rising?</div>
+                    <label class="quiz-option"><input type="radio" name="q24" value="a"> A) Malachi</label>
+                    <label class="quiz-option"><input type="radio" name="q24" value="b"> B) Zechariah</label>
+                    <label class="quiz-option"><input type="radio" name="q24" value="c"> C) Haggai</label>
+                    <label class="quiz-option"><input type="radio" name="q24" value="d"> D) Obadiah</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">25. According to Jewish tradition, how long will the Messianic Age last?</div>
+                    <label class="quiz-option"><input type="radio" name="q25" value="a"> A) 7 years</label>
+                    <label class="quiz-option"><input type="radio" name="q25" value="b"> B) 1,000 years</label>
+                    <label class="quiz-option"><input type="radio" name="q25" value="c"> C) 40 years</label>
+                    <label class="quiz-option"><input type="radio" name="q25" value="d"> D) Views vary; some say forever</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">26. Which of the following is NOT a sign of the Messianic Age according to Isaiah?</div>
+                    <label class="quiz-option"><input type="radio" name="q26" value="a"> A) The wolf will dwell with the lamb</label>
+                    <label class="quiz-option"><input type="radio" name="q26" value="b"> B) The earth will be filled with the knowledge of God</label>
+                    <label class="quiz-option"><input type="radio" name="q26" value="c"> C) All Jews will speak Hebrew</label>
+                    <label class="quiz-option"><input type="radio" name="q26" value="d"> D) They will not hurt nor destroy in all God's holy mountain</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">27. What is the name of the final prayer in the daily Amidah that expresses hope for the Messianic Age?</div>
+                    <label class="quiz-option"><input type="radio" name="q27" value="a"> A) Shema</label>
+                    <label class="quiz-option"><input type="radio" name="q27" value="b"> B) Aleinu</label>
+                    <label class="quiz-option"><input type="radio" name="q27" value="c"> C) Kaddish</label>
+                    <label class="quiz-option"><input type="radio" name="q27" value="d"> D) Amidah</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">28. Which modern country is often identified with the biblical "Magog"?</div>
+                    <label class="quiz-option"><input type="radio" name="q28" value="a"> A) Iran</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="b"> B) Russia (in some Jewish interpretations)</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="c"> C) Germany</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="d"> D) Turkey</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">29. What does "Pirkei Avot" (Ethics of the Fathers) say about the Messianic Age?</div>
+                    <label class="quiz-option"><input type="radio" name="q29" value="a"> A) It will come only when Israel repents</label>
+                    <label class="quiz-option"><input type="radio" name="q29" value="b"> B) It will come after a great war</label>
+                    <label class="quiz-option"><input type="radio" name="q29" value="c"> C) It will come when all keep the Sabbath</label>
+                    <label class="quiz-option"><input type="radio" name="q29" value="d"> D) It is a myth</label>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-text">30. Which verse from Daniel is central to Jewish belief in the resurrection?</div>
+                    <label class="quiz-option"><input type="radio" name="q30" value="a"> A) Daniel 7:13</label>
+                    <label class="quiz-option"><input type="radio" name="q30" value="b"> B) Daniel 9:27</label>
+                    <label class="quiz-option"><input type="radio" name="q30" value="c"> C) Daniel 12:2</label>
+                    <label class="quiz-option"><input type="radio" name="q30" value="d"> D) Daniel 2:44</label>
+                </div>
+            </form>
+
+            <button class="submit-btn" onclick="checkQuiz()">Submit Answers</button>
+            <div id="quizResult" class="result"></div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/assets/js/components.js"></script>
+    <script>
+        const correctAnswers = {
+            q1: 'b', q2: 'a', q3: 'c', q4: 'b', q5: 'b', q6: 'c', q7: 'b', q8: 'b', q9: 'b', q10: 'b',
+            q11: 'b', q12: 'b', q13: 'c', q14: 'b', q15: 'b', q16: 'd', q17: 'b', q18: 'b', q19: 'c', q20: 'c',
+            q21: 'a', q22: 'b', q23: 'b', q24: 'a', q25: 'd', q26: 'c', q27: 'b', q28: 'b', q29: 'a', q30: 'c'
+        };
+
+        function checkQuiz() {
+            let score = 0;
+            let total = 30;
+
+            for (let i = 1; i <= total; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected && selected.value === correctAnswers[`q${i}`]) {
+                    score++;
+                }
+            }
+
+            const resultDiv = document.getElementById('quizResult');
+            resultDiv.style.display = 'block';
+            const percentage = (score / total) * 100;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = 'Excellent! You have a deep understanding of Jewish eschatology.';
+                resultDiv.classList.add('correct');
+                resultDiv.classList.remove('incorrect');
+            } else if (percentage >= 60) {
+                message = 'Good effort! Review the prophecies in Isaiah, Ezekiel, and Daniel.';
+                resultDiv.classList.add('correct');
+                resultDiv.classList.remove('incorrect');
+            } else {
+                message = 'Review the lesson carefully. Focus on the core concepts: Mashiach, resurrection, and the Messianic Age.';
+                resultDiv.classList.add('incorrect');
+                resultDiv.classList.remove('correct');
+            }
+            
+            resultDiv.innerHTML = `<div class="score-highlight">${score}/${total}</div><p>${message}</p>`;
+            
+            const progressFill = document.getElementById('progressFill');
+            if (progressFill) {
+                progressFill.style.width = `${(score / total) * 100}%`;
+            }
+        }
+    </script>
+</body>
+</html>
