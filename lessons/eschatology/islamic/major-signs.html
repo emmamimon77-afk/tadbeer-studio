@@ -8,97 +8,120 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Additional styles specific to this lesson */
+        /* Lesson-specific styles */
+        .lesson-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .quran-highlight {
+            text-align: center;
+            background: linear-gradient(135deg, #f0f4f8, #ffffff);
+            padding: 40px 20px;
+            border-radius: 24px;
+            margin: 30px 0;
+            border: 1px solid #e2e8f0;
+        }
+        .quran-highlight .arabic {
+            font-size: 2rem;
+            font-family: 'Amiri', 'Traditional Arabic', serif;
+            color: #1a472a;
+            margin-bottom: 15px;
+        }
+        .quran-highlight .translation {
+            font-size: 1.1rem;
+            color: #334155;
+            font-style: italic;
+        }
+        .quran-highlight .reference {
+            margin-top: 10px;
+            color: #64748b;
+        }
         .sign-card {
             background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-left: 5px solid #2e7d32;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-left: 6px solid #2e7d32;
+            transition: transform 0.2s;
+        }
+        .sign-card:hover {
+            transform: translateX(5px);
         }
         .sign-number {
             display: inline-block;
             background: #2e7d32;
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             text-align: center;
-            line-height: 40px;
+            line-height: 45px;
             font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        .sign-card h3 {
+            font-size: 1.6rem;
             margin-bottom: 15px;
+            color: #1a472a;
         }
         .hadith-box {
-            background: #f0f4f8;
+            background: #f8fafc;
             padding: 20px;
             border-radius: 16px;
             margin: 20px 0;
             border-left: 4px solid #fbbf24;
-            font-style: italic;
+            font-style: normal;
         }
         .game-theory-box {
             background: #e8f0fe;
-            padding: 25px;
-            border-radius: 20px;
-            margin: 30px 0;
+            padding: 30px;
+            border-radius: 24px;
+            margin: 40px 0;
             border: 1px solid #2e7d32;
         }
         .glossary {
             background: #ffffff;
-            padding: 25px;
-            border-radius: 20px;
-            margin-top: 40px;
+            padding: 30px;
+            border-radius: 24px;
+            margin-top: 50px;
             border: 1px solid #e2e8f0;
         }
         .glossary-term {
             font-weight: bold;
             color: #1a472a;
+            font-size: 1.1rem;
         }
-        .quiz-question {
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: 16px;
+        .glossary-item {
             margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
         }
-        .quiz-option {
-            display: block;
-            margin: 10px 0;
-            padding: 10px;
-            background: white;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: background 0.3s;
+        .section-title {
+            font-size: 1.8rem;
+            margin: 50px 0 30px;
+            color: #1a472a;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
         }
-        .quiz-option:hover {
-            background: #e8f0fe;
+        .sub-section {
+            margin: 30px 0;
         }
-        .quiz-option input {
-            margin-right: 10px;
-        }
-        .submit-btn {
-            background: #2e7d32;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-top: 20px;
-        }
-        .result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 12px;
-            display: none;
-        }
-        .result.correct {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        .result.incorrect {
-            background: #fee2e2;
-            color: #991b1b;
+        @media (max-width: 768px) {
+            .lesson-container {
+                padding: 15px;
+            }
+            .quran-highlight .arabic {
+                font-size: 1.3rem;
+            }
+            .sign-card {
+                padding: 20px;
+            }
+            .sign-card h3 {
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>
@@ -110,29 +133,31 @@
         <div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div>
     </div>
 
-    <div class="container">
-        <!-- Hero Section -->
-        <div class="quran-verse" style="text-align: center; margin-bottom: 40px;">
+    <div class="lesson-container">
+        <!-- Centered Quranic Verse -->
+        <div class="quran-highlight">
             <div class="arabic">سَنُرِيهِمْ آيَاتِنَا فِي الْآفَاقِ وَفِي أَنفُسِهِمْ</div>
             <div class="translation">"We will show them Our signs in the horizons and within themselves..."</div>
             <div class="reference">— Quran 41:53</div>
         </div>
 
-        <h1 class="page-title">📖 Islamic Eschatology: The Ten Major Signs</h1>
-        <p class="page-subtitle">A comprehensive, evidence-based study of the final signs before the Last Day, derived from the Qur'an and authentic Sunnah.</p>
+        <h1 class="page-title" style="text-align: center;">📖 Islamic Eschatology: The Ten Major Signs</h1>
+        <p class="page-subtitle" style="text-align: center; margin-bottom: 40px;">A comprehensive, evidence-based study of the final signs before the Last Day, derived from the Qur'an and authentic Sunnah.</p>
 
         <!-- Introduction -->
         <div class="sign-card">
-            <h2><i class="fas fa-mosque"></i> Introduction: The Science of the Unseen</h2>
+            <h2 style="margin-top: 0;">📜 Introduction: The Science of the Unseen</h2>
             <p>Belief in the Last Day is a fundamental pillar of Islamic faith. The Prophet Muhammad (ﷺ) did not leave his ummah in darkness regarding the future. He detailed the minor and major signs that would precede the Hour, allowing believers to recognize the times they live in.</p>
             <div class="hadith-box">
-                <i class="fas fa-quote-left"></i> The Prophet (ﷺ) said: <strong>"The Hour will not be established until you see ten signs..."</strong> and he mentioned them. <br>— Sahih Muslim (2901)
+                <i class="fas fa-quote-left" style="margin-right: 10px; color: #fbbf24;"></i> 
+                The Prophet (ﷺ) said: <strong>"The Hour will not be established until you see ten signs..."</strong> and he mentioned them.
+                <div style="margin-top: 10px;">— Sahih Muslim (2901)</div>
             </div>
             <p>The minor signs are numerous and many have already occurred (spread of injustice, nakedness, competition in tall buildings). The major signs are ten profound events that will occur in rapid succession, transforming the world completely.</p>
         </div>
 
         <!-- The Ten Major Signs -->
-        <h2><i class="fas fa-list-ol"></i> The Ten Major Signs (In Chronological Order)</h2>
+        <h2 class="section-title">🔟 The Ten Major Signs (In Chronological Order)</h2>
 
         <!-- Sign 1 -->
         <div class="sign-card">
@@ -198,7 +223,7 @@
             <p>A smoke that will fill the earth, causing believers to feel something like a cold, and disbelievers to be severely affected.</p>
         </div>
 
-        <!-- Sign 8-10 -->
+        <!-- Signs 8-10 -->
         <div class="sign-card">
             <div class="sign-number">8-10</div>
             <h3>The Landslides, Fire, and Rapid Succession</h3>
@@ -207,112 +232,61 @@
 
         <!-- Game Theory Connection -->
         <div class="game-theory-box">
-            <h3><i class="fas fa-chess"></i> Strategic Foresight: The Treaty of Hudaybiyyah</h3>
+            <h3 style="color: #1a472a; margin-bottom: 20px;"><i class="fas fa-chess"></i> Strategic Foresight: The Treaty of Hudaybiyyah</h3>
             <p>How does this relate to game theory? The science of eschatology is about recognizing long-term patterns and preparing for the inevitable. The Prophet Muhammad (ﷺ) demonstrated the highest form of strategic thinking (Tadbeer) during the Treaty of Hudaybiyyah.</p>
-            <p><strong>The Setup:</strong> In 628 CE, the Prophet (ﷺ) led 1,400 Muslims to Mecca for Umrah. They were blocked by the Quraysh. After negotiations, a treaty was signed that appeared humiliating to the Muslims:</p>
-            <ul>
-                <li>They must return to Medina without performing Umrah.</li>
-                <li>If a Meccan became Muslim and fled to Medina, they would be returned to Mecca.</li>
-                <li>If a Medinan left Islam and went to Mecca, they would not be returned.</li>
-            </ul>
-            <p><strong>The Game Theory Analysis:</strong> The companions were shocked. They saw it as a loss. But the Prophet (ﷺ) saw the long-term payoff matrix:</p>
-            <ul>
-                <li><strong>Immediate Payoff:</strong> Humiliation, no Umrah.</li>
-                <li><strong>Long-term Payoff:</strong> The Quraysh implicitly recognized Medina as a sovereign state. Warfare ceased. People could now listen to Islam without the "noise" of war. In the two years following the treaty, more people converted than in the previous 20 years.</li>
-                <li><strong>Outcome:</strong> Mecca was conquered peacefully two years later.</li>
-            </ul>
-            <p><strong>Lesson for Today:</strong> True strategic wisdom (Tadbeer) is not about winning every battle. It is about understanding the endgame. The major signs of the Last Day are Allah's way of showing us the long-term payoff matrix of history. The believers who recognize the signs are the ones who will be prepared.</p>
+            
+            <div class="sub-section">
+                <h4 style="color: #2e7d32;">📜 The Setup</h4>
+                <p>In 628 CE, the Prophet (ﷺ) led 1,400 Muslims to Mecca for Umrah. They were blocked by the Quraysh. After negotiations, a treaty was signed that appeared humiliating to the Muslims:</p>
+                <ul style="margin-left: 20px;">
+                    <li>They must return to Medina without performing Umrah.</li>
+                    <li>If a Meccan became Muslim and fled to Medina, they would be returned to Mecca.</li>
+                    <li>If a Medinan left Islam and went to Mecca, they would not be returned.</li>
+                </ul>
+            </div>
+
+            <div class="sub-section">
+                <h4 style="color: #2e7d32;">♟️ The Game Theory Analysis</h4>
+                <p>The companions were shocked. They saw it as a loss. But the Prophet (ﷺ) saw the long-term payoff matrix:</p>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Immediate Payoff:</strong> Humiliation, no Umrah.</li>
+                    <li><strong>Long-term Payoff:</strong> The Quraysh implicitly recognized Medina as a sovereign state. Warfare ceased. People could now listen to Islam without the "noise" of war. In the two years following the treaty, more people converted than in the previous 20 years.</li>
+                    <li><strong>Outcome:</strong> Mecca was conquered peacefully two years later.</li>
+                </ul>
+            </div>
+
+            <div class="sub-section">
+                <h4 style="color: #2e7d32;">💡 Lesson for Today</h4>
+                <p>True strategic wisdom (Tadbeer) is not about winning every battle. It is about understanding the endgame. The major signs of the Last Day are Allah's way of showing us the long-term payoff matrix of history. The believers who recognize the signs are the ones who will be prepared.</p>
+            </div>
         </div>
 
         <!-- Glossary -->
         <div class="glossary">
-            <h3><i class="fas fa-book-open"></i> Glossary of Key Arabic Terms</h3>
-            <ul>
-                <li><span class="glossary-term">Tadbeer (تدبير):</span> Strategic foresight, planning, and management. The art of thinking several moves ahead.</li>
-                <li><span class="glossary-term">Dajjal (دجال):</span> The False Messiah. The greatest fitna in human history.</li>
-                <li><span class="glossary-term">Yajuj wa Majuj (يأجوج ومأجوج):</span> Gog and Magog. Two destructive tribes contained behind a wall.</li>
-                <li><span class="glossary-term">Fitna (فتنة):</span> Trial, persecution, or discord that tests one's faith.</li>
-                <li><span class="glossary-term">Shura (شورى):</span> Consultation. The Prophet's practice of seeking counsel from his companions.</li>
-            </ul>
-        </div>
-
-        <!-- Quiz Section -->
-        <h2 style="margin-top: 50px;"><i class="fas fa-question-circle"></i> Test Your Understanding</h2>
-        <p>Answer the following questions to reinforce your knowledge.</p>
-
-        <div id="quizContainer">
-            <div class="quiz-question">
-                <p><strong>1. What is the first major sign of the Last Day?</strong></p>
-                <label class="quiz-option"><input type="radio" name="q1" value="a"> A) The Smoke</label>
-                <label class="quiz-option"><input type="radio" name="q1" value="b"> B) The Appearance of the Mahdi</label>
-                <label class="quiz-option"><input type="radio" name="q1" value="c"> C) The Beast</label>
-                <label class="quiz-option"><input type="radio" name="q1" value="d"> D) The Rising of the Sun from the West</label>
+            <h3 style="color: #1a472a; margin-bottom: 25px;"><i class="fas fa-book-open"></i> Glossary of Key Arabic Terms</h3>
+            <div class="glossary-item">
+                <span class="glossary-term">Tadbeer (تدبير):</span> Strategic foresight, planning, and management. The art of thinking several moves ahead.
             </div>
-
-            <div class="quiz-question">
-                <p><strong>2. Where will Prophet 'Isa (Jesus) descend?</strong></p>
-                <label class="quiz-option"><input type="radio" name="q2" value="a"> A) Jerusalem</label>
-                <label class="quiz-option"><input type="radio" name="q2" value="b"> B) Mecca</label>
-                <label class="quiz-option"><input type="radio" name="q2" value="c"> C) The white minaret in Damascus</label>
-                <label class="quiz-option"><input type="radio" name="q2" value="d"> D) Medina</label>
+            <div class="glossary-item">
+                <span class="glossary-term">Dajjal (دجال):</span> The False Messiah. The greatest fitna in human history.
             </div>
-
-            <div class="quiz-question">
-                <p><strong>3. Who built the wall that contains Yajuj wa Majuj?</strong></p>
-                <label class="quiz-option"><input type="radio" name="q3" value="a"> A) Solomon (Sulayman)</label>
-                <label class="quiz-option"><input type="radio" name="q3" value="b"> B) Alexander the Great</label>
-                <label class="quiz-option"><input type="radio" name="q3" value="c"> C) Dhul-Qarnayn</label>
-                <label class="quiz-option"><input type="radio" name="q3" value="d"> D) Cyrus the Great</label>
+            <div class="glossary-item">
+                <span class="glossary-term">Yajuj wa Majuj (يأجوج ومأجوج):</span> Gog and Magog. Two destructive tribes contained behind a wall.
             </div>
-
-            <div class="quiz-question">
-                <p><strong>4. What happens when the sun rises from the West?</strong></p>
-                <label class="quiz-option"><input type="radio" name="q4" value="a"> A) The Dajjal appears</label>
-                <label class="quiz-option"><input type="radio" name="q4" value="b"> B) The door of repentance is closed</label>
-                <label class="quiz-option"><input type="radio" name="q4" value="c"> C) The Mahdi dies</label>
-                <label class="quiz-option"><input type="radio" name="q4" value="d"> D) The Beast emerges</label>
+            <div class="glossary-item">
+                <span class="glossary-term">Fitna (فتنة):</span> Trial, persecution, or discord that tests one's faith.
             </div>
-
-            <div class="quiz-question">
-                <p><strong>5. What strategic lesson did the Treaty of Hudaybiyyah teach about game theory?</strong></p>
-                <label class="quiz-option"><input type="radio" name="q5" value="a"> A) Always fight immediately</label>
-                <label class="quiz-option"><input type="radio" name="q5" value="b"> B) Short-term losses can lead to long-term victory</label>
-                <label class="quiz-option"><input type="radio" name="q5" value="c"> C) Never negotiate with enemies</label>
-                <label class="quiz-option"><input type="radio" name="q5" value="d"> D) The Quraysh were weak</label>
+            <div class="glossary-item">
+                <span class="glossary-term">Shura (شورى):</span> Consultation. The Prophet's practice of seeking counsel from his companions.
             </div>
-
-            <button class="submit-btn" onclick="checkQuiz()">Submit Answers</button>
-            <div id="quizResult" class="result"></div>
+            <div class="glossary-item">
+                <span class="glossary-term">Ahl al-Bayt (أهل البيت):</span> The household of the Prophet Muhammad (ﷺ).
+            </div>
         </div>
     </div>
 
     <div id="footer-placeholder"></div>
 
     <script src="/assets/js/components.js"></script>
-    <script>
-        function checkQuiz() {
-            const answers = {
-                q1: 'b',
-                q2: 'c',
-                q3: 'c',
-                q4: 'b',
-                q5: 'b'
-            };
-            let score = 0;
-            let total = 5;
-
-            for (let i = 1; i <= total; i++) {
-                const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                if (selected && selected.value === answers[`q${i}`]) {
-                    score++;
-                }
-            }
-
-            const resultDiv = document.getElementById('quizResult');
-            resultDiv.style.display = 'block';
-            resultDiv.classList.add(score === total ? 'correct' : 'incorrect');
-            resultDiv.innerHTML = `<strong>Your Score: ${score}/${total}</strong><br>${score === total ? 'Excellent! You have mastered the major signs.' : 'Review the lesson and try again. Pay attention to the chronological order.'}`;
-        }
-    </script>
 </body>
 </html>
