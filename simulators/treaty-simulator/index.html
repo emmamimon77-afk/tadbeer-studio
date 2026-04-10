@@ -83,10 +83,71 @@
             document.getElementById('wisdomBar').style.width = percent + '%';
         }
 
-        // End game with outcome and detailed reflection
+        // Determine personality type based on decisions
+        function getPersonalityProfile(decisions, wisdom, trust, hostility) {
+            const hasTrap = decisions.includes('secret_alliance') || decisions.includes('send_spy') || decisions.includes('attack_weak');
+            const hasPatience = decisions.includes('negotiate') || decisions.includes('accept') || decisions.includes('quiet_return');
+            const hasAggression = decisions.includes('fight') || decisions.includes('reject');
+            const hasForgiveness = decisions.includes('forgive_enemies');
+            const highWisdom = wisdom >= 60;
+            
+            if (hasForgiveness && highWisdom) {
+                return { emoji: "🕊️", name: "The Sage Strategist", description: "You think long-term, forgive enemies, and understand that true victory comes from patience and mercy. You embody the Prophet's (ﷺ) highest teaching." };
+            } else if (hasPatience && !hasTrap && highWisdom) {
+                return { emoji: "🧠", name: "The Patient Planner", description: "You resist emotional reactions. You think several moves ahead. You understand that short-term losses can lead to long-term victories. You have mastered the art of Tadbeer." };
+            } else if (hasAggression && !hasPatience) {
+                return { emoji: "⚡", name: "The Impulsive Warrior", description: "You prefer immediate action over strategic patience. While courage is valuable, you may benefit from slowing down and thinking about long-term consequences." };
+            } else if (hasTrap && !hasPatience) {
+                return { emoji: "🎭", name: "The Deceptive Trickster", description: "You enjoy outsmarting others, but deception often backfires. The Prophet (ﷺ) never resorted to treachery. Try honesty — it builds trust that lasts." };
+            } else if (wisdom < 30) {
+                return { emoji: "😰", name: "The Anxious Reactor", description: "You react emotionally to pressure. In stressful situations, you tend to make quick decisions without considering long-term effects. Practice patience — it is a skill you can develop." };
+            } else {
+                return { emoji: "🤔", name: "The Balanced Thinker", description: "You have a mix of patience and action. You are learning, but there is room to grow. Study the Prophet's (ﷺ) Treaty of Hudaybiyyah — it will elevate your strategic thinking." };
+            }
+        }
+
+
+        // End game with outcome, detailed reflection, and psychological profile
         function endGame(outcomeType, message, details, wisdomGain, reflectionLesson, correctStrategy) {
             gameState.wisdom += wisdomGain;
             updateUI();
+            
+            // Calculate personality profile based on decisions
+            const decisions = gameState.decisions;
+            const wisdom = gameState.wisdom;
+            const hasTrap = decisions.includes('secret_alliance') || decisions.includes('send_spy') || decisions.includes('attack_weak');
+            const hasPatience = decisions.includes('negotiate') || decisions.includes('accept') || decisions.includes('quiet_return') || decisions.includes('prepare_umrah') || decisions.includes('send_letters');
+            const hasAggression = decisions.includes('fight') || decisions.includes('reject') || decisions.includes('attack_weak');
+            const hasForgiveness = decisions.includes('forgive_enemies');
+            const highWisdom = wisdom >= 60;
+            
+            let personalityEmoji = "🤔", personalityName = "The Balanced Thinker", personalityDesc = "";
+            
+            if (hasForgiveness && highWisdom) {
+                personalityEmoji = "🕊️";
+                personalityName = "The Sage Strategist";
+                personalityDesc = "You think long-term, forgive enemies, and understand that true victory comes from patience and mercy. You embody the Prophet's (ﷺ) highest teaching.";
+            } else if (hasPatience && !hasTrap && highWisdom) {
+                personalityEmoji = "🧠";
+                personalityName = "The Patient Planner";
+                personalityDesc = "You resist emotional reactions. You think several moves ahead. You understand that short-term losses can lead to long-term victories. You have mastered the art of Tadbeer.";
+            } else if (hasAggression && !hasPatience) {
+                personalityEmoji = "⚡";
+                personalityName = "The Impulsive Warrior";
+                personalityDesc = "You prefer immediate action over strategic patience. While courage is valuable, you may benefit from slowing down and thinking about long-term consequences.";
+            } else if (hasTrap && !hasPatience) {
+                personalityEmoji = "🎭";
+                personalityName = "The Deceptive Trickster";
+                personalityDesc = "You enjoy outsmarting others, but deception often backfires. The Prophet (ﷺ) never resorted to treachery. Try honesty — it builds trust that lasts.";
+            } else if (wisdom < 30) {
+                personalityEmoji = "😰";
+                personalityName = "The Anxious Reactor";
+                personalityDesc = "You react emotionally to pressure. In stressful situations, you tend to make quick decisions without considering long-term effects. Practice patience — it is a skill you can develop.";
+            } else {
+                personalityEmoji = "🤔";
+                personalityName = "The Balanced Thinker";
+                personalityDesc = "You have a mix of patience and action. You are learning, but there is room to grow. Study the Prophet's (ﷺ) Treaty of Hudaybiyyah — it will elevate your strategic thinking.";
+            }
             
             let endingClass = '', endingIcon = '', endingColor = '';
             if (outcomeType === 'victory') { endingClass = '🏆'; endingIcon = '🌟'; endingColor = '#d1fae5'; }
@@ -105,14 +166,22 @@
                         Companion Trust: ${gameState.trust}% | Quraysh Hostility: ${gameState.hostility}%
                     </div>
                     
-                    <!-- REFLECTION SECTION -->
+                    <!-- REFLECTION SECTION WITH PSYCHOLOGICAL PROFILE -->
                     <div style="background: #1e293b; color: white; padding: 20px; border-radius: 20px; margin: 20px 0;">
                         <h3 style="color: #ffd700; margin-bottom: 15px;"><i class="fas fa-brain"></i> 🧠 Post-Game Reflection & Lesson</h3>
                         <p><strong>Why this happened:</strong> ${reflectionLesson}</p>
                         <p><strong>What you should have done:</strong> ${correctStrategy}</p>
                         <hr style="border-color: #334155; margin: 15px 0;">
-                        <p><strong>📖 The Prophet's (ﷺ) Actual Strategy:</strong> He chose patience over pride. He accepted the humiliating treaty. He understood that short-term loss leads to long-term victory. He taught us that <em>true power is not winning every battle — it is winning the war without fighting.</em></p>
-                        <p><strong>💡 Life Application:</strong> In your own life, when faced with a humiliating choice or a difficult negotiation, ask yourself: "Am I reacting emotionally or thinking long-term?" The Prophet's (ﷺ) Tadbeer teaches us to sacrifice immediate ego for ultimate success.</p>
+                        <p><strong>📖 The Prophet's (ﷺ) Actual Strategy:</strong> He chose patience over pride. He accepted the humiliating treaty. He understood that short-term loss leads to long-term victory.</p>
+                        <p><strong>💡 Life Application:</strong> In your own life, when faced with a difficult choice, ask yourself: "Am I reacting emotionally or thinking long-term?" Tadbeer teaches us to sacrifice immediate ego for ultimate success.</p>
+                        
+                        <!-- PSYCHOLOGICAL PROFILE -->
+                        <div style="background: #0f172a; padding: 15px; border-radius: 16px; margin-top: 20px; text-align: center;">
+                            <h4 style="color: #ffd700; margin-bottom: 10px;"><i class="fas fa-chart-line"></i> ${personalityEmoji} Your Psychological Profile</h4>
+                            <p style="font-size: 1.1rem;"><strong>${personalityName}</strong></p>
+                            <p>${personalityDesc}</p>
+                            <p style="font-size: 0.8rem; margin-top: 10px; color: #94a3b8;">🔍 Based on your choices in this simulation</p>
+                        </div>
                     </div>
                     
                     <button class="restart-btn" onclick="location.reload()">🔄 Play Again</button>
@@ -120,6 +189,7 @@
             `;
             document.getElementById('gameContent').innerHTML = html;
         }
+
 
         // Decision handlers
         function makeDecision(stage, choice) {
