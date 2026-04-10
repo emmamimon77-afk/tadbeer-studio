@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treaty of Hudaybiyyah Simulator - Tadbeer Studio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .simulator-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .scenario-card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 6px solid #2e7d32;
+        }
+        .choice-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+        .choice-btn:hover {
+            background: #e8f0fe;
+            border-color: #2e7d32;
+            transform: translateX(5px);
+        }
+        .outcome-card {
+            background: #f0fdf4;
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 30px;
+            border: 1px solid #bbf7d0;
+            display: none;
+        }
+        .outcome-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1a472a;
+            margin-bottom: 15px;
+        }
+        .restart-btn {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+        .payoff-matrix {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        @media (max-width: 768px) {
+            .simulator-container {
+                padding: 15px;
+            }
+            .choice-btn {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="bismillah">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+
+    <div class="simulator-container">
+        <h1 class="page-title" style="text-align: center;">⚔️ Treaty of Hudaybiyyah Simulator</h1>
+        <p class="page-subtitle" style="text-align: center;">Play the role of Prophet Muhammad (ﷺ) in 628 CE. Your choices will determine the fate of the Muslim community.</p>
+
+        <div id="simulatorContent">
+            <!-- Scenario 1: Initial Decision -->
+            <div id="scenario1" class="scenario-card">
+                <h2><i class="fas fa-map-marked-alt"></i> The Year 628 CE</h2>
+                <p>You (Prophet Muhammad ﷺ) have led 1,400 unarmed Muslims from Medina to Mecca to perform Umrah. The Quraysh have gathered a large army and blocked your path at a place called Hudaybiyyah. They refuse to let you enter Mecca. Your companions are eager to fight, but you are outnumbered.</p>
+                <p><strong>What do you do?</strong></p>
+                <button class="choice-btn" onclick="makeChoice('fight')">⚔️ Fight immediately - We have Allah on our side!</button>
+                <button class="choice-btn" onclick="makeChoice('negotiate')">🤝 Negotiate - Send Uthman to speak with the Quraysh</button>
+                <button class="choice-btn" onclick="makeChoice('bypass')">🏃‍♂️ Attempt to bypass and enter Mecca secretly</button>
+            </div>
+
+            <!-- Outcome display -->
+            <div id="outcome" class="outcome-card"></div>
+        </div>
+
+        <a href="/simulators" class="btn-secondary" style="display: inline-block; margin-top: 20px;">← Back to Simulators</a>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/assets/js/components.js"></script>
+    <script>
+        function makeChoice(choice) {
+            const scenarioDiv = document.getElementById('scenario1');
+            const outcomeDiv = document.getElementById('outcome');
+            let outcomeHtml = '';
+            
+            if (choice === 'fight') {
+                outcomeHtml = `
+                    <div class="outcome-title">⚔️ You chose to fight immediately.</div>
+                    <p>The Muslims are outnumbered 3:1. After a fierce battle, many companions are martyred. You are unable to enter Mecca. The Quraysh become more hostile, and the dream of peacefully spreading Islam is set back for years.</p>
+                    <div class="payoff-matrix">
+                        <strong>📊 Game Theory Analysis:</strong><br>
+                        Immediate Payoff: ❌ Heavy casualties, no Umrah<br>
+                        Long-term Payoff: ❌ Increased hostility, delayed spread of Islam<br>
+                        Outcome: ❌ Strategic Failure
+                    </div>
+                    <p><strong>Historical Reality:</strong> The Prophet (ﷺ) rejected this option. He knew patience was the key.</p>
+                    <button class="restart-btn" onclick="restartSimulator()">🔄 Play Again</button>
+                `;
+            } 
+            else if (choice === 'bypass') {
+                outcomeHtml = `
+                    <div class="outcome-title">🏃‍♂️ You attempted to bypass and enter Mecca secretly.</div>
+                    <p>The Quraysh scouts discover your plan. They accuse you of treachery. The situation escalates, and a skirmish breaks out. Several Muslims are captured. Negotiations collapse completely.</p>
+                    <div class="payoff-matrix">
+                        <strong>📊 Game Theory Analysis:</strong><br>
+                        Immediate Payoff: ❌ Captured Muslims, broken trust<br>
+                        Long-term Payoff: ❌ Quraysh refuse any future negotiations<br>
+                        Outcome: ❌ Strategic Failure
+                    </div>
+                    <p><strong>Historical Reality:</strong> The Prophet (ﷺ) did not take this risk. He chose the path of patience.</p>
+                    <button class="restart-btn" onclick="restartSimulator()">🔄 Play Again</button>
+                `;
+            }
+            else if (choice === 'negotiate') {
+                outcomeHtml = `
+                    <div class="outcome-title">🤝 You chose to negotiate. Uthman is sent to the Quraysh.</div>
+                    <p>After tense negotiations, the Quraysh agree to a treaty. But the terms seem humiliating:</p>
+                    <ul>
+                        <li>Muslims must return to Medina without performing Umrah this year.</li>
+                        <li>If a Meccan becomes Muslim and flees to Medina, they will be returned to Mecca.</li>
+                        <li>If a Medinan leaves Islam and goes to Mecca, they will not be returned.</li>
+                    </ul>
+                    <p>Your companions are furious. Umar says, "Are we not on the truth?" You remain calm. You know something they do not.</p>
+                    <p><strong>Do you accept the treaty?</strong></p>
+                    <button class="choice-btn" onclick="acceptTreaty()">✅ Accept the treaty - Trust in Allah's plan</button>
+                    <button class="choice-btn" onclick="rejectTreaty()">❌ Reject the treaty - This is humiliating!</button>
+                `;
+                scenarioDiv.style.display = 'none';
+                outcomeDiv.innerHTML = outcomeHtml;
+                outcomeDiv.style.display = 'block';
+                return;
+            }
+            
+            scenarioDiv.style.display = 'none';
+            outcomeDiv.innerHTML = outcomeHtml;
+            outcomeDiv.style.display = 'block';
+        }
+        
+        function acceptTreaty() {
+            const outcomeDiv = document.getElementById('outcome');
+            const outcomeHtml = `
+                <div class="outcome-title">✅ You accepted the Treaty of Hudaybiyyah.</div>
+                <p>The companions are confused and angry. But you know the long-term wisdom. The treaty is signed.</p>
+                <div class="payoff-matrix">
+                    <strong>📊 Game Theory Analysis:</strong><br>
+                    Immediate Payoff: ❌ Humiliation, no Umrah, returning refugees<br>
+                    Long-term Payoff: ✅ The Quraysh recognize Medina as a sovereign state. Warfare ceases. People can now hear Islam without the "noise" of war.<br>
+                    Outcome: ✅ In the two years following the treaty, more people converted to Islam than in the previous 20 years. Mecca was conquered peacefully in 630 CE without bloodshed.
+                </div>
+                <p><strong>Historical Reality:</strong> This is exactly what happened. The Prophet (ﷺ) demonstrated the highest form of strategic patience (Tadbeer). He sacrificed short-term gain for long-term victory.</p>
+                <p><strong>The Lesson:</strong> True strategic wisdom is not about winning every battle. It is about understanding the endgame.</p>
+                <button class="restart-btn" onclick="restartSimulator()">🔄 Play Again</button>
+            `;
+            outcomeDiv.innerHTML = outcomeHtml;
+            outcomeDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function rejectTreaty() {
+            const outcomeDiv = document.getElementById('outcome');
+            const outcomeHtml = `
+                <div class="outcome-title">❌ You rejected the treaty. Negotiations collapse.</div>
+                <p>The Quraysh refuse any further talks. The Muslims return to Medina empty-handed. The opportunity for peace is lost. The Quraysh remain hostile, and the spread of Islam is delayed for years.</p>
+                <div class="payoff-matrix">
+                    <strong>📊 Game Theory Analysis:</strong><br>
+                    Immediate Payoff: ❌ No treaty, continued hostility<br>
+                    Long-term Payoff: ❌ Prolonged conflict, delayed conquest of Mecca<br>
+                    Outcome: ❌ Strategic Failure
+                </div>
+                <p><strong>Historical Reality:</strong> The Prophet (ﷺ) accepted the treaty, understanding the long-term benefits. This was the turning point of his mission.</p>
+                <button class="restart-btn" onclick="restartSimulator()">🔄 Play Again</button>
+            `;
+            outcomeDiv.innerHTML = outcomeHtml;
+            outcomeDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function restartSimulator() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
