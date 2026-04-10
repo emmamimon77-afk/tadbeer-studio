@@ -2,84 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Treaty of Hudaybiyyah Simulator - Tadbeer Studio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Treaty of Hudaybiyyah - Enhanced Simulator | Tadbeer Studio</title>
     <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .simulator-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .scenario-card {
-            background: white;
-            border-radius: 24px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-left: 6px solid #2e7d32;
-        }
-        .choice-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: left;
-        }
-        .choice-btn:hover {
-            background: #e8f0fe;
-            border-color: #2e7d32;
-            transform: translateX(5px);
-        }
-        .outcome-card {
-            background: #f0fdf4;
-            border-radius: 20px;
-            padding: 25px;
-            margin-top: 30px;
-            border: 1px solid #bbf7d0;
-            display: none;
-        }
-        .outcome-title {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #1a472a;
-            margin-bottom: 15px;
-        }
-        .restart-btn {
-            background: #2e7d32;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 20px;
-            font-weight: 600;
-        }
-        .payoff-matrix {
-            background: #f1f5f9;
-            padding: 15px;
-            border-radius: 12px;
-            margin: 15px 0;
-            font-family: monospace;
-        }
-        @media (max-width: 768px) {
-            .simulator-container {
-                padding: 15px;
-            }
-            .choice-btn {
-                padding: 12px;
-                font-size: 0.9rem;
-            }
-        }
+        * { box-sizing: border-box; }
+        .sim-container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .game-panel { background: white; border-radius: 28px; padding: 30px; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+        .stage-badge { display: inline-block; background: #2e7d32; color: white; padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; margin-bottom: 15px; }
+        .character-speech { background: #f1f5f9; padding: 20px; border-radius: 20px; margin: 15px 0; border-left: 4px solid #fbbf24; font-style: normal; }
+        .character-name { font-weight: bold; color: #1a472a; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .choice-grid { display: flex; flex-direction: column; gap: 12px; margin: 25px 0; }
+        .choice-btn { display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 20px; cursor: pointer; transition: all 0.2s; text-align: left; width: 100%; font-size: 1rem; font-weight: 500; }
+        .choice-btn:hover { background: #e8f0fe; border-color: #2e7d32; transform: translateX(8px); }
+        .choice-icon { font-size: 1.5rem; min-width: 45px; }
+        .choice-text { flex: 1; }
+        .choice-risk { font-size: 0.7rem; color: #ef4444; margin-top: 4px; }
+        .score-bar { background: #e2e8f0; border-radius: 10px; height: 8px; margin: 15px 0; overflow: hidden; }
+        .score-fill { background: #2e7d32; height: 100%; width: 0%; transition: width 0.5s; }
+        .stats-row { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .stat-card { background: #f8fafc; padding: 12px; border-radius: 16px; text-align: center; flex: 1; min-width: 80px; }
+        .stat-label { font-size: 0.7rem; color: #64748b; }
+        .stat-value { font-size: 1.4rem; font-weight: bold; color: #1e293b; }
+        .outcome-card { background: #f0fdf4; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #bbf7d0; display: none; }
+        .ending-badge { display: inline-block; padding: 6px 14px; border-radius: 50px; font-size: 0.7rem; font-weight: bold; margin-bottom: 15px; }
+        .restart-btn { background: #2e7d32; color: white; border: none; padding: 14px 30px; border-radius: 50px; cursor: pointer; font-weight: 600; margin-top: 20px; width: 100%; }
+        .trap-warning { background: #fee2e2; border-left: 4px solid #ef4444; padding: 10px 15px; border-radius: 12px; margin-top: 10px; font-size: 0.8rem; }
+        @media (max-width: 768px) { .sim-container { padding: 12px; } .game-panel { padding: 20px; } .choice-btn { padding: 12px; } }
     </style>
 </head>
 <body>
@@ -90,130 +41,324 @@
         <div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div>
     </div>
 
-    <div class="simulator-container">
-        <h1 class="page-title" style="text-align: center;">⚔️ Treaty of Hudaybiyyah Simulator</h1>
-        <p class="page-subtitle" style="text-align: center;">Play the role of Prophet Muhammad (ﷺ) in 628 CE. Your choices will determine the fate of the Muslim community.</p>
+    <div class="sim-container">
+        <h1 class="page-title" style="text-align: center;">⚔️ Treaty of Hudaybiyyah: The Strategic Masterclass</h1>
+        <p class="page-subtitle" style="text-align: center;">Play as Prophet Muhammad ﷺ. Every choice has a hidden trap. Only true strategic wisdom wins.</p>
 
-        <div id="simulatorContent">
-            <!-- Scenario 1: Initial Decision -->
-            <div id="scenario1" class="scenario-card">
-                <h2><i class="fas fa-map-marked-alt"></i> The Year 628 CE</h2>
-                <p>You (Prophet Muhammad ﷺ) have led 1,400 unarmed Muslims from Medina to Mecca to perform Umrah. The Quraysh have gathered a large army and blocked your path at a place called Hudaybiyyah. They refuse to let you enter Mecca. Your companions are eager to fight, but you are outnumbered.</p>
-                <p><strong>What do you do?</strong></p>
-                <button class="choice-btn" onclick="makeChoice('fight')">⚔️ Fight immediately - We have Allah on our side!</button>
-                <button class="choice-btn" onclick="makeChoice('negotiate')">🤝 Negotiate - Send Uthman to speak with the Quraysh</button>
-                <button class="choice-btn" onclick="makeChoice('bypass')">🏃‍♂️ Attempt to bypass and enter Mecca secretly</button>
+        <div id="gamePanel" class="game-panel">
+            <div class="stats-row">
+                <div class="stat-card"><div class="stat-label">Strategic Wisdom</div><div class="stat-value" id="wisdomScore">0</div></div>
+                <div class="stat-card"><div class="stat-label">Companion Trust</div><div class="stat-value" id="trustScore">100</div></div>
+                <div class="stat-card"><div class="stat-label">Quraysh Hostility</div><div class="stat-value" id="hostilityScore">80</div></div>
+                <div class="stat-card"><div class="stat-label">Stage</div><div class="stat-value" id="stageNum">1</div></div>
             </div>
+            <div class="score-bar"><div class="score-fill" id="wisdomBar"></div></div>
 
-            <!-- Outcome display -->
-            <div id="outcome" class="outcome-card"></div>
+            <div id="gameContent"></div>
         </div>
 
-        <a href="/simulators" class="btn-secondary" style="display: inline-block; margin-top: 20px;">← Back to Simulators</a>
+        <a href="/simulators" class="btn-secondary" style="display: inline-block;">← Back to Simulators</a>
     </div>
 
     <div id="footer-placeholder"></div>
 
     <script src="/assets/js/components.js"></script>
     <script>
-        function makeChoice(choice) {
-            const scenarioDiv = document.getElementById('scenario1');
-            const outcomeDiv = document.getElementById('outcome');
-            let outcomeHtml = '';
+        // Game state
+        let gameState = {
+            stage: 1,
+            wisdom: 0,
+            trust: 100,
+            hostility: 80,
+            decisions: []
+        };
+
+        // Update UI
+        function updateUI() {
+            document.getElementById('wisdomScore').innerText = gameState.wisdom;
+            document.getElementById('trustScore').innerText = gameState.trust;
+            document.getElementById('hostilityScore').innerText = gameState.hostility;
+            document.getElementById('stageNum').innerText = gameState.stage;
+            const percent = Math.min(100, Math.max(0, gameState.wisdom));
+            document.getElementById('wisdomBar').style.width = percent + '%';
+        }
+
+        // End game with outcome and detailed reflection
+        function endGame(outcomeType, message, details, wisdomGain, reflectionLesson, correctStrategy) {
+            gameState.wisdom += wisdomGain;
+            updateUI();
             
-            if (choice === 'fight') {
-                outcomeHtml = `
-                    <div class="outcome-title">⚔️ You chose to fight immediately.</div>
-                    <p>The Muslims are outnumbered 3:1. After a fierce battle, many companions are martyred. You are unable to enter Mecca. The Quraysh become more hostile, and the dream of peacefully spreading Islam is set back for years.</p>
-                    <div class="payoff-matrix">
-                        <strong>📊 Game Theory Analysis:</strong><br>
-                        Immediate Payoff: ❌ Heavy casualties, no Umrah<br>
-                        Long-term Payoff: ❌ Increased hostility, delayed spread of Islam<br>
-                        Outcome: ❌ Strategic Failure
-                    </div>
-                    <p><strong>Historical Reality:</strong> The Prophet (ﷺ) rejected this option. He knew patience was the key.</p>
-                    <button class="restart-btn" onclick="restartSimulator()">🔄 Play Again</button>
-                `;
-            } 
-            else if (choice === 'bypass') {
-                outcomeHtml = `
-                    <div class="outcome-title">🏃‍♂️ You attempted to bypass and enter Mecca secretly.</div>
-                    <p>The Quraysh scouts discover your plan. They accuse you of treachery. The situation escalates, and a skirmish breaks out. Several Muslims are captured. Negotiations collapse completely.</p>
-                    <div class="payoff-matrix">
-                        <strong>📊 Game Theory Analysis:</strong><br>
-                        Immediate Payoff: ❌ Captured Muslims, broken trust<br>
-                        Long-term Payoff: ❌ Quraysh refuse any future negotiations<br>
-                        Outcome: ❌ Strategic Failure
-                    </div>
-                    <p><strong>Historical Reality:</strong> The Prophet (ﷺ) did not take this risk. He chose the path of patience.</p>
-                    <button class="restart-btn" onclick="restartSimulator()">🔄 Play Again</button>
-                `;
-            }
-            else if (choice === 'negotiate') {
-                outcomeHtml = `
-                    <div class="outcome-title">🤝 You chose to negotiate. Uthman is sent to the Quraysh.</div>
-                    <p>After tense negotiations, the Quraysh agree to a treaty. But the terms seem humiliating:</p>
-                    <ul>
-                        <li>Muslims must return to Medina without performing Umrah this year.</li>
-                        <li>If a Meccan becomes Muslim and flees to Medina, they will be returned to Mecca.</li>
-                        <li>If a Medinan leaves Islam and goes to Mecca, they will not be returned.</li>
-                    </ul>
-                    <p>Your companions are furious. Umar says, "Are we not on the truth?" You remain calm. You know something they do not.</p>
-                    <p><strong>Do you accept the treaty?</strong></p>
-                    <button class="choice-btn" onclick="acceptTreaty()">✅ Accept the treaty - Trust in Allah's plan</button>
-                    <button class="choice-btn" onclick="rejectTreaty()">❌ Reject the treaty - This is humiliating!</button>
-                `;
-                scenarioDiv.style.display = 'none';
-                outcomeDiv.innerHTML = outcomeHtml;
-                outcomeDiv.style.display = 'block';
-                return;
-            }
+            let endingClass = '', endingIcon = '', endingColor = '';
+            if (outcomeType === 'victory') { endingClass = '🏆'; endingIcon = '🌟'; endingColor = '#d1fae5'; }
+            else if (outcomeType === 'defeat') { endingClass = '💀'; endingIcon = '⚠️'; endingColor = '#fee2e2'; }
+            else if (outcomeType === 'deception') { endingClass = '🎭'; endingIcon = '🃏'; endingColor = '#fef3c7'; }
+            else { endingClass = '📜'; endingIcon = '📖'; endingColor = '#e0f2fe'; }
             
-            scenarioDiv.style.display = 'none';
-            outcomeDiv.innerHTML = outcomeHtml;
-            outcomeDiv.style.display = 'block';
-        }
-        
-        function acceptTreaty() {
-            const outcomeDiv = document.getElementById('outcome');
-            const outcomeHtml = `
-                <div class="outcome-title">✅ You accepted the Treaty of Hudaybiyyah.</div>
-                <p>The companions are confused and angry. But you know the long-term wisdom. The treaty is signed.</p>
-                <div class="payoff-matrix">
-                    <strong>📊 Game Theory Analysis:</strong><br>
-                    Immediate Payoff: ❌ Humiliation, no Umrah, returning refugees<br>
-                    Long-term Payoff: ✅ The Quraysh recognize Medina as a sovereign state. Warfare ceases. People can now hear Islam without the "noise" of war.<br>
-                    Outcome: ✅ In the two years following the treaty, more people converted to Islam than in the previous 20 years. Mecca was conquered peacefully in 630 CE without bloodshed.
+            const html = `
+                <div class="outcome-card" style="display: block; background: ${endingColor};">
+                    <div class="ending-badge" style="background: ${outcomeType === 'victory' ? '#2e7d32' : outcomeType === 'deception' ? '#d97706' : '#dc2626'}; color: white;">${endingIcon} ${outcomeType.toUpperCase()} ENDING</div>
+                    <div class="outcome-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 15px;">${message}</div>
+                    <p>${details}</p>
+                    
+                    <div class="payoff-matrix" style="background: white; padding: 15px; border-radius: 16px; margin: 20px 0;">
+                        <strong>📊 Final Strategic Wisdom Score: ${gameState.wisdom}</strong><br>
+                        Companion Trust: ${gameState.trust}% | Quraysh Hostility: ${gameState.hostility}%
+                    </div>
+                    
+                    <!-- REFLECTION SECTION -->
+                    <div style="background: #1e293b; color: white; padding: 20px; border-radius: 20px; margin: 20px 0;">
+                        <h3 style="color: #ffd700; margin-bottom: 15px;"><i class="fas fa-brain"></i> 🧠 Post-Game Reflection & Lesson</h3>
+                        <p><strong>Why this happened:</strong> ${reflectionLesson}</p>
+                        <p><strong>What you should have done:</strong> ${correctStrategy}</p>
+                        <hr style="border-color: #334155; margin: 15px 0;">
+                        <p><strong>📖 The Prophet's (ﷺ) Actual Strategy:</strong> He chose patience over pride. He accepted the humiliating treaty. He understood that short-term loss leads to long-term victory. He taught us that <em>true power is not winning every battle — it is winning the war without fighting.</em></p>
+                        <p><strong>💡 Life Application:</strong> In your own life, when faced with a humiliating choice or a difficult negotiation, ask yourself: "Am I reacting emotionally or thinking long-term?" The Prophet's (ﷺ) Tadbeer teaches us to sacrifice immediate ego for ultimate success.</p>
+                    </div>
+                    
+                    <button class="restart-btn" onclick="location.reload()">🔄 Play Again</button>
                 </div>
-                <p><strong>Historical Reality:</strong> This is exactly what happened. The Prophet (ﷺ) demonstrated the highest form of strategic patience (Tadbeer). He sacrificed short-term gain for long-term victory.</p>
-                <p><strong>The Lesson:</strong> True strategic wisdom is not about winning every battle. It is about understanding the endgame.</p>
-                <button class="restart-btn" onclick="restartSimulator()">🔄 Play Again</button>
             `;
-            outcomeDiv.innerHTML = outcomeHtml;
-            outcomeDiv.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('gameContent').innerHTML = html;
         }
-        
-        function rejectTreaty() {
-            const outcomeDiv = document.getElementById('outcome');
-            const outcomeHtml = `
-                <div class="outcome-title">❌ You rejected the treaty. Negotiations collapse.</div>
-                <p>The Quraysh refuse any further talks. The Muslims return to Medina empty-handed. The opportunity for peace is lost. The Quraysh remain hostile, and the spread of Islam is delayed for years.</p>
-                <div class="payoff-matrix">
-                    <strong>📊 Game Theory Analysis:</strong><br>
-                    Immediate Payoff: ❌ No treaty, continued hostility<br>
-                    Long-term Payoff: ❌ Prolonged conflict, delayed conquest of Mecca<br>
-                    Outcome: ❌ Strategic Failure
+
+        // Decision handlers
+        function makeDecision(stage, choice) {
+            if (stage === 1) {
+                if (choice === 'fight') {
+                    gameState.decisions.push('fight');
+                    gameState.wisdom -= 20;
+                    gameState.trust += 10;
+                    gameState.hostility += 30;
+                    updateUI();
+                    showStage2('fight');
+                } else if (choice === 'negotiate') {
+                    gameState.decisions.push('negotiate');
+                    gameState.wisdom += 10;
+                    gameState.trust += 5;
+                    updateUI();
+                    showStage2('negotiate');
+                } else if (choice === 'bypass') {
+                    gameState.decisions.push('bypass');
+                    gameState.wisdom -= 15;
+                    gameState.trust -= 10;
+                    gameState.hostility += 20;
+                    updateUI();
+                    showStage2('bypass');
+                } else if (choice === 'secret_alliance') {
+                    // TRAP OPTION - Hidden betrayal
+                    gameState.decisions.push('secret_alliance');
+                    gameState.wisdom -= 30;
+                    gameState.trust -= 25;
+                    gameState.hostility += 10;
+                    updateUI();
+                    endGame('defeat', '💀 THE BETRAYAL ENDING', 'You secretly allied with a Meccan tribe, but they betrayed you to the Quraysh. Your companions lose trust. The expedition fails.', -30, 
+                      'You trusted a secret alliance with people who had no loyalty to you. Deception often backfires. The Quraysh used your own spy against you.', 
+                      'Instead of secret deals, you should have been transparent. The Prophet (ﷺ) never resorted to treachery. He relied on truth and patience.');
+                }
+            } else if (stage === 2) {
+                if (choice === 'send_uthman') {
+                    gameState.decisions.push('send_uthman');
+                    gameState.wisdom += 5;
+                    updateUI();
+                    showStage3('send_uthman');
+                } else if (choice === 'send_ali') {
+                    gameState.decisions.push('send_ali');
+                    gameState.wisdom += 10;
+                    gameState.trust += 10;
+                    updateUI();
+                    showStage3('send_ali');
+                } else if (choice === 'send_spy') {
+                    // TRAP - Deception backfires
+                    gameState.decisions.push('send_spy');
+                    gameState.wisdom -= 25;
+                    gameState.trust -= 20;
+                    updateUI();
+                    endGame('defeat', '🕵️ THE SPY CATASTROPHE', 'Your spy is caught. The Quraysh accuse you of treachery. Negotiations collapse. War ensues.', -40,
+                        'Sending a spy was a short-term tactical move that destroyed all trust. Once trust is broken, negotiations become impossible.',
+                        'You should have sent an honest envoy like Uthman, who was respected even by the enemy. Honesty builds bridges; deception burns them.');
+                }
+            } else if (stage === 3) {
+                if (choice === 'accept') {
+                    gameState.decisions.push('accept');
+                    gameState.wisdom += 25;
+                    gameState.trust += 15;
+                    gameState.hostility -= 20;
+                    updateUI();
+                    showStage4('accept');
+                } else if (choice === 'reject') {
+                    gameState.decisions.push('reject');
+                    gameState.wisdom -= 30;
+                    gameState.trust -= 10;
+                    gameState.hostility += 20;
+                    updateUI();
+                    endGame('defeat', '⚔️ THE WAR ENDING', 'You reject the treaty. War breaks out. Many companions are martyred. Medina is weakened.', -40,
+                       'You chose pride over patience. The treaty seemed humiliating, but rejecting it led to bloodshed and weakened your position.',
+                       'You should have accepted the treaty, even though it seemed unfair. The Prophet (ﷺ) saw that peace, even imperfect peace, is better than war.');
+                } else if (choice === 'counter_offer') {
+                    gameState.decisions.push('counter_offer');
+                    gameState.wisdom += 15;
+                    updateUI();
+                    showStage4('counter_offer');
+                }
+            } else if (stage === 4) {
+                if (choice === 'public_celebrate') {
+                    gameState.decisions.push('public_celebrate');
+                    gameState.wisdom += 5;
+                    gameState.trust += 10;
+                    updateUI();
+                    showStage5('public_celebrate');
+                } else if (choice === 'quiet_return') {
+                    gameState.decisions.push('quiet_return');
+                    gameState.wisdom += 20;
+                    gameState.trust += 5;
+                    updateUI();
+                    showStage5('quiet_return');
+                } else if (choice === 'attack_weak') {
+                    // TRAP - Greedy attack
+                    gameState.decisions.push('attack_weak');
+                    gameState.wisdom -= 50;
+                    gameState.trust -= 30;
+                    updateUI();
+                    endGame('defeat', '💀 THE GREED ENDING', 'You attack a Quraysh caravan. The treaty is broken. War resumes. You lose the moral high ground.', -60,
+                       'Greed for immediate gain destroyed the treaty. You violated your own agreement, proving the Quraysh right to distrust you.',
+                       'You should have honored the treaty completely. Patience and integrity would have built trust. Instead, you chose short-term profit over long-term reputation.');
+                }
+            } else if (stage === 5) {
+                if (choice === 'prepare_umrah') {
+                    gameState.decisions.push('prepare_umrah');
+                    gameState.wisdom += 15;
+                    updateUI();
+                    endGame('victory', '🏆 STRATEGIC VICTORY (Historical Ending)', 'You prepare for the following year\'s Umrah. The Quraysh, impressed by your patience, allow entry. Mass conversions follow. Mecca is conquered peacefully in 630 CE. Your strategic wisdom prevails!', 50,
+                      'You demonstrated patience and strategic thinking. You did not let pride dictate your actions. This is exactly what the Prophet (ﷺ) did.',
+                      'You made the correct choice at every stage: you negotiated, accepted the treaty, returned quietly, and prepared for the future. This is Tadbeer in action.');
+                } else if (choice === 'send_letters') {
+                    gameState.decisions.push('send_letters');
+                    gameState.wisdom += 20;
+                    updateUI();
+                    endGame('victory', '🌟 DIPLOMATIC MASTERY', 'You send letters to the Byzantine and Persian emperors. Islam spreads beyond Arabia. The Quraysh feel surrounded and isolated. They surrender Mecca without a fight.', 55,
+                       'You expanded your influence through diplomacy, not war. You understood that soft power is often stronger than military might.',
+                       'Instead of focusing only on the Quraysh, you looked at the bigger picture. You surrounded them diplomatically, forcing them to surrender peacefully.');
+                } else if (choice === 'forgive_enemies') {
+                    gameState.decisions.push('forgive_enemies');
+                    gameState.wisdom += 30;
+                    gameState.trust += 20;
+                    updateUI();
+                    endGame('victory', '🕊️ THE FORGIVENESS ENDING (Secret Ending)', 'You publicly forgive your former enemies. The Quraysh leadership is stunned. They convert en masse. Mecca falls without a single drop of blood. This is the highest form of Tadbeer.', 80,
+                       'Forgiveness is the ultimate strategic weapon. By forgiving your enemies, you disarmed them completely. They could no longer justify fighting you.',
+                       'You chose the hardest path: to forgive those who harmed you. This is the Prophet\'s (ﷺ) highest teaching. Love your enemy, and they become your ally.');
+                }
+            }
+        }
+
+        // Stage displays
+        function showStage1() {
+            const html = `
+                <div class="stage-badge"><i class="fas fa-flag-checkered"></i> STAGE 1: THE APPROACH</div>
+                <div class="character-speech">
+                    <div class="character-name"><i class="fas fa-user-circle"></i> The Year 628 CE</div>
+                    <p>You (Prophet Muhammad ﷺ) lead 1,400 unarmed Muslims from Medina to perform Umrah. The Quraysh have gathered an army at Hudaybiyyah and block your path.</p>
                 </div>
-                <p><strong>Historical Reality:</strong> The Prophet (ﷺ) accepted the treaty, understanding the long-term benefits. This was the turning point of his mission.</p>
-                <button class="restart-btn" onclick="restartSimulator()">🔄 Play Again</button>
+                <div class="character-speech" style="border-left-color: #ef4444;">
+                    <div class="character-name"><i class="fas fa-fist-raised"></i> Umar ibn al-Khattab</div>
+                    <p>"Ya Rasulullah! We are here for Umrah. They have no right to stop us. Let us fight! We are not afraid to meet our Lord!"</p>
+                </div>
+                <div class="character-speech" style="border-left-color: #10b981;">
+                    <div class="character-name"><i class="fas fa-hand-peace"></i> Abu Bakr as-Siddiq</div>
+                    <p>"O Prophet, you know best. We follow your command. Peace is better if they accept."</p>
+                </div>
+                <div class="choice-grid">
+                    <button class="choice-btn" onclick="makeDecision(1, 'fight')"><span class="choice-icon">⚔️</span><span class="choice-text"><strong>Fight immediately</strong><br>We have Allah on our side!</span><span class="choice-risk">⚠️ High risk</span></button>
+                    <button class="choice-btn" onclick="makeDecision(1, 'negotiate')"><span class="choice-icon">🤝</span><span class="choice-text"><strong>Negotiate</strong><br>Send an envoy to speak with the Quraysh</span><span class="choice-risk">📜 Moderate risk</span></button>
+                    <button class="choice-btn" onclick="makeDecision(1, 'bypass')"><span class="choice-icon">🏃‍♂️</span><span class="choice-text"><strong>Bypass secretly</strong><br>Try to enter Mecca through mountain paths</span><span class="choice-risk">⚠️ High risk</span></button>
+                    <button class="choice-btn" onclick="makeDecision(1, 'secret_alliance')"><span class="choice-icon">🤫</span><span class="choice-text"><strong>Secret alliance</strong><br>Contact a Meccan tribe to help you</span><span class="choice-risk">🔻 TRAP: Betrayal risk!</span></button>
+                </div>
             `;
-            outcomeDiv.innerHTML = outcomeHtml;
-            outcomeDiv.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('gameContent').innerHTML = html;
         }
-        
-        function restartSimulator() {
-            location.reload();
+
+        function showStage2(prevChoice) {
+            gameState.stage = 2;
+            updateUI();
+            const html = `
+                <div class="stage-badge"><i class="fas fa-comments"></i> STAGE 2: THE ENVOY</div>
+                <div class="character-speech">
+                    <div class="character-name"><i class="fas fa-crown"></i> Quraysh Leaders</div>
+                    <p>"We will not let you enter. Send someone to negotiate, but we will not accept any deal that humiliates us."</p>
+                </div>
+                <div class="choice-grid">
+                    <button class="choice-btn" onclick="makeDecision(2, 'send_uthman')"><span class="choice-icon">🤝</span><span class="choice-text"><strong>Send Uthman ibn Affan</strong><br>He is respected by the Quraysh</span></button>
+                    <button class="choice-btn" onclick="makeDecision(2, 'send_ali')"><span class="choice-icon">⚔️</span><span class="choice-text"><strong>Send Ali ibn Abi Talib</strong><br>He is known for his courage</span></button>
+                    <button class="choice-btn" onclick="makeDecision(2, 'send_spy')"><span class="choice-icon">🕵️</span><span class="choice-text"><strong>Send a spy disguised as a trader</strong><br>Gather intelligence secretly</span><span class="choice-risk">🔻 TRAP: Could backfire!</span></button>
+                </div>
+            `;
+            document.getElementById('gameContent').innerHTML = html;
         }
+
+        function showStage3(prevChoice) {
+            gameState.stage = 3;
+            updateUI();
+            const html = `
+                <div class="stage-badge"><i class="fas fa-file-signature"></i> STAGE 3: THE QURAYSH OFFER</div>
+                <div class="character-speech">
+                    <div class="character-name"><i class="fas fa-crown"></i> Suhayl ibn Amr (Quraysh envoy)</div>
+                    <p>"We agree to a truce. But you must return to Medina this year without performing Umrah. And if a Meccan becomes Muslim and flees to you, you must return him to us. If a Medinan leaves your religion, we will not return him."</p>
+                </div>
+                <div class="character-speech" style="border-left-color: #ef4444;">
+                    <div class="character-name"><i class="fas fa-fist-raised"></i> Umar</div>
+                    <p>"This is humiliating! Are we not on the truth? Why should we accept this?"</p>
+                </div>
+                <div class="choice-grid">
+                    <button class="choice-btn" onclick="makeDecision(3, 'accept')"><span class="choice-icon">✅</span><span class="choice-text"><strong>Accept the treaty</strong><br>Trust in Allah's plan</span></button>
+                    <button class="choice-btn" onclick="makeDecision(3, 'reject')"><span class="choice-icon">❌</span><span class="choice-text"><strong>Reject the treaty</strong><br>Prepare for war</span></button>
+                    <button class="choice-btn" onclick="makeDecision(3, 'counter_offer')"><span class="choice-icon">🔄</span><span class="choice-text"><strong>Propose a counter-offer</strong><br>Request a modified treaty</span></button>
+                </div>
+            `;
+            document.getElementById('gameContent').innerHTML = html;
+        }
+
+        function showStage4(prevChoice) {
+            gameState.stage = 4;
+            updateUI();
+            const html = `
+                <div class="stage-badge"><i class="fas fa-handshake"></i> STAGE 4: THE TREATY IS SIGNED</div>
+                <div class="character-speech">
+                    <div class="character-name"><i class="fas fa-smile"></i> The Companions</div>
+                    <p>The treaty is signed. Many companions are confused and sad. They do not understand why you accepted such terms.</p>
+                </div>
+                <div class="choice-grid">
+                    <button class="choice-btn" onclick="makeDecision(4, 'public_celebrate')"><span class="choice-icon">🎉</span><span class="choice-text"><strong>Celebrate publicly</strong><br>Declare this as a victory</span></button>
+                    <button class="choice-btn" onclick="makeDecision(4, 'quiet_return')"><span class="choice-icon">🤫</span><span class="choice-text"><strong>Return quietly to Medina</strong><br>Explain later in private</span></button>
+                    <button class="choice-btn" onclick="makeDecision(4, 'attack_weak')"><span class="choice-icon">⚔️</span><span class="choice-text"><strong>Attack a Quraysh caravan</strong><br>Show them you are strong</span><span class="choice-risk">🔻 TRAP: Breaks treaty!</span></button>
+                </div>
+            `;
+            document.getElementById('gameContent').innerHTML = html;
+        }
+
+        function showStage5(prevChoice) {
+            gameState.stage = 5;
+            updateUI();
+            const html = `
+                <div class="stage-badge"><i class="fas fa-chart-line"></i> STAGE 5: THE AFTERMATH</div>
+                <div class="character-speech">
+                    <div class="character-name"><i class="fas fa-mosque"></i> Revelation from Allah</div>
+                    <p>"Indeed, We have granted you a clear victory" (Quran 48:1). The companions are confused. How is this a victory?</p>
+                </div>
+                <div class="choice-grid">
+                    <button class="choice-btn" onclick="makeDecision(5, 'prepare_umrah')"><span class="choice-icon">🕋</span><span class="choice-text"><strong>Prepare for next year's Umrah</strong><br>Focus on the future</span></button>
+                    <button class="choice-btn" onclick="makeDecision(5, 'send_letters')"><span class="choice-icon">📧</span><span class="choice-text"><strong>Send letters to world leaders</strong><br>Invite them to Islam</span></button>
+                    <button class="choice-btn" onclick="makeDecision(5, 'forgive_enemies')"><span class="choice-icon">🕊️</span><span class="choice-text"><strong>Publicly forgive former enemies</strong><br>Secret ending: Ultimate Tadbeer</span></button>
+                </div>
+            `;
+            document.getElementById('gameContent').innerHTML = html;
+        }
+
+        // Initialize
+        function initGame() {
+            gameState = { stage: 1, wisdom: 0, trust: 100, hostility: 80, decisions: [] };
+            updateUI();
+            showStage1();
+        }
+        initGame();
     </script>
 </body>
 </html>
