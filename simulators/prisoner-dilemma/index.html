@@ -2,11 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prisoner's Dilemma - Tadbeer Studio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Prisoner's Dilemma - The Loyalty Game | Tadbeer Studio</title>
     <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Distinct theme: Deep Blue & Gold */
+        .pd-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .game-card { background: linear-gradient(135deg, #0f172a, #1e293b); border-radius: 28px; padding: 30px; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); border: 1px solid #334155; }
+        .opponent-speech { background: #334155; padding: 20px; border-radius: 20px; margin: 15px 0; border-left: 4px solid #fbbf24; color: #e2e8f0; }
+        .choice-btn { display: block; width: 100%; padding: 16px 20px; margin: 12px 0; background: #1e293b; border: 2px solid #475569; border-radius: 20px; cursor: pointer; transition: all 0.2s; text-align: left; font-size: 1rem; font-weight: 500; color: white; }
+        .choice-btn:hover { background: #2d3a4e; border-color: #fbbf24; transform: translateX(8px); }
+        .round-badge { display: inline-block; background: #fbbf24; color: #0f172a; padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: bold; margin-bottom: 15px; }
+        .stats-row { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+        .stat-card-pd { background: #1e293b; padding: 12px; border-radius: 16px; text-align: center; flex: 1; border: 1px solid #334155; }
+        .stat-label { font-size: 0.7rem; color: #94a3b8; }
+        .stat-value { font-size: 1.4rem; font-weight: bold; color: #fbbf24; }
+        .outcome-card { background: #0f172a; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #334155; display: none; }
+        .restart-btn { background: #fbbf24; color: #0f172a; border: none; padding: 14px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
+        .trust-meter { background: #334155; border-radius: 10px; height: 8px; margin: 15px 0; overflow: hidden; }
+        .trust-fill { background: #fbbf24; height: 100%; width: 50%; transition: width 0.5s; }
+        @media (max-width: 768px) { .pd-container { padding: 12px; } .choice-btn { padding: 12px; font-size: 0.9rem; } }
+    </style>
 </head>
 <body>
     <div id="navbar-placeholder"></div>
@@ -16,14 +34,190 @@
         <div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div>
     </div>
 
-    <div class="container">
-        <h1>🎮 Prisoner's Dilemma</h1>
-        <p>Coming soon: An interactive game where you choose to cooperate or defect.</p>
-        <a href="/simulators" class="btn-secondary">← Back to Simulators</a>
+    <div class="pd-container">
+        <h1 class="page-title" style="text-align: center; color: #fbbf24;">🔐 The Loyalty Game</h1>
+        <p class="page-subtitle" style="text-align: center;">You and a partner have been arrested. Each of you must choose: stay silent or confess. Your partner's choice is unknown. Choose wisely.</p>
+
+        <div id="gamePanel" class="game-card">
+            <div class="stats-row">
+                <div class="stat-card-pd"><div class="stat-label">Round</div><div class="stat-value" id="roundNum">1</div></div>
+                <div class="stat-card-pd"><div class="stat-label">Your Score</div><div class="stat-value" id="yourScore">0</div></div>
+                <div class="stat-card-pd"><div class="stat-label">Partner Score</div><div class="stat-value" id="partnerScore">0</div></div>
+            </div>
+            <div class="trust-meter"><div class="trust-fill" id="trustFill"></div></div>
+
+            <div id="gameContent"></div>
+        </div>
+
+        <a href="/simulators" class="btn-secondary" style="display: inline-block;">← Back to Simulators</a>
     </div>
 
     <div id="footer-placeholder"></div>
 
     <script src="/assets/js/components.js"></script>
+    <script>
+        // Game state
+        let gameState = {
+            round: 1,
+            yourScore: 0,
+            partnerScore: 0,
+            yourHistory: [],
+            partnerHistory: [],
+            trustLevel: 50,
+            secretTrigger: false
+        };
+
+        function updateUI() {
+            document.getElementById('roundNum').innerText = gameState.round;
+            document.getElementById('yourScore').innerText = gameState.yourScore;
+            document.getElementById('partnerScore').innerText = gameState.partnerScore;
+            document.getElementById('trustFill').style.width = gameState.trustLevel + '%';
+        }
+
+        // Partner's decision engine (adaptive AI)
+        function partnerDecision() {
+            if (gameState.round === 1) return 'cooperate';
+            if (gameState.round === 2) {
+                return gameState.yourHistory[0] === 'cooperate' ? 'cooperate' : 'defect';
+            }
+            if (gameState.round === 3) {
+                const lastYourMove = gameState.yourHistory[gameState.yourHistory.length - 1];
+                const lastPartnerMove = gameState.partnerHistory[gameState.partnerHistory.length - 1];
+                if (lastYourMove === 'cooperate' && lastPartnerMove === 'cooperate') return 'cooperate';
+                if (lastYourMove === 'defect' && lastPartnerMove === 'defect') return 'defect';
+                return 'cooperate';
+            }
+            if (gameState.round === 4) {
+                const cooperateCount = gameState.yourHistory.filter(m => m === 'cooperate').length;
+                if (cooperateCount >= 2) return 'cooperate';
+                return 'defect';
+            }
+            if (gameState.round === 5) {
+                if (gameState.trustLevel > 60) return 'cooperate';
+                if (gameState.trustLevel < 40) return 'defect';
+                return Math.random() > 0.5 ? 'cooperate' : 'defect';
+            }
+            return 'defect';
+        }
+
+        function calculatePayoff(yourMove, partnerMove) {
+            if (yourMove === 'cooperate' && partnerMove === 'cooperate') {
+                return { you: 3, partner: 3, message: "🤝 You both stayed silent. You each get 3 years reduced." };
+            }
+            if (yourMove === 'cooperate' && partnerMove === 'defect') {
+                return { you: 0, partner: 5, message: "😔 You stayed silent, but your partner confessed. You get maximum sentence. Your partner goes free." };
+            }
+            if (yourMove === 'defect' && partnerMove === 'cooperate') {
+                return { you: 5, partner: 0, message: "😈 You confessed and betrayed your partner. You go free. Your partner gets maximum sentence." };
+            }
+            if (yourMove === 'defect' && partnerMove === 'defect') {
+                return { you: 1, partner: 1, message: "⚠️ You both confessed. You each get a reduced but significant sentence." };
+            }
+            return { you: 0, partner: 0, message: "" };
+        }
+
+        function endGameWithReflection() {
+            const totalCooperations = gameState.yourHistory.filter(m => m === 'cooperate').length;
+            const totalDefections = gameState.yourHistory.filter(m => m === 'defect').length;
+            let personality = "", advice = "";
+            
+            if (totalCooperations === 5) {
+                personality = "🕊️ The Trusting Idealist";
+                advice = "You believe in the goodness of others. This is noble, but in a competitive world, you may be exploited. Learn when to trust and when to protect yourself.";
+            } else if (totalDefections === 5) {
+                personality = "⚡ The Ruthless Competitor";
+                advice = "You always put yourself first. This wins short-term, but in repeated games, partners learn not to trust you. Cooperation can lead to better long-term outcomes.";
+            } else if (gameState.yourHistory[0] === 'cooperate' && gameState.yourHistory[1] === 'defect' && gameState.yourHistory[2] === 'cooperate') {
+                personality = "🎭 The Unpredictable Trickster";
+                advice = "You keep people guessing. This can be a powerful strategy, but it also creates uncertainty. The Prophet (ﷺ) advised clarity and honesty in dealings.";
+            } else if (gameState.yourScore > gameState.partnerScore) {
+                personality = "🏆 The Winner";
+                advice = "You outsmarted your partner. But remember: in real life, relationships are repeated games. Today's victory may cost you tomorrow's alliance.";
+            } else if (gameState.partnerScore > gameState.yourScore) {
+                personality = "😔 The Trusting Fool";
+                advice = "You trusted, but were betrayed. This happens. The lesson is not to stop trusting, but to choose your partners wisely and protect yourself.";
+            } else {
+                personality = "⚖️ The Balanced Player";
+                advice = "You mixed cooperation and defection. This is the most adaptive strategy. You understand that loyalty and self-interest must be balanced.";
+            }
+            
+            const html = `
+                <div class="outcome-card" style="display: block;">
+                    <h3 style="color: #fbbf24;">🏁 GAME COMPLETE</h3>
+                    <p><strong>Your Score:</strong> ${gameState.yourScore} | <strong>Partner Score:</strong> ${gameState.partnerScore}</p>
+                    <div style="background: #1e293b; padding: 20px; border-radius: 20px; margin: 20px 0;">
+                        <h4 style="color: #fbbf24;">🎭 Your Psychological Profile</h4>
+                        <p><strong>${personality}</strong></p>
+                        <p>${advice}</p>
+                        <hr style="border-color: #334155; margin: 15px 0;">
+                        <p><strong>📖 The Prophet's (ﷺ) Teaching:</strong> "The believer is not one who deceives, nor one who is deceived." He taught that honesty and trust are the foundation of society. In repeated games, cooperation always wins over constant defection.</p>
+                        <p><strong>💡 Life Lesson:</strong> The Prisoner's Dilemma teaches us that short-term greed often leads to long-term loss. Trust, when reciprocated, creates wealth for all.</p>
+                    </div>
+                    <button class="restart-btn" onclick="location.reload()">🔄 Play Again</button>
+                </div>
+            `;
+            document.getElementById('gameContent').innerHTML = html;
+        }
+
+        function makeChoice(choice) {
+            const partnerChoice = partnerDecision();
+            const payoff = calculatePayoff(choice, partnerChoice);
+            
+            gameState.yourScore += payoff.you;
+            gameState.partnerScore += payoff.partner;
+            gameState.yourHistory.push(choice);
+            gameState.partnerHistory.push(partnerChoice);
+            
+            // Adjust trust level
+            if (choice === 'cooperate' && partnerChoice === 'cooperate') gameState.trustLevel += 5;
+            if (choice === 'defect' && partnerChoice === 'cooperate') gameState.trustLevel -= 10;
+            if (choice === 'cooperate' && partnerChoice === 'defect') gameState.trustLevel -= 15;
+            gameState.trustLevel = Math.min(100, Math.max(0, gameState.trustLevel));
+            
+            updateUI();
+            
+            const roundResult = `
+                <div class="opponent-speech">
+                    <p><strong>Round ${gameState.round} Result:</strong></p>
+                    <p>${payoff.message}</p>
+                    <p><strong>Your choice:</strong> ${choice === 'cooperate' ? '🤐 Stayed Silent' : '🗣️ Confessed'}<br>
+                    <strong>Partner's choice:</strong> ${partnerChoice === 'cooperate' ? '🤐 Stayed Silent' : '🗣️ Confessed'}</p>
+                </div>
+            `;
+            
+            if (gameState.round < 5) {
+                gameState.round++;
+                updateUI();
+                showRound();
+                document.getElementById('gameContent').innerHTML += roundResult;
+            } else {
+                endGameWithReflection();
+            }
+        }
+
+        function showRound() {
+            const roundText = gameState.round === 1 ? "Round 1: The First Interrogation" :
+                              gameState.round === 2 ? "Round 2: The Prosecutor Returns" :
+                              gameState.round === 3 ? "Round 3: A Mysterious Offer" :
+                              gameState.round === 4 ? "Round 4: The Witness Appears" :
+                              "Round 5: The Final Verdict";
+            
+            const html = `
+                <div class="round-badge">${roundText}</div>
+                <div class="opponent-speech">
+                    <p><strong>The Prosecutor:</strong> "We have enough evidence. But we're giving you both a chance. Your partner is in another room. Whatever you decide, your partner will not know until after this round."</p>
+                </div>
+                <div class="opponent-speech" style="border-left-color: #ef4444;">
+                    <p><strong>Inner voice:</strong> "If you stay silent, you rely on your partner's loyalty. If you confess, you go free — but at what cost?"</p>
+                </div>
+                <button class="choice-btn" onclick="makeChoice('cooperate')"><span>🤐 Stay Silent</span></button>
+                <button class="choice-btn" onclick="makeChoice('defect')"><span>🗣️ Confess & Betray</span></button>
+            `;
+            document.getElementById('gameContent').innerHTML = html;
+        }
+
+        showRound();
+        updateUI();
+    </script>
 </body>
 </html>
