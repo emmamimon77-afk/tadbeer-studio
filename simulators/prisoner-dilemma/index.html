@@ -116,6 +116,39 @@
             return { you: 0, partner: 0, message: "" };
         }
 
+        function getOpponentIdentity() {
+            const totalCooperations = gameState.yourHistory.filter(m => m === 'cooperate').length;
+            const totalDefections = gameState.yourHistory.filter(m => m === 'defect').length;
+            
+            if (totalCooperations === 5) {
+                return "🌟 An Angelic Partner (Pure Cooperator)";
+            } else if (totalDefections === 5) {
+                return "👿 A Ruthless Predator (Pure Defector)";
+            } else if (gameState.yourHistory[0] === 'cooperate' && gameState.partnerHistory[0] === 'defect') {
+                return "🎭 The Trickster (Exploits first, then mirrors)";
+            } else if (gameState.partnerHistory.every(m => m === 'cooperate')) {
+                return "🕊️ The Forgiver (Always cooperates, never retaliates)";
+            } else if (gameState.partnerHistory[0] === 'cooperate' && gameState.partnerHistory[1] === 'defect') {
+                return "⚖️ The Tit-for-Tat Player (Mirrors your last move)";
+            } else {
+                return "🤖 The Adaptive AI (Learns from your patterns)";
+            }
+        }
+        
+        function getOpponentMessage() {
+            const totalCooperations = gameState.yourHistory.filter(m => m === 'cooperate').length;
+            
+            if (totalCooperations === 5) {
+                return "You met a rare soul: someone who believes in unconditional goodness. In a harsh world, they trusted you completely. Their faith in humanity is both beautiful and vulnerable.";
+            } else if (gameState.yourHistory[0] === 'cooperate' && gameState.partnerHistory[0] === 'defect') {
+                return "They tested you. They betrayed first to see if you would retaliate or forgive. Your response shaped their future behavior. This is a common strategy in competitive environments.";
+            } else if (gameState.yourHistory[0] === 'defect') {
+                return "They saw your betrayal and responded in kind. In the game of life, trust once broken is hard to rebuild. They mirrored your strategy perfectly.";
+            } else {
+                return "They played a balanced game: cooperating when you cooperated, defecting when you defected. This is the most adaptive and successful long-term strategy.";
+            }
+        }
+
         function endGameWithReflection() {
             const totalCooperations = gameState.yourHistory.filter(m => m === 'cooperate').length;
             const totalDefections = gameState.yourHistory.filter(m => m === 'defect').length;
@@ -142,20 +175,29 @@
             }
             
             const html = `
-                <div class="outcome-card" style="display: block;">
+                <div class="outcome-card" style="display: block; background: #0f172a; color: #e2e8f0;">
                     <h3 style="color: #fbbf24;">🏁 GAME COMPLETE</h3>
-                    <p><strong>Your Score:</strong> ${gameState.yourScore} | <strong>Partner Score:</strong> ${gameState.partnerScore}</p>
+                    <p style="color: #e2e8f0;"><strong style="color: #fbbf24;">Your Score:</strong> ${gameState.yourScore} | <strong style="color: #fbbf24;">Partner Score:</strong> ${gameState.partnerScore}</p>
+                    
+                    <!-- MYSTERY OPPONENT REVEAL -->
+                    <div style="background: #1e293b; padding: 15px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #fbbf24;">
+                        <h4 style="color: #fbbf24; margin-bottom: 8px;">🕵️ Mystery Opponent Reveal</h4>
+                        <p style="color: #e2e8f0;"><strong style="color: #fbbf24;">Your partner was:</strong> ${getOpponentIdentity()}</p>
+                        <p style="color: #94a3b8; font-size: 0.85rem;">${getOpponentMessage()}</p>
+                    </div>
+                    
                     <div style="background: #1e293b; padding: 20px; border-radius: 20px; margin: 20px 0;">
                         <h4 style="color: #fbbf24;">🎭 Your Psychological Profile</h4>
-                        <p><strong>${personality}</strong></p>
-                        <p>${advice}</p>
+                        <p style="color: #e2e8f0;"><strong style="color: #fbbf24;">${personality}</strong></p>
+                        <p style="color: #cbd5e1;">${advice}</p>
                         <hr style="border-color: #334155; margin: 15px 0;">
-                        <p><strong>📖 The Prophet's (ﷺ) Teaching:</strong> "The believer is not one who deceives, nor one who is deceived." He taught that honesty and trust are the foundation of society. In repeated games, cooperation always wins over constant defection.</p>
-                        <p><strong>💡 Life Lesson:</strong> The Prisoner's Dilemma teaches us that short-term greed often leads to long-term loss. Trust, when reciprocated, creates wealth for all.</p>
+                        <p style="color: #e2e8f0;"><strong style="color: #fbbf24;">📖 The Prophet's (ﷺ) Teaching:</strong> "The believer is not one who deceives, nor one who is deceived." He taught that honesty and trust are the foundation of society.</p>
+                        <p style="color: #cbd5e1;"><strong style="color: #fbbf24;">💡 Life Lesson:</strong> The Prisoner's Dilemma teaches us that short-term greed often leads to long-term loss. Trust, when reciprocated, creates wealth for all.</p>
                     </div>
                     <button class="restart-btn" onclick="location.reload()">🔄 Play Again</button>
                 </div>
             `;
+
             document.getElementById('gameContent').innerHTML = html;
         }
 
