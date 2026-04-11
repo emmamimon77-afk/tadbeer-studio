@@ -10,29 +10,30 @@
     <style>
         * { box-sizing: border-box; }
         .cg-container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        .game-panel { background: linear-gradient(135deg, #2e1a1a, #1a0f0f); border-radius: 28px; padding: 30px; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); border: 1px solid #ef4444; }
+        .game-panel { background: #1e1a1a; border-radius: 28px; padding: 30px; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); border: 1px solid #ef4444; }
         .stage-badge { display: inline-block; background: #ef4444; color: white; padding: 4px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: bold; margin-bottom: 15px; }
-        .choice-btn { display: block; width: 100%; padding: 16px 20px; margin: 12px 0; background: #2e1a1a; border: 2px solid #ef4444; border-radius: 20px; cursor: pointer; transition: all 0.2s; text-align: left; font-size: 1rem; font-weight: 500; color: #e2e8f0; }
-        .choice-btn:hover { background: #ef4444; transform: translateX(8px); }
+        .choice-btn { display: block; width: 100%; padding: 16px 20px; margin: 12px 0; background: #2a1a1a; border: 2px solid #ef4444; border-radius: 20px; cursor: pointer; transition: all 0.2s; text-align: left; font-size: 1rem; font-weight: 500; color: #f0f0f0; }
+        .choice-btn:hover { background: #ef4444; transform: translateX(8px); color: white; }
         .stats-row { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
-        .stat-card { background: #2e1a1a; padding: 12px; border-radius: 16px; text-align: center; flex: 1; border: 1px solid #ef4444; }
+        .stat-card { background: #2a1a1a; padding: 12px; border-radius: 16px; text-align: center; flex: 1; border: 1px solid #ef4444; color: #f0f0f0; }
         .stat-value { font-size: 1.4rem; font-weight: bold; color: #ef4444; }
         .tension-meter { background: #ef4444; border-radius: 10px; height: 8px; margin: 15px 0; overflow: hidden; }
         .tension-fill { background: #ff6b6b; height: 100%; width: 0%; transition: width 0.5s; }
-        .outcome-card { background: #2e1a1a; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #ef4444; display: none; animation: fadeIn 0.5s; }
+        .opponent-speech { background: #2a1a1a; padding: 20px; border-radius: 20px; margin: 15px 0; border-left: 4px solid #ef4444; color: #f0f0f0; }
+        .outcome-card { background: #2a1a1a; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #ef4444; display: none; animation: fadeIn 0.5s; color: #f0f0f0; }
         .restart-btn { background: #ef4444; color: white; border: none; padding: 14px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }
         .shake { animation: shake 0.3s; }
         @media (max-width: 768px) { .cg-container { padding: 12px; } .choice-btn { padding: 12px; font-size: 0.9rem; } }
-    </script>
+    </style>
 </head>
 <body>
     <div id="navbar-placeholder"></div>
     <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div></div>
     <div class="cg-container">
         <h1 class="page-title" style="text-align: center; color: #ef4444;">🐔 Chicken Game - Enhanced</h1>
-        <p class="page-subtitle" style="text-align: center;">5 rounds. Hidden opponent patterns. Crash or victory. Who blinks first?</p>
+        <p class="page-subtitle" style="text-align: center; color: #cbd5e1;">5 rounds. Hidden opponent patterns. Crash or victory. Who blinks first?</p>
         <div id="gamePanel" class="game-panel">
             <div class="stats-row">
                 <div class="stat-card"><div class="stat-label">Round</div><div class="stat-value" id="roundNum">1</div></div>
@@ -57,7 +58,7 @@
             document.getElementById('tensionFill').style.width = gameState.tension + '%';
         }
         function playSound(type) {
-            try { const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); if (type === 'crash') { o.frequency.value = 110; g.gain.value = 0.2; o.start(); g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.8); o.stop(audioCtx.currentTime + 0.8); document.body.classList.add('shake'); setTimeout(() => document.body.classList.remove('shake'), 500); } else { o.frequency.value = type === 'good' ? 660 : 440; g.gain.value = 0.1; o.start(); g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.4); o.stop(audioCtx.currentTime + 0.4); } } catch(e) {}
+            try { const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); if (type === 'crash') { o.frequency.value = 110; g.gain.value = 0.2; o.start(); g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.8); o.stop(audioCtx.currentTime + 0.8); document.body.classList.add('shake'); setTimeout(() => document.body.classList.remove('shake'), 500); } else { o.frequency.value = type === 'good' ? 660 : 440; g.gain.value = 0.1; o.start(); g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.4); o.stop(audioCtx.currentTime + 0.4); } } catch(e) { console.log('Audio not supported'); }
         }
         function opponentDecision() {
             if (gameState.round === 1) return Math.random() > 0.3 ? 'hold' : 'swerve';
@@ -69,22 +70,36 @@
         }
         function endGame(outcome, message, details, reflection, correctStrategy, personality) {
             playSound(outcome === 'crash' ? 'crash' : 'good');
-            const html = `<div class="outcome-card" style="display: block;"><h3 style="color: #ef4444;">${outcome.toUpperCase()} ENDING</h3><p>${message}</p><p>${details}</p><div style="background: #1a0f0f; padding: 20px; border-radius: 20px; margin: 20px 0;"><h4 style="color: #ef4444;">🧠 Reflection</h4><p><strong>Why:</strong> ${reflection}</p><p><strong>Correct strategy:</strong> ${correctStrategy}</p><hr><p><strong>🎭 Profile:</strong> ${personality}</p><p><strong>📖 Prophetic Tadbeer:</strong> True courage is knowing when to stand firm AND when to swerve. Brinksmanship without wisdom is foolishness.</p></div><button class="restart-btn" onclick="location.reload()">🔄 Play Again</button></div>`;
+            const html = '<div class="outcome-card" style="display: block;"><h3 style="color: #ef4444;">' + outcome.toUpperCase() + ' ENDING</h3><p>' + message + '</p><p>' + details + '</p><div style="background: #1a0f0f; padding: 20px; border-radius: 20px; margin: 20px 0;"><h4 style="color: #ef4444;">🧠 Reflection</h4><p><strong>Why:</strong> ' + reflection + '</p><p><strong>Correct strategy:</strong> ' + correctStrategy + '</p><hr><p><strong>🎭 Profile:</strong> ' + personality + '</p><p><strong>📖 Prophetic Tadbeer:</strong> True courage is knowing when to stand firm AND when to swerve. Brinksmanship without wisdom is foolishness.</p></div><button class="restart-btn" onclick="location.reload()">🔄 Play Again</button></div>';
             document.getElementById('gameContent').innerHTML = html;
         }
         function makeChoice(choice) {
             playSound('good');
             const opponent = opponentDecision();
             gameState.decisions.push(choice);
-            if (choice === 'swerve' && opponent === 'hold') { gameState.reputation -= 20; gameState.aggression += 10; gameState.tension -= 15; updateUI(); endGame('defeat', '😔 You Swerved', 'You lost face. The opponent gained respect.', 'You blinked first. Showed weakness.', 'Hold your ground when you have the advantage.', '😰 The Timid Leader'); }
-            else if (choice === 'hold' && opponent === 'swerve') { gameState.reputation += 20; gameState.aggression -= 10; gameState.tension -= 10; updateUI(); if (gameState.round < 5) { gameState.round++; updateUI(); showRound(); } else endGame('victory', '🏆 You Won!', 'The opponent swerved. Your reputation soars.', 'You held firm. The opponent blinked.', 'Strategic resolve wins respect.', '🦁 The Courageous Leader'); }
-            else if (choice === 'hold' && opponent === 'hold') { gameState.reputation -= 10; gameState.aggression += 20; gameState.tension += 30; updateUI(); endGame('crash', '💀 CRASH!', 'Neither swerved. Both destroyed.', 'Pride led to mutual destruction.', 'Swerve when both risk annihilation.', '⚡ The Reckless Daredevil'); }
-            else if (choice === 'swerve' && opponent === 'swerve') { gameState.reputation += 5; gameState.aggression -= 5; gameState.tension -= 20; updateUI(); if (gameState.round < 5) { gameState.round++; updateUI(); showRound(); } else endGame('partial', '🤝 Mutual Swerve', 'Both swerved. An uneasy truce.', 'No one won, but no one crashed.', 'A draw is better than disaster.', '⚖️ The Pragmatic Peacemaker'); }
+            if (choice === 'swerve' && opponent === 'hold') {
+                gameState.reputation -= 20; gameState.aggression += 10; gameState.tension -= 15; updateUI();
+                endGame('defeat', '😔 You Swerved', 'You lost face. The opponent gained respect.', 'You blinked first. Showed weakness.', 'Hold your ground when you have the advantage.', '😰 The Timid Leader');
+            } else if (choice === 'hold' && opponent === 'swerve') {
+                gameState.reputation += 20; gameState.aggression -= 10; gameState.tension -= 10; updateUI();
+                if (gameState.round < 5) { gameState.round++; updateUI(); showRound(); } else {
+                    endGame('victory', '🏆 You Won!', 'The opponent swerved. Your reputation soars.', 'You held firm. The opponent blinked.', 'Strategic resolve wins respect.', '🦁 The Courageous Leader');
+                }
+            } else if (choice === 'hold' && opponent === 'hold') {
+                gameState.reputation -= 10; gameState.aggression += 20; gameState.tension += 30; updateUI();
+                endGame('crash', '💀 CRASH!', 'Neither swerved. Both destroyed.', 'Pride led to mutual destruction.', 'Swerve when both risk annihilation.', '⚡ The Reckless Daredevil');
+            } else if (choice === 'swerve' && opponent === 'swerve') {
+                gameState.reputation += 5; gameState.aggression -= 5; gameState.tension -= 20; updateUI();
+                if (gameState.round < 5) { gameState.round++; updateUI(); showRound(); } else {
+                    endGame('partial', '🤝 Mutual Swerve', 'Both swerved. An uneasy truce.', 'No one won, but no one crashed.', 'A draw is better than disaster.', '⚖️ The Pragmatic Peacemaker');
+                }
+            }
         }
         function showRound() {
-            document.getElementById('gameContent').innerHTML = `<div class="stage-badge">Round ${gameState.round} of 5</div><div class="opponent-speech" style="background:#2e1a1a; padding:20px; border-radius:20px; margin:15px 0; border-left:4px solid #ef4444;">🚗 Opponent: "I never swerve. Never have, never will."</div><button class="choice-btn" onclick="makeChoice('hold')">🚀 HOLD YOUR GROUND</button><button class="choice-btn" onclick="makeChoice('swerve')">🔄 SWERVE</button>`;
+            var html = '<div class="stage-badge">Round ' + gameState.round + ' of 5</div><div class="opponent-speech">🚗 Opponent: "I never swerve. Never have, never will."</div><button class="choice-btn" onclick="makeChoice(\'hold\')">🚀 HOLD YOUR GROUND</button><button class="choice-btn" onclick="makeChoice(\'swerve\')">🔄 SWERVE</button>';
+            document.getElementById('gameContent').innerHTML = html;
         }
-        function setOpponentPattern() { const patterns = ['aggressive', 'normal', 'cowardly']; gameState.opponentPattern = patterns[Math.floor(Math.random() * patterns.length)]; }
+        function setOpponentPattern() { var patterns = ['aggressive', 'normal', 'cowardly']; gameState.opponentPattern = patterns[Math.floor(Math.random() * patterns.length)]; }
         setOpponentPattern(); showRound(); updateUI();
     </script>
 </body>
