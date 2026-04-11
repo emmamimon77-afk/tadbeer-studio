@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Jerusalem Coexistence Simulator | Tadbeer Studio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; }
+        .j-container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .game-panel { background: linear-gradient(135deg, #1e1b2e, #2a1e3c); border-radius: 28px; padding: 30px; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); border: 1px solid #4a3a6e; transition: all 0.3s; }
+        .stage-badge { display: inline-block; background: #c084fc; color: #1e1b2e; padding: 4px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: bold; margin-bottom: 15px; }
+        .character-speech { background: #2a1e3c; padding: 20px; border-radius: 20px; margin: 15px 0; border-left: 4px solid #c084fc; color: #e2e8f0; transition: all 0.2s; }
+        .choice-btn { display: block; width: 100%; padding: 16px 20px; margin: 12px 0; background: #2a1e3c; border: 2px solid #4a3a6e; border-radius: 20px; cursor: pointer; transition: all 0.2s; text-align: left; font-size: 1rem; font-weight: 500; color: #e2e8f0; }
+        .choice-btn:hover { background: #3a2a4e; border-color: #c084fc; transform: translateX(8px); }
+        .stats-row { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+        .stat-card { background: #2a1e3c; padding: 12px; border-radius: 16px; text-align: center; flex: 1; border: 1px solid #4a3a6e; }
+        .stat-label { font-size: 0.7rem; color: #a78bfa; }
+        .stat-value { font-size: 1.4rem; font-weight: bold; color: #c084fc; }
+        .mood-meter { background: #4a3a6e; border-radius: 10px; height: 8px; margin: 15px 0; overflow: hidden; }
+        .mood-fill { background: #c084fc; height: 100%; width: 50%; transition: width 0.5s; }
+        .outcome-card { background: #1e1b2e; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #4a3a6e; display: none; animation: fadeIn 0.5s; }
+        .restart-btn { background: #c084fc; color: #1e1b2e; border: none; padding: 14px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; transition: transform 0.2s; }
+        .restart-btn:hover { transform: scale(1.02); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        .choice-btn:active { animation: pulse 0.2s; }
+        @media (max-width: 768px) { .j-container { padding: 12px; } .choice-btn { padding: 12px; font-size: 0.9rem; } }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="bismillah">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+
+    <div class="j-container">
+        <h1 class="page-title" style="text-align: center; color: #c084fc;">🕊️ Jerusalem Coexistence Simulator</h1>
+        <p class="page-subtitle" style="text-align: center;">You are a leader in 19th-century Jerusalem. The Ottoman Millet system has ensured centuries of peace. A new ideology arrives. Your choices will shape history.</p>
+
+        <div id="gamePanel" class="game-panel">
+            <div class="stats-row">
+                <div class="stat-card"><div class="stat-label">Coexistence Level</div><div class="stat-value" id="coexistence">85</div></div>
+                <div class="stat-card"><div class="stat-label">Community Trust</div><div class="stat-value" id="trust">80</div></div>
+                <div class="stat-card"><div class="stat-label">External Pressure</div><div class="stat-value" id="pressure">20</div></div>
+                <div class="stat-card"><div class="stat-label">Stage</div><div class="stat-value" id="stageNum">1</div></div>
+            </div>
+            <div class="mood-meter"><div class="mood-fill" id="moodFill"></div></div>
+
+            <div id="gameContent"></div>
+        </div>
+
+        <a href="/simulators" class="btn-secondary" style="display: inline-block;">← Back to Simulators</a>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/assets/js/components.js"></script>
+    <script>
+        // Game state
+        let gameState = {
+            stage: 1,
+            coexistence: 85,
+            trust: 80,
+            pressure: 20,
+            decisions: [],
+            secretPath: false
+        };
+
+        function updateUI() {
+            document.getElementById('coexistence').innerText = gameState.coexistence;
+            document.getElementById('trust').innerText = gameState.trust;
+            document.getElementById('pressure').innerText = gameState.pressure;
+            document.getElementById('stageNum').innerText = gameState.stage;
+            document.getElementById('moodFill').style.width = Math.min(100, Math.max(0, gameState.coexistence)) + '%';
+            playSound('click');
+        }
+
+        function playSound(type) {
+            // Simple beep using Web Audio API (subtle, no external files)
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.frequency.value = type === 'click' ? 440 : 880;
+                gainNode.gain.value = 0.1;
+                oscillator.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5);
+                oscillator.stop(audioCtx.currentTime + 0.5);
+            } catch(e) { console.log('Audio not supported'); }
+        }
+
+        function endGame(outcomeType, message, details, reflection, correctStrategy, personality) {
+            const html = `
+                <div class="outcome-card" style="display: block; animation: fadeIn 0.5s;">
+                    <h3 style="color: #c084fc;">🏁 ${outcomeType.toUpperCase()} ENDING</h3>
+                    <p style="color: #e2e8f0;"><strong>${message}</strong></p>
+                    <p style="color: #cbd5e1;">${details}</p>
+                    <div style="background: #2a1e3c; padding: 20px; border-radius: 20px; margin: 20px 0;">
+                        <h4 style="color: #c084fc;">🧠 Reflection & Lesson</h4>
+                        <p style="color: #e2e8f0;"><strong>Why this happened:</strong> ${reflection}</p>
+                        <p style="color: #cbd5e1;"><strong>What you should have done:</strong> ${correctStrategy}</p>
+                        <hr style="border-color: #4a3a6e; margin: 15px 0;">
+                        <p style="color: #e2e8f0;"><strong>🎭 Your Leadership Profile:</strong> ${personality}</p>
+                        <p style="color: #a78bfa;"><strong>📖 Prophetic Tadbeer:</strong> The Prophet (ﷺ) taught that justice and coexistence are foundations of a righteous society. The Millet system was closer to his Medina model than any modern state.</p>
+                    </div>
+                    <button class="restart-btn" onclick="location.reload()">🔄 Play Again</button>
+                </div>
+            `;
+            document.getElementById('gameContent').innerHTML = html;
+            playSound('end');
+        }
+
+        function makeDecision(stage, choice) {
+            if (stage === 1) {
+                if (choice === 'welcome') {
+                    gameState.decisions.push('welcome');
+                    gameState.coexistence += 5;
+                    gameState.trust += 10;
+                    updateUI();
+                    showStage2('welcome');
+                } else if (choice === 'cautious') {
+                    gameState.decisions.push('cautious');
+                    gameState.coexistence += 2;
+                    gameState.trust += 5;
+                    updateUI();
+                    showStage2('cautious');
+                } else if (choice === 'reject') {
+                    gameState.decisions.push('reject');
+                    gameState.coexistence -= 10;
+                    gameState.trust -= 15;
+                    gameState.pressure += 20;
+                    updateUI();
+                    endGame('defeat', '💀 The Rejection Path', 'You rejected the Zionist settlers harshly. They turned to Britain for support. The Balfour Declaration (1917) followed. The conflict intensified.', 
+                        'Rejection without diplomacy pushed the settlers toward imperial powers. They found allies elsewhere.', 
+                        'You should have engaged diplomatically while protecting indigenous rights. The Prophet (ﷺ) negotiated with enemies, never outright rejected them.',
+                        '⚡ The Rigid Traditionalist');
+                } else if (choice === 'secret_deal') {
+                    gameState.decisions.push('secret_deal');
+                    gameState.coexistence -= 20;
+                    gameState.trust -= 25;
+                    gameState.pressure += 10;
+                    updateUI();
+                    endGame('defeat', '🎭 The Betrayal Path', 'You made a secret deal with Zionist leaders, selling land without community consent. When revealed, trust collapsed. Violence erupted.',
+                        'Secrecy destroyed trust. The community felt betrayed. Once trust is broken, coexistence becomes impossible.',
+                        'You should have been transparent. The Prophet (ﷺ) conducted all treaties openly with community consultation (Shura).',
+                        '🎭 The Deceptive Broker');
+                }
+            } else if (stage === 2) {
+                if (choice === 'protect_rights') {
+                    gameState.decisions.push('protect_rights');
+                    gameState.coexistence += 10;
+                    gameState.trust += 15;
+                    gameState.pressure += 5;
+                    updateUI();
+                    showStage3('protect_rights');
+                } else if (choice === 'compromise') {
+                    gameState.decisions.push('compromise');
+                    gameState.coexistence += 5;
+                    gameState.trust += 5;
+                    gameState.pressure += 10;
+                    updateUI();
+                    showStage3('compromise');
+                } else if (choice === 'ignore') {
+                    gameState.decisions.push('ignore');
+                    gameState.coexistence -= 15;
+                    gameState.trust -= 20;
+                    gameState.pressure += 25;
+                    updateUI();
+                    endGame('defeat', '💀 The Ignorance Path', 'You ignored the warnings. Zionist immigration accelerated. Land purchases increased. Palestinian peasants were displaced. The seeds of Nakba were sown.',
+                        'Ignoring a growing threat never works. The problem only worsens.',
+                        'You should have addressed the issue early with clear red lines and international diplomacy.',
+                        '😰 The Avoidant Leader');
+                }
+            } else if (stage === 3) {
+                if (choice === 'nonviolent_resistance') {
+                    gameState.decisions.push('nonviolent');
+                    gameState.coexistence += 15;
+                    gameState.trust += 10;
+                    gameState.pressure += 5;
+                    updateUI();
+                    showStage4('nonviolent');
+                } else if (choice === 'armed_resistance') {
+                    gameState.decisions.push('armed');
+                    gameState.coexistence -= 10;
+                    gameState.trust -= 5;
+                    gameState.pressure += 30;
+                    updateUI();
+                    endGame('defeat', '⚔️ The Armed Revolt Path', 'Armed resistance led to British crackdowns. Many villages were destroyed. The rebellion was crushed. The Zionist project continued.',
+                        'Armed resistance against a colonial power without strategic patience led to devastating reprisals.',
+                        'You should have focused on nonviolent international pressure and building parallel institutions. The Prophet (ﷺ) used patience and diplomacy, not premature violence.',
+                        '⚡ The Impulsive Fighter');
+                } else if (choice === 'seek_international') {
+                    gameState.decisions.push('international');
+                    gameState.coexistence += 5;
+                    gameState.trust += 5;
+                    gameState.pressure += 15;
+                    updateUI();
+                    showStage4('international');
+                }
+            } else if (stage === 4) {
+                if (choice === 'one_state') {
+                    gameState.decisions.push('one_state');
+                    gameState.coexistence += 20;
+                    gameState.trust += 15;
+                    updateUI();
+                    endGame('victory', '🌟 The One-State Solution (Alternative Ending)', 'You proposed a single democratic state with equal rights for all. After decades of struggle, this vision gained international support. Apartheid ended. Coexistence returned.',
+                        'You chose justice over revenge. You chose equality over domination. You understood that true peace requires equal rights for all.',
+                        'You followed the Prophet\'s (ﷺ) Medina model: a single state where Muslims, Jews, and Christians lived under a just constitution. This is the highest Tadbeer.',
+                        '🕊️ The Justice Seeker');
+                } else if (choice === 'two_state') {
+                    gameState.decisions.push('two_state');
+                    gameState.coexistence += 10;
+                    gameState.trust += 5;
+                    updateUI();
+                    endGame('partial', '⚖️ The Two-State Compromise', 'You accepted partition. A Palestinian state was established alongside Israel. Some peace returned, but settlements and tensions continued. The refugee problem remained unresolved.',
+                        'Compromise brought partial peace, but justice was incomplete. The root causes (settlements, refugees, Jerusalem) remained.',
+                        'A two-state solution is better than war, but it does not fully restore the rights of the displaced. The Prophet (ﷺ) sought complete justice, not partial solutions.',
+                        '⚖️ The Pragmatic Compromiser');
+                } else if (choice === 'return_and_reconciliation') {
+                    gameState.decisions.push('return');
+                    gameState.coexistence += 30;
+                    gameState.trust += 25;
+                    updateUI();
+                    endGame('victory', '🕊️ The Forgiveness Ending (Secret Path)', 'You chose the path of return and reconciliation. Refugees returned. Property was restored or compensated. A truth and reconciliation commission healed wounds. Jerusalem became an open city for all faiths. This was the hardest path, but it brought true peace.',
+                        'You chose the hardest path: justice with mercy. You returned rights to the displaced. You forgave without forgetting. This is the Prophet\'s (ﷺ) highest teaching: justice and forgiveness together.',
+                        'You embodied the Quranic verse: "Repel evil with that which is better" (41:34). This is the ultimate Tadbeer.',
+                        '🕊️ The Sage of Justice');
+                }
+            }
+        }
+
+        function showStage1() {
+            const html = `
+                <div class="stage-badge"><i class="fas fa-history"></i> STAGE 1: 1880s - The First Arrivals</div>
+                <div class="character-speech">
+                    <p><strong>📜 The Ottoman Millet System (500 years of coexistence):</strong> Muslims, Christians, and Jews live in relative peace. Each community governs its own religious laws. Jerusalem is an open city for all.</p>
+                </div>
+                <div class="character-speech" style="border-left-color: #ef4444;">
+                    <p><strong>⚠️ A New Movement Arrives:</strong> Zionist settlers from Europe begin purchasing land. They speak of a "Jewish state." Local Palestinians are alarmed. The Ottomans are indifferent.</p>
+                </div>
+                <div class="choice-grid">
+                    <button class="choice-btn" onclick="makeDecision(1, 'welcome')"><span>🤝 Welcome them</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"They are refugees fleeing persecution. Let them live in peace."</span></button>
+                    <button class="choice-btn" onclick="makeDecision(1, 'cautious')"><span>⚠️ Cautious engagement</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"Let them settle, but limit land sales and political activity."</span></button>
+                    <button class="choice-btn" onclick="makeDecision(1, 'reject')"><span>🚫 Reject them entirely</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"This is a colonial project. They have no right to our land."</span></button>
+                    <button class="choice-btn" onclick="makeDecision(1, 'secret_deal')"><span>🤫 Secret deal with Zionist leaders</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"Sell land quietly. Make profit. No one needs to know."</span></button>
+                </div>
+            `;
+            document.getElementById('gameContent').innerHTML = html;
+        }
+
+        function showStage2(prevChoice) {
+            gameState.stage = 2;
+            updateUI();
+            const html = `
+                <div class="stage-badge"><i class="fas fa-treaty"></i> STAGE 2: 1917-1947 - The British Mandate</div>
+                <div class="character-speech">
+                    <p><strong>🇬🇧 The Balfour Declaration (1917):</strong> Britain promises a "national home for the Jewish people" in Palestine. Zionist immigration accelerates. Palestinian resistance grows.</p>
+                </div>
+                <div class="character-speech" style="border-left-color: #fbbf24;">
+                    <p><strong>Your advisors are divided:</strong> Some say resist. Others say negotiate. A few say ignore and hope it passes.</p>
+                </div>
+                <div class="choice-grid">
+                    <button class="choice-btn" onclick="makeDecision(2, 'protect_rights')"><span>🛡️ Protect Palestinian rights through law</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"Use legal means, petitions, and international diplomacy."</span></button>
+                    <button class="choice-btn" onclick="makeDecision(2, 'compromise')"><span>⚖️ Compromise: accept partition with safeguards</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"A small Jewish state in return for Palestinian sovereignty."</span></button>
+                    <button class="choice-btn" onclick="makeDecision(2, 'ignore')"><span>😴 Ignore the threat</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"This too shall pass. Focus on daily life."</span></button>
+                </div>
+            `;
+            document.getElementById('gameContent').innerHTML = html;
+        }
+
+        function showStage3(prevChoice) {
+            gameState.stage = 3;
+            updateUI();
+            const html = `
+                <div class="stage-badge"><i class="fas fa-fist-raised"></i> STAGE 3: 1948 - The Nakba</div>
+                <div class="character-speech">
+                    <p><strong>💔 Catastrophe:</strong> Zionist militias declare the State of Israel. 750,000 Palestinians are expelled or flee. Hundreds of villages are destroyed. The dream of coexistence shatters.</p>
+                </div>
+                <div class="choice-grid">
+                    <button class="choice-btn" onclick="makeDecision(3, 'nonviolent_resistance')"><span>🕊️ Nonviolent resistance</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"Gandhi's way. Boycotts, civil disobedience, international solidarity."</span></button>
+                    <button class="choice-btn" onclick="makeDecision(3, 'armed_resistance')"><span>⚔️ Armed resistance</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"Fight back. Regain land by force."</span></button>
+                    <button class="choice-btn" onclick="makeDecision(3, 'seek_international')"><span>🌍 Seek international intervention</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"UN, Arab League, international courts."</span></button>
+                </div>
+            `;
+            document.getElementById('gameContent').innerHTML = html;
+        }
+
+        function showStage4(prevChoice) {
+            gameState.stage = 4;
+            updateUI();
+            const html = `
+                <div class="stage-badge"><i class="fas fa-chart-line"></i> STAGE 4: 2025 - The Crossroads</div>
+                <div class="character-speech">
+                    <p><strong>📢 The world is watching:</strong> South Africa calls Israel an apartheid state. International courts issue arrest warrants. The occupation continues. But there is still hope.</p>
+                </div>
+                <div class="choice-grid">
+                    <button class="choice-btn" onclick="makeDecision(4, 'one_state')"><span>🌟 One democratic state for all</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"Equal rights. Return of refugees. Jerusalem open to all."</span></button>
+                    <button class="choice-btn" onclick="makeDecision(4, 'two_state')"><span>⚖️ Two-state solution with justice</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"Palestinian state based on 1967 borders. East Jerusalem as capital. Right of return."</span></button>
+                    <button class="choice-btn" onclick="makeDecision(4, 'return_and_reconciliation')"><span>🕊️ Return + Reconciliation (Secret Path)</span><span style="display: block; font-size: 0.7rem; color: #a78bfa;">"Truth commission. Return of refugees. Mutual forgiveness. Shared future."</span></button>
+                </div>
+            `;
+            document.getElementById('gameContent').innerHTML = html;
+        }
+
+        showStage1();
+        updateUI();
+    </script>
+</body>
+</html>
