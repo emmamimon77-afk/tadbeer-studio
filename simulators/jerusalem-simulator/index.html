@@ -6,23 +6,34 @@
     <title>Jerusalem Coexistence Simulator | Tadbeer Studio</title>
     <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">   
+
     <style>
-        .sim-container { max-width: 900px; margin: 0 auto; padding: 20px; }
-        .game-panel { background: #0f172a; border-radius: 28px; padding: 25px; margin-bottom: 25px; border: 1px solid #fbbf24; }
-        .stat-box { display: inline-block; background: #1e293b; padding: 10px 15px; border-radius: 12px; margin: 5px; border: 1px solid #fbbf24; }
+        body { background: #0f172a; }
+        .sim-container { max-width: 900px; margin: 0 auto; padding: 20px; background: #0f172a; border-radius: 28px; }
+        .game-panel { background: #1e293b; border-radius: 28px; padding: 25px; margin-bottom: 25px; border: 1px solid #fbbf24; }
+        .stat-box { display: inline-block; background: #0f172a; padding: 10px 15px; border-radius: 12px; margin: 5px; border: 1px solid #fbbf24; }
         .stat-label { font-size: 12px; color: #94a3b8; }
         .stat-value { font-size: 24px; font-weight: bold; color: #fbbf24; }
-        .quran-box { background: #1e293b; padding: 15px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #fbbf24; }
-        .arabic { font-size: 1.3rem; font-family: 'Amiri', serif; color: #fbbf24; }
-        .choice-btn { display: block; width: 100%; padding: 14px; margin: 10px 0; background: #1e293b; border: 2px solid #fbbf24; border-radius: 16px; cursor: pointer; font-size: 1rem; font-weight: 500; color: white; text-align: left; }
+        .quran-box { background: #0f172a; padding: 15px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #fbbf24; color: #e2e8f0; }
+        .arabic { font-size: 1.3rem; font-family: 'Amiri', serif; color: #fbbf24; margin-bottom: 8px; }
+        .choice-btn { display: block; width: 100%; padding: 14px; margin: 10px 0; background: #0f172a; border: 2px solid #fbbf24; border-radius: 16px; cursor: pointer; font-size: 1rem; font-weight: 500; color: #f0f0f0; text-align: left; transition: all 0.2s; }
         .choice-btn:hover { background: #fbbf24; color: #0f172a; }
-        .stage-title { font-size: 1.5rem; color: #fbbf24; margin-bottom: 15px; }
-        .historical-note { background: #1e293b; padding: 12px; border-radius: 12px; margin: 15px 0; border-left: 4px solid #3b82f6; }
+        .stage-title { font-size: 1.5rem; color: #fbbf24; margin-bottom: 15px; font-weight: bold; }
+        .historical-note { background: #0f172a; padding: 12px; border-radius: 12px; margin: 15px 0; border-left: 4px solid #3b82f6; color: #cbd5e1; }
         .restart-btn { background: #fbbf24; color: #0f172a; border: none; padding: 12px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
-        .outcome-card { background: #1e293b; border-radius: 20px; padding: 20px; margin-top: 20px; border: 1px solid #fbbf24; }
+        .outcome-card { background: #1e293b; border-radius: 20px; padding: 20px; margin-top: 20px; border: 1px solid #fbbf24; color: #e2e8f0; }
+        .outcome-card h3 { color: #fbbf24; margin-bottom: 15px; }
+        body { background: #0f172a; }
+        .bismillah { background: #1e293b; color: #fbbf24; }
+        .page-title, h1 { color: #fbbf24 !important; }
+        p, li, .page-subtitle { color: #cbd5e1 !important; }
+        a { color: #fbbf24 !important; }
+        .btn-secondary { background: #1e293b; border: 1px solid #fbbf24; color: #fbbf24 !important; }
+        .btn-secondary:hover { background: #fbbf24; color: #0f172a !important; }
         @media (max-width: 768px) { .sim-container { padding: 12px; } .choice-btn { padding: 12px; font-size: 0.9rem; } }
     </style>
+
 </head>
 <body>
     <div id="navbar-placeholder"></div>
