@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Theory Quiz - Tadbeer Studio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .quiz-container { max-width: 800px; margin: 0 auto; }
+        .quiz-question { background: white; padding: 20px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 4px solid #2e7d32; }
+        .question-text { font-weight: 600; margin-bottom: 15px; color: #1a472a; }
+        .quiz-option { display: block; margin: 10px 0; padding: 10px 15px; background: #f8fafc; border-radius: 12px; cursor: pointer; transition: background 0.3s; }
+        .quiz-option:hover { background: #e8f0fe; }
+        .quiz-option input { margin-right: 12px; }
+        .submit-btn { background: #2e7d32; color: white; border: none; padding: 14px 40px; border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 16px; margin: 20px 0; display: block; width: 100%; max-width: 300px; margin-left: auto; margin-right: auto; }
+        .result { margin-top: 30px; padding: 20px; border-radius: 16px; display: none; text-align: center; }
+        .result.correct { background: #d1fae5; color: #065f46; border: 1px solid #10b981; }
+        .result.incorrect { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
+        .score-highlight { font-size: 2rem; font-weight: bold; }
+        .progress-bar { background: #e2e8f0; border-radius: 10px; height: 8px; margin: 20px 0; }
+        .progress-fill { background: #2e7d32; border-radius: 10px; height: 8px; width: 0%; }
+        @media (max-width: 768px) { .quiz-question { padding: 15px; } .quiz-option { padding: 8px 12px; font-size: 14px; } }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="bismillah">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+
+    <div class="container">
+        <div class="quiz-container">
+            <h1 class="page-title">♟️ Game Theory & Tadbeer Quiz</h1>
+            <p class="page-subtitle">Test your knowledge of strategic thinking, game theory concepts, and prophetic Tadbeer. 30 questions.</p>
+            
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+            <form id="quizForm">
+                <!-- Q1-Q10: Core Concepts -->
+                <div class="quiz-question"><div class="question-text">1. What is the Nash Equilibrium?</div>
+                    <label class="quiz-option"><input type="radio" name="q1" value="a"> A) A strategy where one player dominates another</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="b"> B) A stable state where no player can improve their outcome by changing strategy alone</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="c"> C) A game where both players lose</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="d"> D) A cooperative strategy</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">2. In the Prisoner's Dilemma, what is the rational individual choice?</div>
+                    <label class="quiz-option"><input type="radio" name="q2" value="a"> A) Cooperate</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="b"> B) Defect</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="c"> C) Random choice</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="d"> D) Refuse to play</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">3. What is "Tit-for-Tat" strategy?</div>
+                    <label class="quiz-option"><input type="radio" name="q3" value="a"> A) Always defect</label>
+                    <label class="quiz-option"><input type="radio" name="q3" value="b"> B) Always cooperate</label>
+                    <label class="quiz-option"><input type="radio" name="q3" value="c"> C) Start with cooperation, then mirror opponent's previous move</label>
+                    <label class="quiz-option"><input type="radio" name="q3" value="d"> D) Random strategy</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">4. Which game simulates brinkmanship?</div>
+                    <label class="quiz-option"><input type="radio" name="q4" value="a"> A) Prisoner's Dilemma</label>
+                    <label class="quiz-option"><input type="radio" name="q4" value="b"> B) Stag Hunt</label>
+                    <label class="quiz-option"><input type="radio" name="q4" value="c"> C) Chicken Game</label>
+                    <label class="quiz-option"><input type="radio" name="q4" value="d"> D) Battle of the Sexes</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">5. What is the optimal strategy in an iterated (repeated) Prisoner's Dilemma?</div>
+                    <label class="quiz-option"><input type="radio" name="q5" value="a"> A) Always defect</label>
+                    <label class="quiz-option"><input type="radio" name="q5" value="b"> B) Always cooperate</label>
+                    <label class="quiz-option"><input type="radio" name="q5" value="c"> C) Tit-for-Tat</label>
+                    <label class="quiz-option"><input type="radio" name="q5" value="d"> D) Random</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">6. The "Stag Hunt" game illustrates which problem?</div>
+                    <label class="quiz-option"><input type="radio" name="q6" value="a"> A) Coordination and trust</label>
+                    <label class="quiz-option"><input type="radio" name="q6" value="b"> B) Betrayal</label>
+                    <label class="quiz-option"><input type="radio" name="q6" value="c"> C) Brinksmanship</label>
+                    <label class="quiz-option"><input type="radio" name="q6" value="d"> D) Zero-sum competition</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">7. What does "zero-sum game" mean?</div>
+                    <label class="quiz-option"><input type="radio" name="q7" value="a"> A) Both players win</label>
+                    <label class="quiz-option"><input type="radio" name="q7" value="b"> B) Both players lose</label>
+                    <label class="quiz-option"><input type="radio" name="q7" value="c"> C) One player's gain is exactly another's loss</label>
+                    <label class="quiz-option"><input type="radio" name="q7" value="d"> D) The game has no outcome</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">8. Who invented the concept of Nash Equilibrium?</div>
+                    <label class="quiz-option"><input type="radio" name="q8" value="a"> A) John von Neumann</label>
+                    <label class="quiz-option"><input type="radio" name="q8" value="b"> B) John Nash</label>
+                    <label class="quiz-option"><input type="radio" name="q8" value="c"> C) Adam Smith</label>
+                    <label class="quiz-option"><input type="radio" name="q8" value="d"> D) Thomas Schelling</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">9. The "Battle of the Sexes" game represents what conflict?</div>
+                    <label class="quiz-option"><input type="radio" name="q9" value="a"> A) Coordination without communication</label>
+                    <label class="quiz-option"><input type="radio" name="q9" value="b"> B) Betrayal</label>
+                    <label class="quiz-option"><input type="radio" name="q9" value="c"> C) Brinksmanship</label>
+                    <label class="quiz-option"><input type="radio" name="q9" value="d"> D) Prisoner's dilemma</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">10. What is "Pareto efficiency"?</div>
+                    <label class="quiz-option"><input type="radio" name="q10" value="a"> A) A state where no one can be made better off without making someone worse off</label>
+                    <label class="quiz-option"><input type="radio" name="q10" value="b"> B) A state where everyone is equal</label>
+                    <label class="quiz-option"><input type="radio" name="q10" value="c"> C) A state where one player dominates</label>
+                    <label class="quiz-option"><input type="radio" name="q10" value="d"> D) A state of total loss</label>
+                </div>
+
+                <!-- Q11-Q20: Historical & Prophetic Applications -->
+                <div class="quiz-question"><div class="question-text">11. The Treaty of Hudaybiyyah (628 CE) is an example of what game theory concept?</div>
+                    <label class="quiz-option"><input type="radio" name="q11" value="a"> A) Short-term sacrifice for long-term gain</label>
+                    <label class="quiz-option"><input type="radio" name="q11" value="b"> B) Zero-sum thinking</label>
+                    <label class="quiz-option"><input type="radio" name="q11" value="c"> C) Always defect</label>
+                    <label class="quiz-option"><input type="radio" name="q11" value="d"> D) Brinksmanship</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">12. What is "Tadbeer" in Islamic strategic thinking?</div>
+                    <label class="quiz-option"><input type="radio" name="q12" value="a"> A) Short-term revenge</label>
+                    <label class="quiz-option"><input type="radio" name="q12" value="b"> B) Long-term strategic foresight and planning</label>
+                    <label class="quiz-option"><input type="radio" name="q12" value="c"> C) Military conquest only</label>
+                    <label class="quiz-option"><input type="radio" name="q12" value="d"> D) Economic policy only</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">13. Which Quranic verse commands believers to prepare power?</div>
+                    <label class="quiz-option"><input type="radio" name="q13" value="a"> A) Quran 2:255</label>
+                    <label class="quiz-option"><input type="radio" name="q13" value="b"> B) Quran 8:60</label>
+                    <label class="quiz-option"><input type="radio" name="q13" value="c"> C) Quran 112:1</label>
+                    <label class="quiz-option"><input type="radio" name="q13" value="d"> D) Quran 18:94</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">14. The Ottoman Millet system is an example of what?</div>
+                    <label class="quiz-option"><input type="radio" name="q14" value="a"> A) A cooperative Nash Equilibrium</label>
+                    <label class="quiz-option"><input type="radio" name="q14" value="b"> B) A zero-sum conflict</label>
+                    <label class="quiz-option"><input type="radio" name="q14" value="c"> C) A Prisoner's Dilemma</label>
+                    <label class="quiz-option"><input type="radio" name="q14" value="d"> D) A Chicken Game</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">15. What destroyed the Millet system's cooperative equilibrium?</div>
+                    <label class="quiz-option"><input type="radio" name="q15" value="a"> A) World War I</label>
+                    <label class="quiz-option"><input type="radio" name="q15" value="b"> B) The arrival of political Zionism</label>
+                    <label class="quiz-option"><input type="radio" name="q15" value="c"> C) The Ottoman decline</label>
+                    <label class="quiz-option"><input type="radio" name="q15" value="d"> D) All of the above</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">16. Which Jewish intellectual rejected political Zionism?</div>
+                    <label class="quiz-option"><input type="radio" name="q16" value="a"> A) Theodor Herzl</label>
+                    <label class="quiz-option"><input type="radio" name="q16" value="b"> B) Albert Einstein</label>
+                    <label class="quiz-option"><input type="radio" name="q16" value="c"> C) David Ben-Gurion</label>
+                    <label class="quiz-option"><input type="radio" name="q16" value="d"> D) Chaim Weizmann</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">17. The Prophet's (ﷺ) Constitution of Medina established what?</div>
+                    <label class="quiz-option"><input type="radio" name="q17" value="a"> A) A mono-religious state</label>
+                    <label class="quiz-option"><input type="radio" name="q17" value="b"> B) A multi-religious cooperative political entity</label>
+                    <label class="quiz-option"><input type="radio" name="q17" value="c"> C) A theocracy</label>
+                    <label class="quiz-option"><input type="radio" name="q17" value="d"> D) A military dictatorship</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">18. What is "Shura" in Islamic decision-making?</div>
+                    <label class="quiz-option"><input type="radio" name="q18" value="a"> A) Consultation</label>
+                    <label class="quiz-option"><input type="radio" name="q18" value="b"> B) Dictatorship</label>
+                    <label class="quiz-option"><input type="radio" name="q18" value="c"> C) Voting only</label>
+                    <label class="quiz-option"><input type="radio" name="q18" value="d"> D) Majority rule without debate</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">19. The Cold War nuclear standoff was an example of which game?</div>
+                    <label class="quiz-option"><input type="radio" name="q19" value="a"> A) Prisoner's Dilemma</label>
+                    <label class="quiz-option"><input type="radio" name="q19" value="b"> B) Chicken Game</label>
+                    <label class="quiz-option"><input type="radio" name="q19" value="c"> C) Stag Hunt</label>
+                    <label class="quiz-option"><input type="radio" name="q19" value="d"> D) Battle of the Sexes</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">20. What is the lesson of the Treaty of Hudaybiyyah for modern leaders?</div>
+                    <label class="quiz-option"><input type="radio" name="q20" value="a"> A) Never compromise</label>
+                    <label class="quiz-option"><input type="radio" name="q20" value="b"> B) Short-term humiliation can lead to long-term victory</label>
+                    <label class="quiz-option"><input type="radio" name="q20" value="c"> C) Always fight immediately</label>
+                    <label class="quiz-option"><input type="radio" name="q20" value="d"> D) Never negotiate with enemies</label>
+                </div>
+
+                <!-- Q21-Q30: Advanced Concepts & Applications -->
+                <div class="quiz-question"><div class="question-text">21. What is "credible commitment" in game theory?</div>
+                    <label class="quiz-option"><input type="radio" name="q21" value="a"> A) A promise that cannot be broken without cost</label>
+                    <label class="quiz-option"><input type="radio" name="q21" value="b"> B) A lie</label>
+                    <label class="quiz-option"><input type="radio" name="q21" value="c"> C) A random strategy</label>
+                    <label class="quiz-option"><input type="radio" name="q21" value="d"> D) A threat</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">22. The Prophet (ﷺ) demonstrated credible commitment by...</div>
+                    <label class="quiz-option"><input type="radio" name="q22" value="a"> A) Breaking treaties when convenient</label>
+                    <label class="quiz-option"><input type="radio" name="q22" value="b"> B) Honoring the Treaty of Hudaybiyyah despite its humiliating terms</label>
+                    <label class="quiz-option"><input type="radio" name="q22" value="c"> C) Never making treaties</label>
+                    <label class="quiz-option"><input type="radio" name="q22" value="d"> D) Only negotiating from strength</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">23. What is "moral hazard" in game theory?</div>
+                    <label class="quiz-option"><input type="radio" name="q23" value="a"> A) Risk-taking because someone else bears the cost</label>
+                    <label class="quiz-option"><input type="radio" name="q23" value="b"> B) Ethical behavior</label>
+                    <label class="quiz-option"><input type="radio" name="q23" value="c"> C) Cooperation</label>
+                    <label class="quiz-option"><input type="radio" name="q23" value="d"> D) Defection</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">24. Which strategy won the repeated Prisoner's Dilemma tournament?</div>
+                    <label class="quiz-option"><input type="radio" name="q24" value="a"> A) Always defect</label>
+                    <label class="quiz-option"><input type="radio" name="q24" value="b"> B) Random</label>
+                    <label class="quiz-option"><input type="radio" name="q24" value="c"> C) Tit-for-Tat</label>
+                    <label class="quiz-option"><input type="radio" name="q24" value="d"> D) Always cooperate</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">25. What does "grim trigger" strategy mean?</div>
+                    <label class="quiz-option"><input type="radio" name="q25" value="a"> A) Cooperate until opponent defects, then defect forever</label>
+                    <label class="quiz-option"><input type="radio" name="q25" value="b"> B) Always cooperate</label>
+                    <label class="quiz-option"><input type="radio" name="q25" value="c"> C) Random defection</label>
+                    <label class="quiz-option"><input type="radio" name="q25" value="d"> D) Always defect</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">26. The "Battle of the Trench" (5 AH) demonstrated what strategic innovation?</div>
+                    <label class="quiz-option"><input type="radio" name="q26" value="a"> A) Digging a trench to neutralize cavalry</label>
+                    <label class="quiz-option"><input type="radio" name="q26" value="b"> B) Using spies</label>
+                    <label class="quiz-option"><input type="radio" name="q26" value="c"> C) Economic blockade</label>
+                    <label class="quiz-option"><input type="radio" name="q26" value="d"> D) Open battle</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">27. What is "asymmetric information" in game theory?</div>
+                    <label class="quiz-option"><input type="radio" name="q27" value="a"> A) One player knows more than the other</label>
+                    <label class="quiz-option"><input type="radio" name="q27" value="b"> B) Both know the same</label>
+                    <label class="quiz-option"><input type="radio" name="q27" value="c"> C) No one knows anything</label>
+                    <label class="quiz-option"><input type="radio" name="q27" value="d"> D) Perfect information</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">28. The Quranic command "And prepare against them whatever you are able of power" encourages:</div>
+                    <label class="quiz-option"><input type="radio" name="q28" value="a"> A) Constant readiness and strategic deterrence</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="b"> B) Aggression</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="c"> C) Isolationism</label>
+                    <label class="quiz-option"><input type="radio" name="q28" value="d"> D) Pacifism</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">29. What is the difference between a "Nash Equilibrium" and a "Pareto optimum"?</div>
+                    <label class="quiz-option"><input type="radio" name="q29" value="a"> A) Nash is stable; Pareto is efficient</label>
+                    <label class="quiz-option"><input type="radio" name="q29" value="b"> B) They are the same</label>
+                    <label class="quiz-option"><input type="radio" name="q29" value="c"> C) Pareto is stable; Nash is efficient</label>
+                    <label class="quiz-option"><input type="radio" name="q29" value="d"> D) Neither relates to outcomes</label>
+                </div>
+
+                <div class="quiz-question"><div class="question-text">30. According to prophetic Tadbeer, true strategic wisdom is:</div>
+                    <label class="quiz-option"><input type="radio" name="q30" value="a"> A) Winning every battle</label>
+                    <label class="quiz-option"><input type="radio" name="q30" value="b"> B) Understanding the long-term endgame and sacrificing short-term ego</label>
+                    <label class="quiz-option"><input type="radio" name="q30" value="c"> C) Never compromising</label>
+                    <label class="quiz-option"><input type="radio" name="q30" value="d"> D) Always fighting</label>
+                </div>
+            </form>
+
+            <button class="submit-btn" onclick="checkQuiz()">Submit Answers</button>
+            <div id="quizResult" class="result"></div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/assets/js/components.js"></script>
+    <script>
+        function checkQuiz() {
+            let score = 0;
+            let total = 30;
+            let resultHtml = '<div style="text-align: left;"><strong>Your Results:</strong><ul style="margin-top: 10px;">';
+            
+            const correctAnswers = {
+                q1: 'b', q2: 'b', q3: 'c', q4: 'c', q5: 'c', q6: 'a', q7: 'c', q8: 'b', q9: 'a', q10: 'a',
+                q11: 'a', q12: 'b', q13: 'b', q14: 'a', q15: 'd', q16: 'b', q17: 'b', q18: 'a', q19: 'b', q20: 'b',
+                q21: 'a', q22: 'b', q23: 'a', q24: 'c', q25: 'a', q26: 'a', q27: 'a', q28: 'a', q29: 'a', q30: 'b'
+            };
+            
+            const explanations = {
+                q1: 'A Nash Equilibrium is a stable state where no player can unilaterally improve their outcome.',
+                q2: 'Rational individual choice is to defect, but mutual cooperation yields better collective outcome.',
+                q3: 'Tit-for-Tat starts with cooperation, then mirrors the opponent\'s previous move.',
+                q4: 'The Chicken Game simulates brinkmanship — who swerves first.',
+                q5: 'Tit-for-Tat won Robert Axelrod\'s tournaments.',
+                q6: 'The Stag Hunt tests whether players trust each other to cooperate for a larger reward.',
+                q7: 'Zero-sum means one player\'s gain is exactly another\'s loss.',
+                q8: 'John Nash invented the Nash Equilibrium (Nobel Prize 1994).',
+                q9: 'Battle of the Sexes is a coordination game without communication.',
+                q10: 'Pareto efficiency means no one can be better off without harming another.',
+                q11: 'The treaty sacrificed short-term dignity for long-term victory.',
+                q12: 'Tadbeer is long-term strategic foresight and planning.',
+                q13: 'Quran 8:60 commands believers to prepare power.',
+                q14: 'The Millet system was a stable cooperative equilibrium for centuries.',
+                q15: 'Political Zionism, WWI, and Ottoman decline all contributed.',
+                q16: 'Albert Einstein rejected political Zionism, calling its early militias "fascist."',
+                q17: 'The Constitution of Medina created a multi-religious cooperative state.',
+                q18: 'Shura means consultation — a key Islamic decision-making principle.',
+                q19: 'The Cold War standoff was a classic Chicken Game (mutually assured destruction).',
+                q20: 'Short-term humiliation can lead to long-term victory — the essence of Tadbeer.',
+                q21: 'A credible commitment is a promise that cannot be broken without cost.',
+                q22: 'The Prophet (ﷺ) honored the treaty despite its humiliating terms.',
+                q23: 'Moral hazard is risk-taking because someone else bears the cost.',
+                q24: 'Tit-for-Tat won the repeated Prisoner\'s Dilemma tournament.',
+                q25: 'Grim trigger: cooperate until opponent defects, then defect forever.',
+                q26: 'The trench was a Persian innovation that neutralized cavalry.',
+                q27: 'Asymmetric information means one player knows more than the other.',
+                q28: 'The verse encourages constant readiness and strategic deterrence.',
+                q29: 'Nash Equilibrium is about stability; Pareto optimum is about efficiency.',
+                q30: 'True wisdom is understanding the endgame and sacrificing short-term ego.'
+            };
+            
+            for (let i = 1; i <= total; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const isCorrect = selected && selected.value === correctAnswers[`q${i}`];
+                if (isCorrect) score++;
+                
+                let correctAnswerText = '';
+                const correctValue = correctAnswers[`q${i}`];
+                const allOptions = document.querySelectorAll(`input[name="q${i}"]`);
+                for (let opt of allOptions) {
+                    if (opt.value === correctValue) {
+                        const label = opt.closest('label');
+                        if (label) correctAnswerText = label.innerText.trim();
+                        break;
+                    }
+                }
+                
+                resultHtml += `<li style="margin-bottom: 12px; padding: 8px; background: ${isCorrect ? '#d1fae5' : '#fee2e2'}; border-radius: 8px;">`;
+                resultHtml += `<strong>Question ${i}:</strong> ${isCorrect ? '✅ Correct' : '❌ Incorrect'}<br>`;
+                if (!isCorrect && correctAnswerText) resultHtml += `<span style="font-size: 0.85rem;">Correct answer: ${correctAnswerText}</span><br>`;
+                resultHtml += `<span style="font-size: 0.8rem; color: #475569;">💡 ${explanations[`q${i}`]}</span></li>`;
+            }
+            
+            resultHtml += '</ul></div>';
+            const resultDiv = document.getElementById('quizResult');
+            resultDiv.style.display = 'block';
+            const percentage = (score / total) * 100;
+            
+            let message = '';
+            if (percentage >= 80) message = '🎉 Excellent! You have mastered game theory and Tadbeer.';
+            else if (percentage >= 60) message = '📚 Good effort! Review the concepts and historical examples.';
+            else message = '📖 Review the lesson carefully. Focus on core concepts and prophetic examples.';
+            
+            resultDiv.innerHTML = `<div class="score-highlight">${score}/${total}</div><p>${message}</p>${resultHtml}`;
+            document.getElementById('progressFill').style.width = `${(score / total) * 100}%`;
+        }
+    </script>
+</body>
+</html>
