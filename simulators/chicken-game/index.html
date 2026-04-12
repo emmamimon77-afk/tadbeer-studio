@@ -131,6 +131,7 @@
     </div>
     
     <div id="footer-placeholder"></div>
+
     <script src="/assets/js/components.js"></script>
     <script>
         // Game variables
@@ -269,7 +270,8 @@
             }
         }
         
-        function startGame() {
+        // This function displays the initial game buttons
+        function showGameButtons() {
             let html = '<div class="intro-text"><h3 style="color: #ef4444;">📜 The Chicken Game Scenario</h3>';
             html += '<p>Two drivers race toward each other on a narrow road. Each must choose: <strong>SWERVE</strong> (yield, lose face) or <strong>DRIVE STRAIGHT</strong> (hold firm, risk disaster).</p>';
             html += '<ul style="margin-left: 20px; color: #cbd5e1;"><li>🤝 Both swerve → Draw, both lose face</li>';
@@ -283,8 +285,10 @@
             document.getElementById('gameContent').innerHTML = html;
         }
         
-        startGame();
+        // Initialize the game
+        showGameButtons();
         updateUI();
     </script>
+
 </body>
 </html>
