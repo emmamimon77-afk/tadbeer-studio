@@ -8,35 +8,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0f172a; font-family: 'Inter', sans-serif; }
         .pd-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .game-panel { background: #0f172a; border-radius: 28px; padding: 25px; margin-bottom: 25px; border: 1px solid #3b82f6; }
-        .stat-box { display: inline-block; background: #1e293b; padding: 10px 20px; border-radius: 16px; margin: 5px; border: 1px solid #3b82f6; }
+        .game-panel { background: #1e293b; border-radius: 28px; padding: 25px; margin-bottom: 25px; border: 1px solid #3b82f6; }
+        .stat-box { display: inline-block; background: #0f172a; padding: 10px 20px; border-radius: 16px; margin: 5px; border: 1px solid #3b82f6; }
         .stat-label { font-size: 12px; color: #94a3b8; }
         .stat-value { font-size: 28px; font-weight: bold; color: #3b82f6; }
-        .payoff-table { background: #1e293b; border-radius: 16px; padding: 15px; margin: 20px 0; overflow-x: auto; }
+        .payoff-table { background: #0f172a; border-radius: 16px; padding: 15px; margin: 20px 0; overflow-x: auto; }
         .payoff-table table { width: 100%; border-collapse: collapse; }
         .payoff-table th, .payoff-table td { padding: 12px; text-align: center; border: 1px solid #3b82f6; color: #e2e8f0; }
-        .payoff-table th { background: #0f172a; color: #3b82f6; }
+        .payoff-table th { background: #1e293b; color: #3b82f6; }
         .choice-btn { display: block; width: 100%; padding: 16px; margin: 12px 0; background: #1e293b; border: 2px solid #3b82f6; border-radius: 20px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #f0f0f0; text-align: center; transition: all 0.2s; }
         .choice-btn:hover { background: #3b82f6; color: #0f172a; transform: scale(1.01); }
         .quran-box { background: #0f172a; padding: 20px; border-radius: 20px; margin: 20px 0; border-left: 4px solid #fbbf24; }
-        .arabic { font-size: 1.2rem; font-family: 'Amiri', serif; color: #fbbf24; margin-bottom: 8px; }
-        .round-result { background: #1e293b; padding: 15px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #3b82f6; }
-        .outcome-card { background: #1e293b; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #3b82f6; }
+        .arabic { font-size: 1.4rem; font-family: 'Amiri', serif; color: #fbbf24; margin-bottom: 12px; text-align: right; }
+        .round-result { background: #1e293b; padding: 20px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #3b82f6; color: #e2e8f0; }
+        .outcome-card { background: #1e293b; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #3b82f6; color: #e2e8f0; }
         .restart-btn { background: #3b82f6; color: white; border: none; padding: 14px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
         .btn-secondary { background: #1e293b; border: 1px solid #3b82f6; color: #3b82f6; padding: 10px 20px; border-radius: 50px; text-decoration: none; display: inline-block; }
         .section-title { color: #3b82f6; font-size: 1.5rem; margin: 25px 0 15px; border-bottom: 2px solid #3b82f6; padding-bottom: 8px; }
-        @media (max-width: 768px) { .pd-container { padding: 12px; } .choice-btn { padding: 12px; font-size: 0.9rem; } .stat-box { padding: 5px 12px; } .stat-value { font-size: 22px; } }
+        h1 { color: #3b82f6; text-align: center; margin-bottom: 15px; }
+        p { color: #cbd5e1; line-height: 1.6; margin-bottom: 10px; }
+        .intro-text { background: #1e293b; padding: 20px; border-radius: 20px; margin-bottom: 20px; }
+        @media (max-width: 768px) { .pd-container { padding: 12px; } .choice-btn { padding: 12px; font-size: 0.9rem; } .stat-box { padding: 5px 12px; } .stat-value { font-size: 22px; } .arabic { font-size: 1.1rem; } }
     </style>
 </head>
 <body>
     <div id="navbar-placeholder"></div>
-    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div></div>
+    <div class="bismillah" style="background: #1e293b; padding: 15px; text-align: center; border-bottom: 1px solid #3b82f6;">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation" style="color: #94a3b8;">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
     
     <div class="pd-container">
-        <h1 style="text-align: center; color: #3b82f6;">🔐 Prisoner's Dilemma: Game Theory & Islamic Ethics</h1>
-        <p style="text-align: center; color: #cbd5e1;">5 rounds. Your choices against an adaptive opponent. Learn cooperation, trust, and Islamic values.</p>
+        <h1>🔐 Prisoner's Dilemma: Game Theory & Islamic Ethics</h1>
+        <p style="text-align: center; margin-bottom: 20px;">5 rounds. Your choices against an adaptive opponent. Learn cooperation, trust, and Islamic values.</p>
         
         <!-- Educational Section -->
         <div class="quran-box">
@@ -72,38 +79,40 @@
     <script src="/assets/js/components.js"></script>
     <script>
         // Game state
-        let round = 1;
-        let yourScore = 0;
-        let opponentScore = 0;
-        let trust = 50;
-        let yourHistory = [];
-        let opponentHistory = [];
+        let currentRound = 1;
+        let yourTotalScore = 0;
+        let opponentTotalScore = 0;
+        let currentTrust = 50;
+        let yourMoveHistory = [];
+        let opponentMoveHistory = [];
         
         function updateUI() {
-            document.getElementById('roundNum').innerText = round;
-            document.getElementById('yourScore').innerText = yourScore;
-            document.getElementById('opponentScore').innerText = opponentScore;
-            document.getElementById('trustLevel').innerText = trust;
+            document.getElementById('roundNum').innerText = currentRound;
+            document.getElementById('yourScore').innerText = yourTotalScore;
+            document.getElementById('opponentScore').innerText = opponentTotalScore;
+            document.getElementById('trustLevel').innerText = currentTrust;
         }
         
-        function opponentDecision() {
-            if (round === 1) return Math.random() > 0.5 ? 'cooperate' : 'defect';
-            if (round === 2) {
-                return yourHistory[0] === 'cooperate' ? 'cooperate' : 'defect';
+        function opponentMove() {
+            if (currentRound === 1) {
+                return Math.random() > 0.5 ? 'cooperate' : 'defect';
             }
-            if (round === 3) {
-                if (yourHistory[0] === 'defect' && yourHistory[1] === 'defect') return 'defect';
-                if (yourHistory[0] === 'cooperate' && yourHistory[1] === 'cooperate') return 'cooperate';
+            if (currentRound === 2) {
+                return yourMoveHistory[0] === 'cooperate' ? 'cooperate' : 'defect';
+            }
+            if (currentRound === 3) {
+                if (yourMoveHistory[0] === 'defect' && yourMoveHistory[1] === 'defect') return 'defect';
+                if (yourMoveHistory[0] === 'cooperate' && yourMoveHistory[1] === 'cooperate') return 'cooperate';
                 return 'cooperate';
             }
-            if (round === 4) {
-                const cooperateCount = yourHistory.filter(m => m === 'cooperate').length;
-                return cooperateCount >= 2 ? 'cooperate' : 'defect';
+            if (currentRound === 4) {
+                let coopCount = yourMoveHistory.filter(m => m === 'cooperate').length;
+                return coopCount >= 2 ? 'cooperate' : 'defect';
             }
-            if (round === 5) {
-                if (trust > 70) return 'cooperate';
-                if (trust < 30) return 'defect';
-                return yourHistory[yourHistory.length - 1] === 'cooperate' ? 'cooperate' : 'defect';
+            if (currentRound === 5) {
+                if (currentTrust > 70) return 'cooperate';
+                if (currentTrust < 30) return 'defect';
+                return yourMoveHistory[yourMoveHistory.length - 1] === 'cooperate' ? 'cooperate' : 'defect';
             }
             return 'defect';
         }
@@ -113,7 +122,7 @@
                 return '✅ Quran 5:2: "Cooperate in righteousness and piety." Mutual cooperation is the Islamic ideal. Both benefit.';
             }
             if (yourMove === 'cooperate' && opponentMove === 'defect') {
-                return '⚠️ You trusted, but were betrayed. Allah says: "Do not be deceived by the conduct of the wicked." (Quran 35:5) The Prophet (ﷺ) was betrayed by others but never betrayed.';
+                return '⚠️ You trusted, but were betrayed. Allah says: "Do not be deceived by the conduct of the wicked." (Quran 35:5) The Prophet (ﷺ) was betrayed but never betrayed.';
             }
             if (yourMove === 'defect' && opponentMove === 'cooperate') {
                 return '❌ You exploited your opponent\'s trust. The Prophet (ﷺ) said: "The believer is not one who deceives." This is a sin.';
@@ -125,8 +134,7 @@
         }
         
         function endGame() {
-            let totalCoop = yourHistory.filter(m => m === 'cooperate').length;
-            let totalDef = yourHistory.filter(m => m === 'defect').length;
+            let totalCoop = yourMoveHistory.filter(m => m === 'cooperate').length;
             let percentageCoop = (totalCoop / 5) * 100;
             let profile = '';
             let islamicAssessment = '';
@@ -146,7 +154,7 @@
             }
             
             let resultHtml = '<div class="outcome-card"><h3 style="color: #3b82f6;">🏁 GAME COMPLETE</h3>';
-            resultHtml += '<p><strong>Your Final Score:</strong> ' + yourScore + ' | <strong>Opponent Score:</strong> ' + opponentScore + '</p>';
+            resultHtml += '<p><strong>Your Final Score:</strong> ' + yourTotalScore + ' | <strong>Opponent Score:</strong> ' + opponentTotalScore + '</p>';
             resultHtml += '<p><strong>Your Cooperation Rate:</strong> ' + percentageCoop + '% (' + totalCoop + '/5 rounds)</p>';
             resultHtml += '<div class="quran-box"><h4 style="color: #fbbf24;">🎭 Your Psychological Profile</h4><p><strong>' + profile + '</strong></p>';
             resultHtml += '<h4 style="color: #fbbf24; margin-top: 15px;">📖 Islamic Ethical Assessment</h4><p>' + islamicAssessment + '</p>';
@@ -155,59 +163,58 @@
             document.getElementById('gameContent').innerHTML = resultHtml;
         }
         
-        function processRound(yourMove) {
-            const opponentMove = opponentDecision();
+        function processRound(yourChoice) {
+            const opponentChoice = opponentMove();
             let yourPoints = 0;
             let opponentPoints = 0;
             let outcomeMessage = '';
             
-            if (yourMove === 'cooperate' && opponentMove === 'cooperate') {
+            if (yourChoice === 'cooperate' && opponentChoice === 'cooperate') {
                 yourPoints = 3;
                 opponentPoints = 3;
                 outcomeMessage = '🤝 Both stayed silent. You each receive 3 years reduction. Mutual cooperation!';
-                trust += 10;
-            } else if (yourMove === 'cooperate' && opponentMove === 'defect') {
+                currentTrust += 10;
+            } else if (yourChoice === 'cooperate' && opponentChoice === 'defect') {
                 yourPoints = 5;
                 opponentPoints = 0;
                 outcomeMessage = '😔 You stayed silent, but your partner confessed. You receive maximum sentence. Your partner goes free.';
-                trust -= 15;
-            } else if (yourMove === 'defect' && opponentMove === 'cooperate') {
+                currentTrust -= 15;
+            } else if (yourChoice === 'defect' && opponentChoice === 'cooperate') {
                 yourPoints = 0;
                 opponentPoints = 5;
                 outcomeMessage = '😈 You confessed and betrayed your partner. You go free. Your partner gets maximum sentence.';
-                trust -= 10;
+                currentTrust -= 10;
             } else {
                 yourPoints = 2;
                 opponentPoints = 2;
                 outcomeMessage = '⚠️ Both confessed. You each receive a reduced but significant sentence. Mutual loss.';
-                trust -= 5;
+                currentTrust -= 5;
             }
             
-            trust = Math.min(100, Math.max(0, trust));
+            currentTrust = Math.min(100, Math.max(0, currentTrust));
             
-            yourScore += yourPoints;
-            opponentScore += opponentPoints;
-            yourHistory.push(yourMove);
-            opponentHistory.push(opponentMove);
+            yourTotalScore += yourPoints;
+            opponentTotalScore += opponentPoints;
+            yourMoveHistory.push(yourChoice);
+            opponentMoveHistory.push(opponentChoice);
             
-            const islamicMessage = getIslamicMessage(yourMove, opponentMove);
+            const islamicMessage = getIslamicMessage(yourChoice, opponentChoice);
             
-            let roundHtml = '<div class="round-result"><h4 style="color: #fbbf24;">Round ' + round + ' Result</h4>';
-            roundHtml += '<p><strong>You chose:</strong> ' + (yourMove === 'cooperate' ? '🤐 Stay Silent (Cooperate)' : '🗣️ Confess (Defect)') + '</p>';
-            roundHtml += '<p><strong>Opponent chose:</strong> ' + (opponentMove === 'cooperate' ? '🤐 Stay Silent (Cooperate)' : '🗣️ Confess (Defect)') + '</p>';
+            let roundHtml = '<div class="round-result"><h4 style="color: #fbbf24;">Round ' + currentRound + ' Result</h4>';
+            roundHtml += '<p><strong>You chose:</strong> ' + (yourChoice === 'cooperate' ? '🤐 Stay Silent (Cooperate)' : '🗣️ Confess (Defect)') + '</p>';
+            roundHtml += '<p><strong>Opponent chose:</strong> ' + (opponentChoice === 'cooperate' ? '🤐 Stay Silent (Cooperate)' : '🗣️ Confess (Defect)') + '</p>';
             roundHtml += '<p><strong>Outcome:</strong> ' + outcomeMessage + '</p>';
             roundHtml += '<p><strong>Your score this round:</strong> +' + yourPoints + ' | <strong>Opponent:</strong> +' + opponentPoints + '</p>';
             roundHtml += '<div class="quran-box" style="margin-top: 10px;"><p>' + islamicMessage + '</p></div></div>';
             
-            if (round < 5) {
-                round++;
+            if (currentRound < 5) {
+                currentRound++;
                 updateUI();
                 roundHtml += '<div style="margin-top: 15px;"><button class="choice-btn" onclick="makeChoice(\'cooperate\')">🤝 Cooperate (Stay Silent)</button>';
                 roundHtml += '<button class="choice-btn" onclick="makeChoice(\'defect\')">⚔️ Defect (Confess)</button></div>';
                 document.getElementById('gameContent').innerHTML = roundHtml;
             } else {
                 updateUI();
-                roundHtml += '<div style="margin-top: 15px;"></div>';
                 document.getElementById('gameContent').innerHTML = roundHtml;
                 endGame();
             }
@@ -217,10 +224,10 @@
             processRound(choice);
         }
         
-        function showIntro() {
-            let introHtml = '<div class="quran-box"><h3 style="color: #3b82f6;">📜 The Scenario</h3>';
+        function startGame() {
+            let introHtml = '<div class="intro-text"><h3 style="color: #3b82f6;">📜 The Scenario</h3>';
             introHtml += '<p>You and your partner have been arrested. You are placed in separate rooms. The prosecutor offers each of you a deal:</p>';
-            introHtml += '<ul style="margin-left: 20px;"><li>If <strong>both stay silent</strong> (cooperate), each gets <strong>3 years</strong>.</li>';
+            introHtml += '<ul style="margin-left: 20px; color: #cbd5e1;"><li>If <strong>both stay silent</strong> (cooperate), each gets <strong>3 years</strong>.</li>';
             introHtml += '<li>If <strong>one confesses</strong> (defects) and the other stays silent, the confessor goes <strong>free</strong> and the silent one gets <strong>5 years</strong>.</li>';
             introHtml += '<li>If <strong>both confess</strong> (defect), each gets <strong>2 years</strong>.</li></ul>';
             introHtml += '<p>The dilemma: You cannot communicate with your partner. Do you trust them? Or do you protect yourself?</p>';
@@ -230,7 +237,7 @@
             document.getElementById('gameContent').innerHTML = introHtml;
         }
         
-        showIntro();
+        startGame();
         updateUI();
     </script>
 </body>
