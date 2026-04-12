@@ -11,43 +11,27 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0f172a; font-family: 'Inter', sans-serif; }
         .cg-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        
-        /* Game Panel */
         .game-panel { background: #1e1a2e; border-radius: 28px; padding: 25px; margin-bottom: 25px; border: 1px solid #ef4444; }
-        
-        /* Stats Boxes */
         .stat-box { display: inline-block; background: #0f172a; padding: 10px 20px; border-radius: 16px; margin: 5px; border: 1px solid #ef4444; }
         .stat-label { font-size: 12px; color: #94a3b8; }
         .stat-value { font-size: 28px; font-weight: bold; color: #ef4444; }
-        
-        /* Payoff Matrix */
         .payoff-table { background: #0f172a; border-radius: 16px; padding: 15px; margin: 20px 0; overflow-x: auto; }
         .payoff-table table { width: 100%; border-collapse: collapse; }
         .payoff-table th, .payoff-table td { padding: 12px; text-align: center; border: 1px solid #ef4444; color: #e2e8f0; }
         .payoff-table th { background: #1e1a2e; color: #ef4444; }
-        
-        /* Buttons */
         .choice-btn { display: block; width: 100%; padding: 16px; margin: 12px 0; background: #1e1a2e; border: 2px solid #ef4444; border-radius: 20px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #f0f0f0; text-align: center; transition: all 0.2s; }
         .choice-btn:hover { background: #ef4444; color: #0f172a; transform: scale(1.01); }
-        
-        /* Quran and Educational Boxes */
-        .quran-box { background: #0f172a; padding: 20px; border-radius: 20px; margin: 20px 0; border-left: 4px solid #fbbf24; }
+        .quran-box { background: #0f172a; padding: 20px; border-radius: 20px; margin: 20px 0; border-left: 4px solid #fbbf24; color: #e2e8f0; }
         .arabic { font-size: 1.4rem; font-family: 'Amiri', serif; color: #fbbf24; margin-bottom: 12px; text-align: right; }
-        .islamic-box { background: #1e1a2e; padding: 20px; border-radius: 20px; margin: 20px 0; border-right: 4px solid #fbbf24; }
-        
-        /* Round Results */
+        .islamic-box { background: #1e1a2e; padding: 20px; border-radius: 20px; margin: 20px 0; border-right: 4px solid #fbbf24; color: #e2e8f0; }
         .round-result { background: #1e1a2e; padding: 20px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #ef4444; color: #e2e8f0; }
         .outcome-card { background: #1e1a2e; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #ef4444; color: #e2e8f0; }
         .restart-btn { background: #ef4444; color: white; border: none; padding: 14px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
         .btn-secondary { background: #1e1a2e; border: 1px solid #ef4444; color: #ef4444; padding: 10px 20px; border-radius: 50px; text-decoration: none; display: inline-block; }
-        
-        /* Typography */
         h1 { color: #ef4444; text-align: center; margin-bottom: 15px; }
         p { color: #cbd5e1; line-height: 1.6; margin-bottom: 10px; }
-        .intro-text { background: #1e1a2e; padding: 20px; border-radius: 20px; margin-bottom: 20px; }
+        .intro-text { background: #1e1a2e; padding: 20px; border-radius: 20px; margin-bottom: 20px; color: #e2e8f0; }
         .real-world-example { background: #0f172a; padding: 15px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #fbbf24; }
-        
-        /* Responsive */
         @media (max-width: 768px) { 
             .cg-container { padding: 12px; } 
             .choice-btn { padding: 12px; font-size: 0.9rem; } 
@@ -66,7 +50,7 @@
     
     <div class="cg-container">
         <h1>🐔 Chicken Game: Brinkmanship & Islamic Ethics</h1>
-        <p style="text-align: center; margin-bottom: 20px;">5 rounds. Two drivers race toward each other. Who swerves first? Learn game theory, Islamic values, and strategic wisdom.</p>
+        <p style="text-align: center; margin-bottom: 20px; color: #cbd5e1;">5 rounds. Two drivers race toward each other. Who swerves first? Learn game theory, Islamic values, and strategic wisdom.</p>
         
         <!-- Islamic Foundation Box -->
         <div class="quran-box">
@@ -118,6 +102,7 @@
             </ul>
         </div>
 
+        <!-- Game Panel -->
         <div id="gamePanel" class="game-panel">
             <div style="text-align: center; margin-bottom: 20px;">
                 <span class="stat-box"><div class="stat-label">Round</div><div class="stat-value" id="roundNum">1</div></span>
@@ -125,13 +110,28 @@
                 <span class="stat-box"><div class="stat-label">Opponent Reputation</div><div class="stat-value" id="opponentScore">0</div></span>
                 <span class="stat-box"><div class="stat-label">Tension Level</div><div class="stat-value" id="tension">30</div></span>
             </div>
-            <div id="gameContent"></div>
+            <div id="gameContent">
+                <!-- Game buttons will appear here -->
+                <div class="intro-text">
+                    <h3 style="color: #ef4444;">📜 The Chicken Game Scenario</h3>
+                    <p>Two drivers race toward each other on a narrow road. Each must choose: <strong>SWERVE</strong> (yield, lose face) or <strong>DRIVE STRAIGHT</strong> (hold firm, risk disaster).</p>
+                    <ul style="margin-left: 20px;">
+                        <li>🤝 Both swerve → Draw, both lose face</li>
+                        <li>🔄 You swerve, opponent drives straight → You lose, opponent wins</li>
+                        <li>🚀 You drive straight, opponent swerves → You win, opponent loses</li>
+                        <li>💀 Both drive straight → CRASH! Mutual destruction</li>
+                    </ul>
+                    <p><strong>Round 1 of 5:</strong> Your opponent is a stranger. Their strategy will adapt based on your choices.</p>
+                    <p><strong>Islamic Reminder:</strong> "Do not throw yourselves into destruction." (Quran 2:195) But also, "Be steadfast for Allah, witnesses in justice." (Quran 5:8)</p>
+                </div>
+                <button class="choice-btn" onclick="playRound('swerve')">🔄 SWERVE (Yield - Lose face, avoid crash)</button>
+                <button class="choice-btn" onclick="playRound('straight')">🚀 DRIVE STRAIGHT (Hold firm - Risk disaster)</button>
+            </div>
         </div>
         <a href="/simulators" class="btn-secondary">← Back to Simulators</a>
     </div>
     
     <div id="footer-placeholder"></div>
-
     <script src="/assets/js/components.js"></script>
     <script>
         // Game variables
@@ -196,7 +196,7 @@
                 islamicAssessment = 'You chose aggression almost every time. Islam forbids self-destruction and reckless behavior. The Prophet (ﷺ) said: "The strong is not the one who overcomes people, but the one who controls himself in anger."';
             } else if (percentageAggressive >= 50) {
                 profile = '⚖️ The Balanced Competitor';
-                islamicAssessment = 'You mixed aggression and caution. Islam teaches justice ('adl) and balance (wasatiyyah). You demonstrated strategic wisdom, knowing when to stand firm and when to yield.';
+                islamicAssessment = 'You mixed aggression and caution. Islam teaches justice (adl) and balance (wasatiyyah). You demonstrated strategic wisdom, knowing when to stand firm and when to yield.';
             } else if (percentageAggressive >= 20) {
                 profile = '🕊️ The Cautious Yielder';
                 islamicAssessment = 'You preferred to swerve rather than risk disaster. Islam values the preservation of life above all. "Whoever saves one life, it is as if he saved all mankind." (Quran 5:32)';
@@ -270,25 +270,7 @@
             }
         }
         
-        // This function displays the initial game buttons
-        function showGameButtons() {
-            let html = '<div class="intro-text"><h3 style="color: #ef4444;">📜 The Chicken Game Scenario</h3>';
-            html += '<p>Two drivers race toward each other on a narrow road. Each must choose: <strong>SWERVE</strong> (yield, lose face) or <strong>DRIVE STRAIGHT</strong> (hold firm, risk disaster).</p>';
-            html += '<ul style="margin-left: 20px; color: #cbd5e1;"><li>🤝 Both swerve → Draw, both lose face</li>';
-            html += '<li>🔄 You swerve, opponent drives straight → You lose, opponent wins</li>';
-            html += '<li>🚀 You drive straight, opponent swerves → You win, opponent loses</li>';
-            html += '<li>💀 Both drive straight → CRASH! Mutual destruction</li></ul>';
-            html += '<p><strong>Round 1 of 5:</strong> Your opponent is a stranger. Their strategy will adapt based on your choices.</p>';
-            html += '<p><strong>Islamic Reminder:</strong> "Do not throw yourselves into destruction." (Quran 2:195) But also, "Be steadfast for Allah, witnesses in justice." (Quran 5:8)</p></div>';
-            html += '<button class="choice-btn" onclick="playRound(\'swerve\')">🔄 SWERVE (Yield - Lose face, avoid crash)</button>';
-            html += '<button class="choice-btn" onclick="playRound(\'straight\')">🚀 DRIVE STRAIGHT (Hold firm - Risk disaster)</button>';
-            document.getElementById('gameContent').innerHTML = html;
-        }
-        
-        // Initialize the game
-        showGameButtons();
         updateUI();
     </script>
-
 </body>
 </html>
