@@ -3,104 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Chicken Game - Enhanced | Tadbeer Studio</title>
+    <title>Chicken Game - Brinkmanship & Islamic Ethics | Tadbeer Studio</title>
     <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; }
-        .cg-container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        .game-panel { background: #1e1a1a; border-radius: 28px; padding: 30px; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); border: 1px solid #ef4444; }
-        .stage-badge { display: inline-block; background: #ef4444; color: white; padding: 4px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: bold; margin-bottom: 15px; }
-        .choice-btn { display: block; width: 100%; padding: 16px 20px; margin: 12px 0; background: #2a1a1a; border: 2px solid #ef4444; border-radius: 20px; cursor: pointer; transition: all 0.2s; text-align: left; font-size: 1rem; font-weight: 500; color: #f0f0f0; }
-        .choice-btn:hover { background: #ef4444; transform: translateX(8px); color: white; }
-        .stats-row { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
-        .stat-card { background: #2a1a1a; padding: 12px; border-radius: 16px; text-align: center; flex: 1; border: 1px solid #ef4444; color: #f0f0f0; }
-        .stat-value { font-size: 1.4rem; font-weight: bold; color: #ef4444; }
-        .tension-meter { background: #ef4444; border-radius: 10px; height: 8px; margin: 15px 0; overflow: hidden; }
-        .tension-fill { background: #ff6b6b; height: 100%; width: 0%; transition: width 0.5s; }
-        .opponent-speech { background: #2a1a1a; padding: 20px; border-radius: 20px; margin: 15px 0; border-left: 4px solid #ef4444; color: #f0f0f0; }
-        .outcome-card { background: #2a1a1a; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #ef4444; display: none; animation: fadeIn 0.5s; color: #f0f0f0; }
-        .restart-btn { background: #ef4444; color: white; border: none; padding: 14px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }
-        .shake { animation: shake 0.3s; }
-        @media (max-width: 768px) { .cg-container { padding: 12px; } .choice-btn { padding: 12px; font-size: 0.9rem; } }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0f172a; font-family: 'Inter', sans-serif; }
+        .cg-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        
+        /* Game Panel */
+        .game-panel { background: #1e1a2e; border-radius: 28px; padding: 25px; margin-bottom: 25px; border: 1px solid #ef4444; }
+        
+        /* Stats Boxes */
+        .stat-box { display: inline-block; background: #0f172a; padding: 10px 20px; border-radius: 16px; margin: 5px; border: 1px solid #ef4444; }
+        .stat-label { font-size: 12px; color: #94a3b8; }
+        .stat-value { font-size: 28px; font-weight: bold; color: #ef4444; }
+        
+        /* Payoff Matrix */
+        .payoff-table { background: #0f172a; border-radius: 16px; padding: 15px; margin: 20px 0; overflow-x: auto; }
+        .payoff-table table { width: 100%; border-collapse: collapse; }
+        .payoff-table th, .payoff-table td { padding: 12px; text-align: center; border: 1px solid #ef4444; color: #e2e8f0; }
+        .payoff-table th { background: #1e1a2e; color: #ef4444; }
+        
+        /* Buttons */
+        .choice-btn { display: block; width: 100%; padding: 16px; margin: 12px 0; background: #1e1a2e; border: 2px solid #ef4444; border-radius: 20px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #f0f0f0; text-align: center; transition: all 0.2s; }
+        .choice-btn:hover { background: #ef4444; color: #0f172a; transform: scale(1.01); }
+        
+        /* Quran and Educational Boxes */
+        .quran-box { background: #0f172a; padding: 20px; border-radius: 20px; margin: 20px 0; border-left: 4px solid #fbbf24; }
+        .arabic { font-size: 1.4rem; font-family: 'Amiri', serif; color: #fbbf24; margin-bottom: 12px; text-align: right; }
+        .islamic-box { background: #1e1a2e; padding: 20px; border-radius: 20px; margin: 20px 0; border-right: 4px solid #fbbf24; }
+        
+        /* Round Results */
+        .round-result { background: #1e1a2e; padding: 20px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #ef4444; color: #e2e8f0; }
+        .outcome-card { background: #1e1a2e; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #ef4444; color: #e2e8f0; }
+        .restart-btn { background: #ef4444; color: white; border: none; padding: 14px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
+        .btn-secondary { background: #1e1a2e; border: 1px solid #ef4444; color: #ef4444; padding: 10px 20px; border-radius: 50px; text-decoration: none; display: inline-block; }
+        
+        /* Typography */
+        h1 { color: #ef4444; text-align: center; margin-bottom: 15px; }
+        p { color: #cbd5e1; line-height: 1.6; margin-bottom: 10px; }
+        .intro-text { background: #1e1a2e; padding: 20px; border-radius: 20px; margin-bottom: 20px; }
+        .real-world-example { background: #0f172a; padding: 15px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #fbbf24; }
+        
+        /* Responsive */
+        @media (max-width: 768px) { 
+            .cg-container { padding: 12px; } 
+            .choice-btn { padding: 12px; font-size: 0.9rem; } 
+            .stat-box { padding: 5px 12px; } 
+            .stat-value { font-size: 22px; } 
+            .arabic { font-size: 1.1rem; }
+        }
     </style>
 </head>
 <body>
     <div id="navbar-placeholder"></div>
-    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div></div>
+    <div class="bismillah" style="background: #1e1a2e; padding: 15px; text-align: center; border-bottom: 1px solid #ef4444;">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation" style="color: #94a3b8;">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+    
     <div class="cg-container">
-        <h1 class="page-title" style="text-align: center; color: #ef4444;">🐔 Chicken Game - Enhanced</h1>
-        <p class="page-subtitle" style="text-align: center; color: #cbd5e1;">5 rounds. Hidden opponent patterns. Crash or victory. Who blinks first?</p>
+        <h1>🐔 Chicken Game: Brinkmanship & Islamic Ethics</h1>
+        <p style="text-align: center; margin-bottom: 20px;">5 rounds. Two drivers race toward each other. Who swerves first? Learn game theory, Islamic values, and strategic wisdom.</p>
+        
+        <!-- Islamic Foundation Box -->
+        <div class="quran-box">
+            <div class="arabic">وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ</div>
+            <p><strong>📖 Islamic Foundation:</strong> "And cooperate in righteousness and piety." (Quran 5:2) — Islam encourages cooperation ('adl), justice, and mutual benefit. Cheating, deception, and zero-sum exploitation are strictly prohibited.</p>
+            <p>The Prophet (ﷺ) said: <strong>"The believer is not one who deceives."</strong> In the Chicken Game, bluffing and pre-commitment can be forms of deception. Islam teaches truthfulness (sidq) and wisdom (hikmah) in all dealings.</p>
+        </div>
+
+        <!-- Payoff Matrix -->
+        <div class="payoff-table">
+            <h4 style="color: #fbbf24; margin-bottom: 10px;">📊 Payoff Matrix (Reputation Points)</h4>
+            <table>
+                <tr><th></th><th>🤝 Opponent Swerves</th><th>⚔️ Opponent Drives Straight</th></tr>
+                <tr><th>🤝 You Swerve</th><td>0, 0 (Draw - both lose face)</td><td>-1, +2 (You lose, opponent wins)</td></tr>
+                <tr><th>⚔️ You Drive Straight</th><td>+2, -1 (You win, opponent loses)</td><td>-10, -10 (CRASH - both lose)</td></tr>
+            </table>
+            <p style="color: #94a3b8; font-size: 12px; margin-top: 10px;">No dominant strategy. Two Nash equilibria: (Swerve, Straight) and (Straight, Swerve). Mutual Straight = disaster.</p>
+        </div>
+
+        <!-- Key Concepts Box -->
+        <div class="islamic-box">
+            <h4 style="color: #fbbf24; margin-bottom: 10px;">🎓 Key Game Theory Concepts</h4>
+            <ul style="margin-left: 20px; color: #cbd5e1;">
+                <li><strong>No Dominant Strategy:</strong> Unlike Prisoner's Dilemma, there is no single best move.</li>
+                <li><strong>Two Pure-Strategy Nash Equilibria:</strong> (Swerve, Straight) and (Straight, Swerve).</li>
+                <li><strong>Mixed-Strategy Equilibrium:</strong> Randomizing between swerving and driving straight.</li>
+                <li><strong>Pre-commitment:</strong> Removing your ability to swerve to force the opponent to yield.</li>
+                <li><strong>Tit-for-Tat in Repeated Games:</strong> Mirroring the opponent's previous move.</li>
+            </ul>
+        </div>
+
+        <!-- Real-World Examples -->
+        <div class="real-world-example">
+            <h4 style="color: #fbbf24; margin-bottom: 10px;">🌍 Real-World Examples</h4>
+            <p><strong>Cold War (Cuban Missile Crisis, 1962):</strong> The US and USSR played "nuclear chicken" — each dared the other to blink first. The US blockaded Cuba; the USSR backed down and removed missiles. Neither wanted mutual destruction.</p>
+            <p><strong>1955 Film "Rebel Without a Cause":</strong> The famous chicken race scene where two cars drive toward a cliff. The first to jump out is the "chicken."</p>
+            <p><strong>Business Price Wars:</strong> Two companies undercut each other's prices. The first to raise prices loses market share. Both may end up with lower profits.</p>
+        </div>
+
+        <!-- Islamic Critique Box -->
+        <div class="quran-box">
+            <div class="arabic">وَلَا تَأْكُلُوا أَمْوَالَكُم بَيْنَكُم بِالْبَاطِلِ</div>
+            <p><strong>⚠️ Islamic Critique of Conventional Game Theory:</strong></p>
+            <ul style="margin-left: 20px; color: #cbd5e1;">
+                <li>❌ <strong>Zero-sum thinking</strong> (one's gain = another's loss) is forbidden as it resembles gambling (Maysir).</li>
+                <li>❌ <strong>Bluffing and deception</strong> — The Prophet (ﷺ) said: "The deceiver is not of us."</li>
+                <li>❌ <strong>Pre-commitment to harm</strong> — Islam forbids self-destruction: "Do not throw yourselves into destruction." (Quran 2:195)</li>
+                <li>✅ <strong>Islamic Alternative:</strong> Justice ('adl), cooperation (ta'awun), and mutual benefit. Even in competition, truthfulness and fairness must prevail.</li>
+            </ul>
+        </div>
+
         <div id="gamePanel" class="game-panel">
-            <div class="stats-row">
-                <div class="stat-card"><div class="stat-label">Round</div><div class="stat-value" id="roundNum">1</div></div>
-                <div class="stat-card"><div class="stat-label">Your Reputation</div><div class="stat-value" id="reputation">50</div></div>
-                <div class="stat-card"><div class="stat-label">Opponent Aggression</div><div class="stat-value" id="aggression">50</div></div>
-                <div class="stat-card"><div class="stat-label">Tension</div><div class="stat-value" id="tension">30</div></div>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span class="stat-box"><div class="stat-label">Round</div><div class="stat-value" id="roundNum">1</div></span>
+                <span class="stat-box"><div class="stat-label">Your Reputation</div><div class="stat-value" id="yourScore">0</div></span>
+                <span class="stat-box"><div class="stat-label">Opponent Reputation</div><div class="stat-value" id="opponentScore">0</div></span>
+                <span class="stat-box"><div class="stat-label">Tension Level</div><div class="stat-value" id="tension">30</div></span>
             </div>
-            <div class="tension-meter"><div class="tension-fill" id="tensionFill"></div></div>
             <div id="gameContent"></div>
         </div>
         <a href="/simulators" class="btn-secondary">← Back to Simulators</a>
     </div>
+    
     <div id="footer-placeholder"></div>
     <script src="/assets/js/components.js"></script>
     <script>
-        let gameState = { round: 1, reputation: 50, aggression: 50, tension: 30, decisions: [], opponentPattern: 'normal' };
+        // Game variables
+        let round = 1;
+        let yourReputation = 0;
+        let opponentReputation = 0;
+        let tension = 30;
+        let yourHistory = [];
+        let opponentHistory = [];
+        
         function updateUI() {
-            document.getElementById('roundNum').innerText = gameState.round;
-            document.getElementById('reputation').innerText = gameState.reputation;
-            document.getElementById('aggression').innerText = gameState.aggression;
-            document.getElementById('tension').innerText = gameState.tension;
-            document.getElementById('tensionFill').style.width = gameState.tension + '%';
+            document.getElementById('roundNum').innerText = round;
+            document.getElementById('yourScore').innerText = yourReputation;
+            document.getElementById('opponentScore').innerText = opponentReputation;
+            document.getElementById('tension').innerText = tension;
         }
-        function playSound(type) {
-            try { const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); if (type === 'crash') { o.frequency.value = 110; g.gain.value = 0.2; o.start(); g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.8); o.stop(audioCtx.currentTime + 0.8); document.body.classList.add('shake'); setTimeout(() => document.body.classList.remove('shake'), 500); } else { o.frequency.value = type === 'good' ? 660 : 440; g.gain.value = 0.1; o.start(); g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.4); o.stop(audioCtx.currentTime + 0.4); } } catch(e) { console.log('Audio not supported'); }
+        
+        function getOpponentMove() {
+            if (round === 1) return Math.random() > 0.5 ? 'swerve' : 'straight';
+            if (round === 2) return yourHistory[0] === 'swerve' ? 'swerve' : 'straight';
+            if (round === 3) {
+                if (yourHistory[0] === 'straight' && yourHistory[1] === 'straight') return 'straight';
+                if (yourHistory[0] === 'swerve' && yourHistory[1] === 'swerve') return 'swerve';
+                return 'swerve';
+            }
+            if (round === 4) {
+                let straightCount = yourHistory.filter(m => m === 'straight').length;
+                return straightCount >= 2 ? 'straight' : 'swerve';
+            }
+            if (round === 5) {
+                if (tension > 70) return 'straight';
+                if (tension < 30) return 'swerve';
+                return yourHistory[yourHistory.length - 1] === 'swerve' ? 'swerve' : 'straight';
+            }
+            return 'swerve';
         }
-        function opponentDecision() {
-            if (gameState.round === 1) return Math.random() > 0.3 ? 'hold' : 'swerve';
-            const lastPlayer = gameState.decisions[gameState.decisions.length - 1];
-            if (gameState.opponentPattern === 'aggressive') return 'hold';
-            if (gameState.opponentPattern === 'cowardly') return 'swerve';
-            if (lastPlayer === 'hold') return 'hold';
-            return Math.random() > 0.5 ? 'hold' : 'swerve';
+        
+        function getIslamicMessage(yourMove, opponentMove) {
+            if (yourMove === 'swerve' && opponentMove === 'swerve') {
+                return '✅ Both swerved. A draw. Islam teaches that avoiding harm is wise: "Do not throw yourselves into destruction." (Quran 2:195)';
+            }
+            if (yourMove === 'swerve' && opponentMove === 'straight') {
+                return '⚠️ You swerved, opponent drove straight. You lost face. The Prophet (ﷺ) said: "The believer is not one who deceives." But sometimes, yielding is wisdom.';
+            }
+            if (yourMove === 'straight' && opponentMove === 'swerve') {
+                return '❌ You drove straight, opponent swerved. You won, but at their expense. Islam warns: "Do not let hatred lead you to injustice." (Quran 5:8)';
+            }
+            if (yourMove === 'straight' && opponentMove === 'straight') {
+                return '💀 CRASH! Both drove straight. Mutual destruction. The Prophet (ﷺ) warned: "Do not wish for the death of your enemy." Pride leads to ruin.';
+            }
+            return '';
         }
-        function endGame(outcome, message, details, reflection, correctStrategy, personality) {
-            playSound(outcome === 'crash' ? 'crash' : 'good');
-            const html = '<div class="outcome-card" style="display: block;"><h3 style="color: #ef4444;">' + outcome.toUpperCase() + ' ENDING</h3><p>' + message + '</p><p>' + details + '</p><div style="background: #1a0f0f; padding: 20px; border-radius: 20px; margin: 20px 0;"><h4 style="color: #ef4444;">🧠 Reflection</h4><p><strong>Why:</strong> ' + reflection + '</p><p><strong>Correct strategy:</strong> ' + correctStrategy + '</p><hr><p><strong>🎭 Profile:</strong> ' + personality + '</p><p><strong>📖 Prophetic Tadbeer:</strong> True courage is knowing when to stand firm AND when to swerve. Brinksmanship without wisdom is foolishness.</p></div><button class="restart-btn" onclick="location.reload()">🔄 Play Again</button></div>';
-            document.getElementById('gameContent').innerHTML = html;
+        
+        function endGame() {
+            let totalStraight = yourHistory.filter(m => m === 'straight').length;
+            let percentageAggressive = (totalStraight / 5) * 100;
+            let profile = '';
+            let islamicAssessment = '';
+            
+            if (percentageAggressive >= 80) {
+                profile = '💀 The Reckless Daredevil';
+                islamicAssessment = 'You chose aggression almost every time. Islam forbids self-destruction and reckless behavior. The Prophet (ﷺ) said: "The strong is not the one who overcomes people, but the one who controls himself in anger."';
+            } else if (percentageAggressive >= 50) {
+                profile = '⚖️ The Balanced Competitor';
+                islamicAssessment = 'You mixed aggression and caution. Islam teaches justice ('adl) and balance (wasatiyyah). You demonstrated strategic wisdom, knowing when to stand firm and when to yield.';
+            } else if (percentageAggressive >= 20) {
+                profile = '🕊️ The Cautious Yielder';
+                islamicAssessment = 'You preferred to swerve rather than risk disaster. Islam values the preservation of life above all. "Whoever saves one life, it is as if he saved all mankind." (Quran 5:32)';
+            } else {
+                profile = '😰 The Timid Player';
+                islamicAssessment = 'You swerved in every round. While avoiding harm is good, Islam also encourages courage and standing up for justice. "Be steadfast for Allah, witnesses in justice." (Quran 5:8)';
+            }
+            
+            let resultHtml = '<div class="outcome-card"><h3 style="color: #ef4444;">🏁 GAME COMPLETE</h3>';
+            resultHtml += '<p><strong>Your Reputation:</strong> ' + yourReputation + ' | <strong>Opponent Reputation:</strong> ' + opponentReputation + '</p>';
+            resultHtml += '<p><strong>Aggression Level:</strong> ' + percentageAggressive + '% (' + totalStraight + '/5 rounds drove straight)</p>';
+            resultHtml += '<div class="quran-box"><h4 style="color: #fbbf24;">🎭 Your Psychological Profile</h4><p><strong>' + profile + '</strong></p>';
+            resultHtml += '<h4 style="color: #fbbf24; margin-top: 15px;">📖 Islamic Ethical Assessment</h4><p>' + islamicAssessment + '</p>';
+            resultHtml += '<h4 style="color: #fbbf24; margin-top: 15px;">🌍 Real-World Lesson</h4><p>The Cold War was a chicken game. Both superpowers had to balance resolve with restraint. Islam teaches that true courage is not reckless aggression, but strategic wisdom — knowing when to stand firm and when to step back for the greater good.</p>';
+            resultHtml += '<h4 style="color: #fbbf24; margin-top: 15px;">🕌 Prophetic Tadbeer</h4><p>The Prophet (ﷺ) showed courage at Badr, patience at Hudaybiyyah, and forgiveness at Mecca. Different situations require different responses. Wisdom is knowing the difference.</p>';
+            resultHtml += '</div><button class="restart-btn" onclick="location.reload()">🔄 Play Again</button></div>';
+            document.getElementById('gameContent').innerHTML = resultHtml;
         }
-        function makeChoice(choice) {
-            playSound('good');
-            const opponent = opponentDecision();
-            gameState.decisions.push(choice);
-            if (choice === 'swerve' && opponent === 'hold') {
-                gameState.reputation -= 20; gameState.aggression += 10; gameState.tension -= 15; updateUI();
-                endGame('defeat', '😔 You Swerved', 'You lost face. The opponent gained respect.', 'You blinked first. Showed weakness.', 'Hold your ground when you have the advantage.', '😰 The Timid Leader');
-            } else if (choice === 'hold' && opponent === 'swerve') {
-                gameState.reputation += 20; gameState.aggression -= 10; gameState.tension -= 10; updateUI();
-                if (gameState.round < 5) { gameState.round++; updateUI(); showRound(); } else {
-                    endGame('victory', '🏆 You Won!', 'The opponent swerved. Your reputation soars.', 'You held firm. The opponent blinked.', 'Strategic resolve wins respect.', '🦁 The Courageous Leader');
-                }
-            } else if (choice === 'hold' && opponent === 'hold') {
-                gameState.reputation -= 10; gameState.aggression += 20; gameState.tension += 30; updateUI();
-                endGame('crash', '💀 CRASH!', 'Neither swerved. Both destroyed.', 'Pride led to mutual destruction.', 'Swerve when both risk annihilation.', '⚡ The Reckless Daredevil');
-            } else if (choice === 'swerve' && opponent === 'swerve') {
-                gameState.reputation += 5; gameState.aggression -= 5; gameState.tension -= 20; updateUI();
-                if (gameState.round < 5) { gameState.round++; updateUI(); showRound(); } else {
-                    endGame('partial', '🤝 Mutual Swerve', 'Both swerved. An uneasy truce.', 'No one won, but no one crashed.', 'A draw is better than disaster.', '⚖️ The Pragmatic Peacemaker');
-                }
+        
+        function playRound(yourMove) {
+            const opponentMove = getOpponentMove();
+            let yourPoints = 0;
+            let opponentPoints = 0;
+            let outcomeMsg = '';
+            
+            if (yourMove === 'swerve' && opponentMove === 'swerve') {
+                yourPoints = 0; opponentPoints = 0;
+                outcomeMsg = '🤝 Both swerved. Draw. No one wins, no one crashes.';
+                tension -= 10;
+            } else if (yourMove === 'swerve' && opponentMove === 'straight') {
+                yourPoints = -1; opponentPoints = 2;
+                outcomeMsg = '😔 You swerved, opponent drove straight. You lost face. The opponent wins.';
+                tension -= 5;
+            } else if (yourMove === 'straight' && opponentMove === 'swerve') {
+                yourPoints = 2; opponentPoints = -1;
+                outcomeMsg = '🏆 You drove straight, opponent swerved. You win! The opponent loses face.';
+                tension += 5;
+            } else {
+                yourPoints = -10; opponentPoints = -10;
+                outcomeMsg = '💀 CRASH! Both drove straight. Mutual destruction. Disaster for both.';
+                tension += 20;
+            }
+            
+            tension = Math.min(100, Math.max(0, tension));
+            yourReputation += yourPoints;
+            opponentReputation += opponentPoints;
+            yourHistory.push(yourMove);
+            opponentHistory.push(opponentMove);
+            
+            const islamicMsg = getIslamicMessage(yourMove, opponentMove);
+            
+            let html = '<div class="round-result"><h4 style="color: #fbbf24;">Round ' + round + ' Result</h4>';
+            html += '<p><strong>You chose:</strong> ' + (yourMove === 'swerve' ? '🔄 Swerve (Yield)' : '🚀 Drive Straight (Hold firm)') + '</p>';
+            html += '<p><strong>Opponent chose:</strong> ' + (opponentMove === 'swerve' ? '🔄 Swerve (Yield)' : '🚀 Drive Straight (Hold firm)') + '</p>';
+            html += '<p><strong>Outcome:</strong> ' + outcomeMsg + '</p>';
+            html += '<p><strong>Your Reputation:</strong> ' + (yourPoints >= 0 ? '+' : '') + yourPoints + ' | <strong>Opponent:</strong> ' + (opponentPoints >= 0 ? '+' : '') + opponentPoints + '</p>';
+            html += '<div class="quran-box" style="margin-top: 10px;"><p>' + islamicMsg + '</p></div></div>';
+            
+            if (round < 5) {
+                round++;
+                updateUI();
+                html += '<div style="margin-top: 15px;">';
+                html += '<button class="choice-btn" onclick="playRound(\'swerve\')">🔄 Swerve (Yield) - Lose face but avoid crash</button>';
+                html += '<button class="choice-btn" onclick="playRound(\'straight\')">🚀 Drive Straight (Hold firm) - Risk disaster</button>';
+                html += '</div>';
+                document.getElementById('gameContent').innerHTML = html;
+            } else {
+                updateUI();
+                document.getElementById('gameContent').innerHTML = html;
+                endGame();
             }
         }
-        function showRound() {
-            var html = '<div class="stage-badge">Round ' + gameState.round + ' of 5</div><div class="opponent-speech">🚗 Opponent: "I never swerve. Never have, never will."</div><button class="choice-btn" onclick="makeChoice(\'hold\')">🚀 HOLD YOUR GROUND</button><button class="choice-btn" onclick="makeChoice(\'swerve\')">🔄 SWERVE</button>';
+        
+        function startGame() {
+            let html = '<div class="intro-text"><h3 style="color: #ef4444;">📜 The Chicken Game Scenario</h3>';
+            html += '<p>Two drivers race toward each other on a narrow road. Each must choose: <strong>SWERVE</strong> (yield, lose face) or <strong>DRIVE STRAIGHT</strong> (hold firm, risk disaster).</p>';
+            html += '<ul style="margin-left: 20px; color: #cbd5e1;"><li>🤝 Both swerve → Draw, both lose face</li>';
+            html += '<li>🔄 You swerve, opponent drives straight → You lose, opponent wins</li>';
+            html += '<li>🚀 You drive straight, opponent swerves → You win, opponent loses</li>';
+            html += '<li>💀 Both drive straight → CRASH! Mutual destruction</li></ul>';
+            html += '<p><strong>Round 1 of 5:</strong> Your opponent is a stranger. Their strategy will adapt based on your choices.</p>';
+            html += '<p><strong>Islamic Reminder:</strong> "Do not throw yourselves into destruction." (Quran 2:195) But also, "Be steadfast for Allah, witnesses in justice." (Quran 5:8)</p></div>';
+            html += '<button class="choice-btn" onclick="playRound(\'swerve\')">🔄 SWERVE (Yield - Lose face, avoid crash)</button>';
+            html += '<button class="choice-btn" onclick="playRound(\'straight\')">🚀 DRIVE STRAIGHT (Hold firm - Risk disaster)</button>';
             document.getElementById('gameContent').innerHTML = html;
         }
-        function setOpponentPattern() { var patterns = ['aggressive', 'normal', 'cowardly']; gameState.opponentPattern = patterns[Math.floor(Math.random() * patterns.length)]; }
-        setOpponentPattern(); showRound(); updateUI();
+        
+        startGame();
+        updateUI();
     </script>
 </body>
 </html>
