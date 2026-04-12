@@ -3,127 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Prisoner's Dilemma - Enhanced | Tadbeer Studio</title>
+    <title>Prisoner's Dilemma - Game Theory & Islamic Ethics | Tadbeer Studio</title>
     <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; }
-        .pd-container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        .game-panel { background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 28px; padding: 30px; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); border: 1px solid #3b82f6; }
-        .stage-badge { display: inline-block; background: #3b82f6; color: white; padding: 4px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: bold; margin-bottom: 15px; }
-        .opponent-speech { background: #1e293b; padding: 20px; border-radius: 20px; margin: 15px 0; border-left: 4px solid #3b82f6; color: #e2e8f0; }
-        .choice-btn { display: block; width: 100%; padding: 16px 20px; margin: 12px 0; background: #0f172a; border: 2px solid #3b82f6; border-radius: 20px; cursor: pointer; transition: all 0.2s; text-align: left; font-size: 1rem; font-weight: 500; color: #e2e8f0; }
-        .choice-btn:hover { background: #3b82f6; transform: translateX(8px); }
-        .stats-row { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
-        .stat-card { background: #1e293b; padding: 12px; border-radius: 16px; text-align: center; flex: 1; border: 1px solid #3b82f6; color: #e2e8f0; }
-        .stat-label { font-size: 0.7rem; color: #94a3b8; }
-        .choice-btn { color: #e2e8f0; }
-        .opponent-speech { color: #e2e8f0; }
-        .outcome-card { color: #e2e8f0; }
-        .stat-value { font-size: 1.4rem; font-weight: bold; color: #3b82f6; }
-        .trust-meter { background: #334155; border-radius: 10px; height: 8px; margin: 15px 0; overflow: hidden; }
-        .trust-fill { background: #3b82f6; height: 100%; width: 50%; transition: width 0.5s; }
-        .outcome-card { background: #1e293b; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #3b82f6; display: none; animation: fadeIn 0.5s; }
-        .restart-btn { background: #3b82f6; color: white; border: none; padding: 14px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 768px) { .pd-container { padding: 12px; } .choice-btn { padding: 12px; font-size: 0.9rem; } }
+        .pd-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .game-panel { background: #0f172a; border-radius: 28px; padding: 25px; margin-bottom: 25px; border: 1px solid #3b82f6; }
+        .stat-box { display: inline-block; background: #1e293b; padding: 10px 20px; border-radius: 16px; margin: 5px; border: 1px solid #3b82f6; }
+        .stat-label { font-size: 12px; color: #94a3b8; }
+        .stat-value { font-size: 28px; font-weight: bold; color: #3b82f6; }
+        .payoff-table { background: #1e293b; border-radius: 16px; padding: 15px; margin: 20px 0; overflow-x: auto; }
+        .payoff-table table { width: 100%; border-collapse: collapse; }
+        .payoff-table th, .payoff-table td { padding: 12px; text-align: center; border: 1px solid #3b82f6; color: #e2e8f0; }
+        .payoff-table th { background: #0f172a; color: #3b82f6; }
+        .choice-btn { display: block; width: 100%; padding: 16px; margin: 12px 0; background: #1e293b; border: 2px solid #3b82f6; border-radius: 20px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #f0f0f0; text-align: center; transition: all 0.2s; }
+        .choice-btn:hover { background: #3b82f6; color: #0f172a; transform: scale(1.01); }
+        .quran-box { background: #0f172a; padding: 20px; border-radius: 20px; margin: 20px 0; border-left: 4px solid #fbbf24; }
+        .arabic { font-size: 1.2rem; font-family: 'Amiri', serif; color: #fbbf24; margin-bottom: 8px; }
+        .round-result { background: #1e293b; padding: 15px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #3b82f6; }
+        .outcome-card { background: #1e293b; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #3b82f6; }
+        .restart-btn { background: #3b82f6; color: white; border: none; padding: 14px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
+        .btn-secondary { background: #1e293b; border: 1px solid #3b82f6; color: #3b82f6; padding: 10px 20px; border-radius: 50px; text-decoration: none; display: inline-block; }
+        .section-title { color: #3b82f6; font-size: 1.5rem; margin: 25px 0 15px; border-bottom: 2px solid #3b82f6; padding-bottom: 8px; }
+        @media (max-width: 768px) { .pd-container { padding: 12px; } .choice-btn { padding: 12px; font-size: 0.9rem; } .stat-box { padding: 5px 12px; } .stat-value { font-size: 22px; } }
     </style>
 </head>
 <body>
     <div id="navbar-placeholder"></div>
-
-    <div class="bismillah">
-        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-        <div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div>
-    </div>
-
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div></div>
+    
     <div class="pd-container">
-        <h1 class="page-title" style="text-align: center; color: #3b82f6;">🔐 Prisoner's Dilemma - Enhanced</h1>
-        <p class="page-subtitle" style="text-align: center;">5 rounds. Hidden opponent patterns. Sound effects. Multiple endings.</p>
-
-        <div id="gamePanel" class="game-panel">
-            <div class="stats-row">
-                <div class="stat-card"><div class="stat-label">Round</div><div class="stat-value" id="roundNum">1</div></div>
-                <div class="stat-card"><div class="stat-label">Your Score</div><div class="stat-value" id="yourScore">0</div></div>
-                <div class="stat-card"><div class="stat-label">Partner Score</div><div class="stat-value" id="partnerScore">0</div></div>
-                <div class="stat-card"><div class="stat-label">Trust Level</div><div class="stat-value" id="trustLevel">50</div></div>
-            </div>
-            <div class="trust-meter"><div class="trust-fill" id="trustFill"></div></div>
-
-            <div id="gameContent"></div>
+        <h1 style="text-align: center; color: #3b82f6;">🔐 Prisoner's Dilemma: Game Theory & Islamic Ethics</h1>
+        <p style="text-align: center; color: #cbd5e1;">5 rounds. Your choices against an adaptive opponent. Learn cooperation, trust, and Islamic values.</p>
+        
+        <!-- Educational Section -->
+        <div class="quran-box">
+            <div class="arabic">وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ</div>
+            <p><strong>📖 Islamic Foundation:</strong> "And cooperate in righteousness and piety." (Quran 5:2) — Islam encourages cooperation (ta'awun), justice ('adl), and brotherhood (ukhuwah). Cheating, deception, and collusion are strictly prohibited.</p>
+            <p>The Prophet (ﷺ) said: <strong>"The believer is not one who deceives."</strong> In game theory, the Prisoner's Dilemma shows how rational self-interest can lead to mutual loss — but Islamic ethics point toward cooperation for the greater good.</p>
         </div>
 
-        <a href="/simulators" class="btn-secondary" style="display: inline-block;">← Back to Simulators</a>
+        <!-- Payoff Matrix -->
+        <div class="payoff-table">
+            <h4 style="color: #fbbf24; margin-bottom: 10px;">📊 Payoff Matrix (Years in Prison)</h4>
+            <table>
+                <tr><th></th><th>🤝 Opponent Cooperates</th><th>⚔️ Opponent Defects</th></tr>
+                <tr><th>🤝 You Cooperate</th><td>3 years, 3 years ✅ Best collective</td><td>5 years, 0 years ⚠️ You are exploited</td></tr>
+                <tr><th>⚔️ You Defect</th><td>0 years, 5 years ❌ You exploit</td><td>2 years, 2 years ❌ Mutual loss</td></tr>
+            </table>
+            <p style="color: #94a3b8; font-size: 12px; margin-top: 10px;">Rational self-interest → Both defect → 2 years each. Cooperation → Both stay silent → 1 year each (not shown here but the principle is the same).</p>
+        </div>
+
+        <div id="gamePanel" class="game-panel">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span class="stat-box"><div class="stat-label">Round</div><div class="stat-value" id="roundNum">1</div></span>
+                <span class="stat-box"><div class="stat-label">Your Score</div><div class="stat-value" id="yourScore">0</div></span>
+                <span class="stat-box"><div class="stat-label">Opponent Score</div><div class="stat-value" id="opponentScore">0</div></span>
+                <span class="stat-box"><div class="stat-label">Trust Level</div><div class="stat-value" id="trustLevel">50</div></span>
+            </div>
+            <div id="gameContent"></div>
+        </div>
+        <a href="/simulators" class="btn-secondary">← Back to Simulators</a>
     </div>
-
+    
     <div id="footer-placeholder"></div>
-
     <script src="/assets/js/components.js"></script>
     <script>
-        let gameState = { round: 1, yourScore: 0, partnerScore: 0, trust: 50, decisions: [], partnerPattern: 'normal' };
-
+        // Game state
+        let round = 1;
+        let yourScore = 0;
+        let opponentScore = 0;
+        let trust = 50;
+        let yourHistory = [];
+        let opponentHistory = [];
+        
         function updateUI() {
-            document.getElementById('roundNum').innerText = gameState.round;
-            document.getElementById('yourScore').innerText = gameState.yourScore;
-            document.getElementById('partnerScore').innerText = gameState.partnerScore;
-            document.getElementById('trustLevel').innerText = gameState.trust;
-            document.getElementById('trustFill').style.width = gameState.trust + '%';
+            document.getElementById('roundNum').innerText = round;
+            document.getElementById('yourScore').innerText = yourScore;
+            document.getElementById('opponentScore').innerText = opponentScore;
+            document.getElementById('trustLevel').innerText = trust;
         }
-
-        function playSound(type) {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                if (type === 'click') { oscillator.frequency.value = 440; gainNode.gain.value = 0.1; oscillator.start(); gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.3); oscillator.stop(audioCtx.currentTime + 0.3); }
-                else if (type === 'betray') { oscillator.frequency.value = 220; gainNode.gain.value = 0.15; oscillator.start(); gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5); oscillator.stop(audioCtx.currentTime + 0.5); }
-                else if (type === 'victory') { oscillator.frequency.value = 660; gainNode.gain.value = 0.15; oscillator.start(); gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.8); oscillator.stop(audioCtx.currentTime + 0.8); }
-            } catch(e) { console.log('Audio not supported'); }
-        }
-
-        function partnerDecision() {
-            if (gameState.round === 1) return Math.random() > 0.3 ? 'cooperate' : 'defect';
-            const lastPlayer = gameState.decisions[gameState.decisions.length - 1];
-            if (gameState.partnerPattern === 'aggressive') return 'defect';
-            if (gameState.partnerPattern === 'forgiving') return 'cooperate';
-            if (lastPlayer === 'cooperate') return 'cooperate';
+        
+        function opponentDecision() {
+            if (round === 1) return Math.random() > 0.5 ? 'cooperate' : 'defect';
+            if (round === 2) {
+                return yourHistory[0] === 'cooperate' ? 'cooperate' : 'defect';
+            }
+            if (round === 3) {
+                if (yourHistory[0] === 'defect' && yourHistory[1] === 'defect') return 'defect';
+                if (yourHistory[0] === 'cooperate' && yourHistory[1] === 'cooperate') return 'cooperate';
+                return 'cooperate';
+            }
+            if (round === 4) {
+                const cooperateCount = yourHistory.filter(m => m === 'cooperate').length;
+                return cooperateCount >= 2 ? 'cooperate' : 'defect';
+            }
+            if (round === 5) {
+                if (trust > 70) return 'cooperate';
+                if (trust < 30) return 'defect';
+                return yourHistory[yourHistory.length - 1] === 'cooperate' ? 'cooperate' : 'defect';
+            }
             return 'defect';
         }
-
-        function endGame(outcome, message, details, reflection, correctStrategy, personality) {
-            playSound(outcome === 'victory' ? 'victory' : 'betray');
-            const html = `<div class="outcome-card" style="display: block;"><h3 style="color: #3b82f6;">${outcome.toUpperCase()} ENDING</h3><p>${message}</p><p>${details}</p><div style="background: #0f172a; padding: 20px; border-radius: 20px; margin: 20px 0;"><h4 style="color: #3b82f6;">🧠 Reflection</h4><p><strong>Why:</strong> ${reflection}</p><p><strong>Correct strategy:</strong> ${correctStrategy}</p><hr><p><strong>🎭 Profile:</strong> ${personality}</p><p><strong>📖 Prophetic Tadbeer:</strong> The Prophet (ﷺ) taught that trust, when reciprocated, builds lasting peace. Short-term betrayal often leads to long-term loss.</p></div><button class="restart-btn" onclick="location.reload()">🔄 Play Again</button></div>`;
-            document.getElementById('gameContent').innerHTML = html;
+        
+        function getIslamicMessage(yourMove, opponentMove) {
+            if (yourMove === 'cooperate' && opponentMove === 'cooperate') {
+                return '✅ Quran 5:2: "Cooperate in righteousness and piety." Mutual cooperation is the Islamic ideal. Both benefit.';
+            }
+            if (yourMove === 'cooperate' && opponentMove === 'defect') {
+                return '⚠️ You trusted, but were betrayed. Allah says: "Do not be deceived by the conduct of the wicked." (Quran 35:5) The Prophet (ﷺ) was betrayed by others but never betrayed.';
+            }
+            if (yourMove === 'defect' && opponentMove === 'cooperate') {
+                return '❌ You exploited your opponent\'s trust. The Prophet (ﷺ) said: "The believer is not one who deceives." This is a sin.';
+            }
+            if (yourMove === 'defect' && opponentMove === 'defect') {
+                return '❌ Both defected. Mutual loss. Allah warns: "Do not let hatred of a people lead you to injustice." (Quran 5:8)';
+            }
+            return '';
         }
-
-        function makeChoice(choice) {
-            playSound('click');
-            const partner = partnerDecision();
-            gameState.decisions.push(choice);
-            if (choice === 'cooperate' && partner === 'cooperate') { gameState.yourScore += 3; gameState.partnerScore += 3; gameState.trust += 10; }
-            else if (choice === 'cooperate' && partner === 'defect') { gameState.yourScore += 0; gameState.partnerScore += 5; gameState.trust -= 15; }
-            else if (choice === 'defect' && partner === 'cooperate') { gameState.yourScore += 5; gameState.partnerScore += 0; gameState.trust -= 10; }
-            else if (choice === 'defect' && partner === 'defect') { gameState.yourScore += 1; gameState.partnerScore += 1; gameState.trust -= 5; }
-            updateUI();
-            if (gameState.round < 5) { gameState.round++; updateUI(); showRound(); }
-            else {
-                const totalCoop = gameState.decisions.filter(d => d === 'cooperate').length;
-                if (totalCoop >= 4) endGame('victory', '🏆 Mutual Trust Victory', 'You built trust through cooperation.', 'You consistently cooperated, building a cooperative equilibrium.', 'You did the right thing. The Prophet (ﷺ) said: "The believer is not one who deceives."', '🕊️ The Trustbuilder');
-                else if (totalCoop <= 1) endGame('defeat', '💀 Betrayal Spiral', 'Constant defection led to mutual loss.', 'You betrayed too often. Trust collapsed.', 'You should have cooperated more. Short-term gain led to long-term loss.', '⚡ The Ruthless Competitor');
-                else endGame('partial', '⚖️ Mixed Results', 'A mix of cooperation and defection.', 'You balanced trust and self-interest.', 'This is realistic. In life, trust must be earned gradually.', '⚖️ The Pragmatic Player');
+        
+        function endGame() {
+            let totalCoop = yourHistory.filter(m => m === 'cooperate').length;
+            let totalDef = yourHistory.filter(m => m === 'defect').length;
+            let percentageCoop = (totalCoop / 5) * 100;
+            let profile = '';
+            let islamicAssessment = '';
+            
+            if (percentageCoop >= 80) {
+                profile = '🕊️ The Trustbuilder';
+                islamicAssessment = 'You consistently chose cooperation. This reflects the Islamic value of trust (amanah) and brotherhood (ukhuwah). The Prophet (ﷺ) was known as Al-Amin (the Trustworthy).';
+            } else if (percentageCoop >= 50) {
+                profile = '⚖️ The Balanced Player';
+                islamicAssessment = 'You mixed cooperation and defection. Islam teaches justice ('adl) and balance (wasatiyyah). But remember: "The best of people are those who benefit others."';
+            } else if (percentageCoop >= 20) {
+                profile = '⚡ The Ruthless Competitor';
+                islamicAssessment = 'You prioritized self-interest over collective good. Islam warns against selfishness and exploitation. "Do not consume one another\'s wealth unjustly." (Quran 2:188)';
+            } else {
+                profile = '😈 The Constant Defector';
+                islamicAssessment = 'You defected in every round. This is the path of deception. The Prophet (ﷺ) said: "The deceiver is not of us." Reflect on your choices.';
+            }
+            
+            let resultHtml = '<div class="outcome-card"><h3 style="color: #3b82f6;">🏁 GAME COMPLETE</h3>';
+            resultHtml += '<p><strong>Your Final Score:</strong> ' + yourScore + ' | <strong>Opponent Score:</strong> ' + opponentScore + '</p>';
+            resultHtml += '<p><strong>Your Cooperation Rate:</strong> ' + percentageCoop + '% (' + totalCoop + '/5 rounds)</p>';
+            resultHtml += '<div class="quran-box"><h4 style="color: #fbbf24;">🎭 Your Psychological Profile</h4><p><strong>' + profile + '</strong></p>';
+            resultHtml += '<h4 style="color: #fbbf24; margin-top: 15px;">📖 Islamic Ethical Assessment</h4><p>' + islamicAssessment + '</p>';
+            resultHtml += '<h4 style="color: #fbbf24; margin-top: 15px;">🌍 Real-World Lesson</h4><p>The Israeli-Palestinian conflict exhibits the Prisoner\'s Dilemma: mutual distrust leads to mutual defection and suffering. The path to peace requires cooperation, trust-building, and third-party mediation. As the Quran says: "If they incline to peace, then incline to it." (8:61)</p>';
+            resultHtml += '</div><button class="restart-btn" onclick="location.reload()">🔄 Play Again</button></div>';
+            document.getElementById('gameContent').innerHTML = resultHtml;
+        }
+        
+        function processRound(yourMove) {
+            const opponentMove = opponentDecision();
+            let yourPoints = 0;
+            let opponentPoints = 0;
+            let outcomeMessage = '';
+            
+            if (yourMove === 'cooperate' && opponentMove === 'cooperate') {
+                yourPoints = 3;
+                opponentPoints = 3;
+                outcomeMessage = '🤝 Both stayed silent. You each receive 3 years reduction. Mutual cooperation!';
+                trust += 10;
+            } else if (yourMove === 'cooperate' && opponentMove === 'defect') {
+                yourPoints = 5;
+                opponentPoints = 0;
+                outcomeMessage = '😔 You stayed silent, but your partner confessed. You receive maximum sentence. Your partner goes free.';
+                trust -= 15;
+            } else if (yourMove === 'defect' && opponentMove === 'cooperate') {
+                yourPoints = 0;
+                opponentPoints = 5;
+                outcomeMessage = '😈 You confessed and betrayed your partner. You go free. Your partner gets maximum sentence.';
+                trust -= 10;
+            } else {
+                yourPoints = 2;
+                opponentPoints = 2;
+                outcomeMessage = '⚠️ Both confessed. You each receive a reduced but significant sentence. Mutual loss.';
+                trust -= 5;
+            }
+            
+            trust = Math.min(100, Math.max(0, trust));
+            
+            yourScore += yourPoints;
+            opponentScore += opponentPoints;
+            yourHistory.push(yourMove);
+            opponentHistory.push(opponentMove);
+            
+            const islamicMessage = getIslamicMessage(yourMove, opponentMove);
+            
+            let roundHtml = '<div class="round-result"><h4 style="color: #fbbf24;">Round ' + round + ' Result</h4>';
+            roundHtml += '<p><strong>You chose:</strong> ' + (yourMove === 'cooperate' ? '🤐 Stay Silent (Cooperate)' : '🗣️ Confess (Defect)') + '</p>';
+            roundHtml += '<p><strong>Opponent chose:</strong> ' + (opponentMove === 'cooperate' ? '🤐 Stay Silent (Cooperate)' : '🗣️ Confess (Defect)') + '</p>';
+            roundHtml += '<p><strong>Outcome:</strong> ' + outcomeMessage + '</p>';
+            roundHtml += '<p><strong>Your score this round:</strong> +' + yourPoints + ' | <strong>Opponent:</strong> +' + opponentPoints + '</p>';
+            roundHtml += '<div class="quran-box" style="margin-top: 10px;"><p>' + islamicMessage + '</p></div></div>';
+            
+            if (round < 5) {
+                round++;
+                updateUI();
+                roundHtml += '<div style="margin-top: 15px;"><button class="choice-btn" onclick="makeChoice(\'cooperate\')">🤝 Cooperate (Stay Silent)</button>';
+                roundHtml += '<button class="choice-btn" onclick="makeChoice(\'defect\')">⚔️ Defect (Confess)</button></div>';
+                document.getElementById('gameContent').innerHTML = roundHtml;
+            } else {
+                updateUI();
+                roundHtml += '<div style="margin-top: 15px;"></div>';
+                document.getElementById('gameContent').innerHTML = roundHtml;
+                endGame();
             }
         }
-
-        function showRound() {
-            const html = `<div class="stage-badge">Round ${gameState.round} of 5</div><div class="opponent-speech"><p>🔒 The prosecutor says: "Your partner is in another room. If you confess, you go free. If you stay silent, you rely on their loyalty."</p></div><button class="choice-btn" onclick="makeChoice('cooperate')">🤐 Stay Silent</button><button class="choice-btn" onclick="makeChoice('defect')">🗣️ Confess & Betray</button>`;
-            document.getElementById('gameContent').innerHTML = html;
+        
+        function makeChoice(choice) {
+            processRound(choice);
         }
-
-        function setPartnerPattern() { const patterns = ['aggressive', 'normal', 'forgiving']; gameState.partnerPattern = patterns[Math.floor(Math.random() * patterns.length)]; }
-        setPartnerPattern(); showRound(); updateUI();
+        
+        function showIntro() {
+            let introHtml = '<div class="quran-box"><h3 style="color: #3b82f6;">📜 The Scenario</h3>';
+            introHtml += '<p>You and your partner have been arrested. You are placed in separate rooms. The prosecutor offers each of you a deal:</p>';
+            introHtml += '<ul style="margin-left: 20px;"><li>If <strong>both stay silent</strong> (cooperate), each gets <strong>3 years</strong>.</li>';
+            introHtml += '<li>If <strong>one confesses</strong> (defects) and the other stays silent, the confessor goes <strong>free</strong> and the silent one gets <strong>5 years</strong>.</li>';
+            introHtml += '<li>If <strong>both confess</strong> (defect), each gets <strong>2 years</strong>.</li></ul>';
+            introHtml += '<p>The dilemma: You cannot communicate with your partner. Do you trust them? Or do you protect yourself?</p>';
+            introHtml += '<p><strong>Round 1 of 5:</strong> Your partner is a stranger. Their strategy may change based on your choices.</p></div>';
+            introHtml += '<button class="choice-btn" onclick="makeChoice(\'cooperate\')">🤝 Cooperate (Stay Silent)</button>';
+            introHtml += '<button class="choice-btn" onclick="makeChoice(\'defect\')">⚔️ Defect (Confess)</button>';
+            document.getElementById('gameContent').innerHTML = introHtml;
+        }
+        
+        showIntro();
+        updateUI();
     </script>
 </body>
 </html>
