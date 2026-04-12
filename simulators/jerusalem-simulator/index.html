@@ -2,52 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jerusalem Coexistence Simulator | Tadbeer Studio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Jerusalem Coexistence Simulator - Islamic Framework | Tadbeer Studio</title>
     <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">   
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background: #0f172a; }
-        .sim-container { max-width: 900px; margin: 0 auto; padding: 20px; background: #0f172a; border-radius: 28px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0f172a; font-family: 'Inter', sans-serif; }
+        .j-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        
+        /* Game Panel */
         .game-panel { background: #1e293b; border-radius: 28px; padding: 25px; margin-bottom: 25px; border: 1px solid #fbbf24; }
-        .stat-box { display: inline-block; background: #0f172a; padding: 10px 15px; border-radius: 12px; margin: 5px; border: 1px solid #fbbf24; }
+        
+        /* Stats Boxes */
+        .stat-box { display: inline-block; background: #0f172a; padding: 10px 20px; border-radius: 16px; margin: 5px; border: 1px solid #fbbf24; }
         .stat-label { font-size: 12px; color: #94a3b8; }
-        .stat-value { font-size: 24px; font-weight: bold; color: #fbbf24; }
-        .quran-box { background: #0f172a; padding: 15px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #fbbf24; color: #e2e8f0; }
-        .arabic { font-size: 1.3rem; font-family: 'Amiri', serif; color: #fbbf24; margin-bottom: 8px; }
-        .choice-btn { display: block; width: 100%; padding: 14px; margin: 10px 0; background: #0f172a; border: 2px solid #fbbf24; border-radius: 16px; cursor: pointer; font-size: 1rem; font-weight: 500; color: #f0f0f0; text-align: left; transition: all 0.2s; }
-        .choice-btn:hover { background: #fbbf24; color: #0f172a; }
+        .stat-value { font-size: 28px; font-weight: bold; color: #fbbf24; }
+        
+        /* Buttons */
+        .choice-btn { display: block; width: 100%; padding: 16px; margin: 12px 0; background: #1e293b; border: 2px solid #fbbf24; border-radius: 20px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #f0f0f0; text-align: center; transition: all 0.2s; }
+        .choice-btn:hover { background: #fbbf24; color: #0f172a; transform: scale(1.01); }
+        
+        /* Educational Boxes */
+        .quran-box { background: #0f172a; padding: 20px; border-radius: 20px; margin: 20px 0; border-left: 4px solid #fbbf24; color: #e2e8f0; }
+        .arabic { font-size: 1.4rem; font-family: 'Amiri', serif; color: #fbbf24; margin-bottom: 12px; text-align: right; }
         .stage-title { font-size: 1.5rem; color: #fbbf24; margin-bottom: 15px; font-weight: bold; }
-        .historical-note { background: #0f172a; padding: 12px; border-radius: 12px; margin: 15px 0; border-left: 4px solid #3b82f6; color: #cbd5e1; }
-        .restart-btn { background: #fbbf24; color: #0f172a; border: none; padding: 12px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
-        .outcome-card { background: #1e293b; border-radius: 20px; padding: 20px; margin-top: 20px; border: 1px solid #fbbf24; color: #e2e8f0; }
-        .outcome-card h3 { color: #fbbf24; margin-bottom: 15px; }
-        body { background: #0f172a; }
-        .bismillah { background: #1e293b; color: #fbbf24; }
-        .page-title, h1 { color: #fbbf24 !important; }
-        p, li, .page-subtitle { color: #cbd5e1 !important; }
-        a { color: #fbbf24 !important; }
-        .btn-secondary { background: #1e293b; border: 1px solid #fbbf24; color: #fbbf24 !important; }
-        .btn-secondary:hover { background: #fbbf24; color: #0f172a !important; }
-        @media (max-width: 768px) { .sim-container { padding: 12px; } .choice-btn { padding: 12px; font-size: 0.9rem; } }
+        .historical-note { background: #0f172a; padding: 15px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #3b82f6; color: #cbd5e1; }
+        .round-result { background: #1e293b; padding: 20px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #fbbf24; color: #e2e8f0; }
+        .outcome-card { background: #1e293b; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #fbbf24; color: #e2e8f0; }
+        .restart-btn { background: #fbbf24; color: #0f172a; border: none; padding: 14px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
+        .btn-secondary { background: #1e293b; border: 1px solid #fbbf24; color: #fbbf24; padding: 10px 20px; border-radius: 50px; text-decoration: none; display: inline-block; }
+        
+        h1 { color: #fbbf24; text-align: center; margin-bottom: 15px; }
+        p { color: #cbd5e1; line-height: 1.6; margin-bottom: 10px; }
+        
+        /* Responsive */
+        @media (max-width: 768px) { 
+            .j-container { padding: 12px; } 
+            .choice-btn { padding: 12px; font-size: 0.9rem; } 
+            .stat-box { padding: 5px 12px; } 
+            .stat-value { font-size: 22px; } 
+            .arabic { font-size: 1.1rem; }
+            .stage-title { font-size: 1.2rem; }
+        }
     </style>
-
 </head>
 <body>
     <div id="navbar-placeholder"></div>
-    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<div class="bismillah-translation">In the name of Allah, the Most Gracious, the Most Merciful</div></div>
+    <div class="bismillah" style="background: #1e293b; padding: 15px; text-align: center; border-bottom: 1px solid #fbbf24;">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation" style="color: #94a3b8;">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
     
-    <div class="sim-container">
-        <h1 style="text-align: center; color: #fbbf24;">🕊️ Jerusalem Coexistence Simulator</h1>
-        <p style="text-align: center; color: #cbd5e1;">Walk through 150 years of history. Make choices. Learn Islamic rulings.</p>
+    <div class="j-container">
+        <h1>🕊️ Jerusalem Coexistence Simulator</h1>
+        <p style="text-align: center; margin-bottom: 20px; color: #cbd5e1;">Walk through 150 years of history. Make choices. Learn Islamic rulings based on the Quran and Sunnah.</p>
         
+        <!-- Islamic Framework Box -->
         <div class="quran-box">
             <div class="arabic">وَأَعِدُّوا لَهُم مَّا اسْتَطَعْتُم مِّن قُوَّةٍ</div>
-            <p><strong>📖 Islamic Framework:</strong> The Prophet (ﷺ) used multiple strategies: patience for personal offenses, self-defense when attacked, armed resistance when expelled from homes, and honoring treaties unless broken.</p>
+            <p><strong>📖 Islamic Framework:</strong> The Prophet (ﷺ) used multiple strategies depending on the situation:</p>
+            <ul style="margin-left: 20px; color: #cbd5e1;">
+                <li>🕊️ <strong>Patience & Forgiveness:</strong> For personal offenses (Quran 42:40).</li>
+                <li>🛡️ <strong>Self-Defense is Obligatory:</strong> "Whoever is killed in defense of his wealth, family, himself, or his religion is a martyr." (Hadith)</li>
+                <li>⚔️ <strong>Permission to Fight:</strong> "Permission (to fight) is given to those fought against, because they have been wronged." (Quran 22:39-40)</li>
+                <li>📜 <strong>Treaties must be honored — unless broken:</strong> "If you fear betrayal from a people, then throw back their treaty to them fairly." (Quran 8:58)</li>
+            </ul>
         </div>
 
+        <!-- Game Panel -->
         <div id="gamePanel" class="game-panel">
             <div style="text-align: center; margin-bottom: 20px;">
                 <span class="stat-box"><div class="stat-label">Rights</div><div class="stat-value" id="rights">70</div></span>
@@ -55,7 +79,9 @@
                 <span class="stat-box"><div class="stat-label">Unity</div><div class="stat-value" id="unity">60</div></span>
                 <span class="stat-box"><div class="stat-label">Stage</div><div class="stat-value" id="stageNum">1</div></span>
             </div>
-            <div id="gameContent"></div>
+            <div id="gameContent">
+                <!-- Stage 1 content will be loaded here -->
+            </div>
         </div>
         <a href="/simulators" class="btn-secondary">← Back to Simulators</a>
     </div>
@@ -67,7 +93,6 @@
         let rights = 70;
         let support = 50;
         let unity = 60;
-        let decisions = [];
         
         function updateUI() {
             document.getElementById('rights').innerText = rights;
@@ -78,7 +103,8 @@
         
         function showStage1() {
             let html = '<div class="stage-title">📜 STAGE 1: 1880s - Zionist Arrivals</div>';
-            html += '<div class="quran-box"><div class="arabic">لَا يَنْهَاكُمُ اللَّهُ عَنِ الَّذِينَ لَمْ يُقَاتِلُوكُمْ</div><p><strong>Islamic Ruling:</strong> "Allah does not forbid you from those who do not fight you — to be just toward them." (Quran 60:8) — Justice and good treatment of peaceful refugees is commanded.</p></div>';
+            html += '<div class="quran-box"><div class="arabic">لَا يَنْهَاكُمُ اللَّهُ عَنِ الَّذِينَ لَمْ يُقَاتِلُوكُمْ</div>';
+            html += '<p><strong>Islamic Ruling:</strong> "Allah does not forbid you from those who do not fight you — to be just toward them." (Quran 60:8) — Justice and good treatment of peaceful refugees is commanded.</p></div>';
             html += '<div class="historical-note">📜 For 500 years, Muslims, Christians, and Jews coexisted under the Ottoman Millet system. Zionist settlers began arriving, seeking a "Jewish state."</div>';
             html += '<button class="choice-btn" onclick="makeChoice(1, \'protect\')">🛡️ Protect Palestinian land rights (Legal restrictions on land sales)</button>';
             html += '<button class="choice-btn" onclick="makeChoice(1, \'welcome\')">🤝 Welcome as refugees (No restrictions)</button>';
@@ -91,7 +117,8 @@
             stage = 2;
             updateUI();
             let html = '<div class="stage-title">📜 STAGE 2: 1917-1947 - British Mandate</div>';
-            html += '<div class="quran-box"><div class="arabic">وَإِن جَنَحُوا لِلسَّلْمِ فَاجْنَحْ لَهَا</div><p><strong>Islamic Ruling:</strong> "If they incline to peace, then incline to it." (Quran 8:61) — The Prophet (ﷺ) always preferred negotiation and treaties when possible.</p></div>';
+            html += '<div class="quran-box"><div class="arabic">وَإِن جَنَحُوا لِلسَّلْمِ فَاجْنَحْ لَهَا</div>';
+            html += '<p><strong>Islamic Ruling:</strong> "If they incline to peace, then incline to it." (Quran 8:61) — The Prophet (ﷺ) always preferred negotiation and treaties when possible.</p></div>';
             html += '<div class="historical-note">📜 Balfour Declaration (1917): Britain promised a "national home for the Jewish people." Zionist immigration accelerated. Palestinian resistance grew.</div>';
             html += '<button class="choice-btn" onclick="makeChoice(2, \'diplomacy\')">🌍 Pursue international diplomacy and legal challenges</button>';
             html += '<button class="choice-btn" onclick="makeChoice(2, \'armed\')">⚔️ Armed revolt (1936-1939)</button>';
@@ -103,7 +130,8 @@
             stage = 3;
             updateUI();
             let html = '<div class="stage-title">📜 STAGE 3: 1948 - The Nakba</div>';
-            html += '<div class="quran-box"><div class="arabic">أُذِنَ لِلَّذِينَ يُقَاتَلُونَ بِأَنَّهُمْ ظُلِمُوا</div><p><strong>Islamic Ruling:</strong> "Permission (to fight) is given to those fought against, because they have been wronged." (Quran 22:39-40) — This was the FIRST verse permitting fighting, revealed when Muslims were expelled from their homes. Armed resistance against expulsion is LEGITIMATE under Islamic law.</p></div>';
+            html += '<div class="quran-box"><div class="arabic">أُذِنَ لِلَّذِينَ يُقَاتَلُونَ بِأَنَّهُمْ ظُلِمُوا</div>';
+            html += '<p><strong>Islamic Ruling:</strong> "Permission (to fight) is given to those fought against, because they have been wronged." (Quran 22:39-40) — This was the FIRST verse permitting fighting, revealed when Muslims were expelled from their homes. Armed resistance against expulsion is LEGITIMATE under Islamic law.</p></div>';
             html += '<div class="historical-note">📜 May 14, 1948: Israel declared independence. War erupted. 750,000 Palestinians were expelled. Over 500 villages were destroyed. Palestinians call this the Nakba ("Catastrophe").</div>';
             html += '<button class="choice-btn" onclick="makeChoice(3, \'unilateral\')">📜 Declare independence unilaterally (Historical path — led to disaster)</button>';
             html += '<button class="choice-btn" onclick="makeChoice(3, \'negotiate\')">🤝 Negotiate a settlement with neighbors</button>';
@@ -115,7 +143,8 @@
             stage = 4;
             updateUI();
             let html = '<div class="stage-title">📜 STAGE 4: 1967-1993 - Occupation & Intifadas</div>';
-            html += '<div class="quran-box"><div class="arabic">وَإِن نَّكَثُوا أَيْمَانَهُم مِّن بَعْدِ عَهْدِهِمْ</div><p><strong>Islamic Ruling:</strong> "If they break their oaths after their treaty... then fight the leaders of disbelief." (Quran 9:12-13) — If the enemy breaks treaties, there is no obligation to uphold them.</p></div>';
+            html += '<div class="quran-box"><div class="arabic">وَإِن نَّكَثُوا أَيْمَانَهُم مِّن بَعْدِ عَهْدِهِمْ</div>';
+            html += '<p><strong>Islamic Ruling:</strong> "If they break their oaths after their treaty... then fight the leaders of disbelief." (Quran 9:12-13) — If the enemy breaks treaties, there is no obligation to uphold them.</p></div>';
             html += '<div class="historical-note">📜 1967: Israel occupied West Bank, Gaza, East Jerusalem, Golan Heights. Settlements began. 1987: First Intifada. 1993: Oslo Accords — Palestinian Authority established.</div>';
             html += '<button class="choice-btn" onclick="makeChoice(4, \'oslo\')">🤝 Accept Oslo Accords (Historical path — limited autonomy)</button>';
             html += '<button class="choice-btn" onclick="makeChoice(4, \'intifada\')">✊ Continue armed resistance (Intifada)</button>';
@@ -127,7 +156,8 @@
             stage = 5;
             updateUI();
             let html = '<div class="stage-title">📜 STAGE 5: 2025 - The Crossroads</div>';
-            html += '<div class="quran-box"><div class="arabic">وَأَعِدُّوا لَهُم مَّا اسْتَطَعْتُم مِّن قُوَّةٍ</div><p><strong>Islamic Ruling:</strong> "And prepare against them whatever you are able of power." (Quran 8:60) — This includes military, economic, diplomatic, and technological capacity. The International Islamic Fiqh Academy (2006) affirmed: "Legitimate resistance to occupation through legally accepted means is a right."</p></div>';
+            html += '<div class="quran-box"><div class="arabic">وَأَعِدُّوا لَهُم مَّا اسْتَطَعْتُم مِّن قُوَّةٍ</div>';
+            html += '<p><strong>Islamic Ruling:</strong> "And prepare against them whatever you are able of power." (Quran 8:60) — This includes military, economic, diplomatic, and technological capacity. The International Islamic Fiqh Academy (2006) affirmed: "Legitimate resistance to occupation through legally accepted means is a right."</p></div>';
             html += '<div class="historical-note">📜 Gaza: 2.3 million people under siege. Over 50,000 killed since October 2023. ICJ says occupation is "unlawful." ICC issued arrest warrants. Ceasefires repeatedly broken by Israel.</div>';
             html += '<button class="choice-btn" onclick="makeChoice(5, \'one_state\')">🌟 One democratic state for all (Equal rights, return of refugees)</button>';
             html += '<button class="choice-btn" onclick="makeChoice(5, \'two_state\')">⚖️ Two-state solution with justice (1967 borders, East Jerusalem capital)</button>';
@@ -136,11 +166,13 @@
             document.getElementById('gameContent').innerHTML = html;
         }
         
-        function endGame(outcome, message, details, ruling) {
+        function endGame(outcome, message, details, ruling, resistancePath) {
             let html = '<div class="outcome-card"><h3 style="color: #fbbf24;">' + outcome + '</h3><p>' + message + '</p><p>' + details + '</p>';
             html += '<div class="quran-box"><p><strong>📖 Islamic Ruling:</strong> ' + ruling + '</p>';
-            html += '<p><strong>Prophet\'s (ﷺ) Example:</strong> He used patience when weak, migration when oppression became unbearable, defensive treaties when beneficial, armed defense when attacked, and conquest when treaties were broken. Different situations require different responses.</p></div>';
-            html += '<button class="restart-btn" onclick="location.reload()">🔄 Play Again</button></div>';
+            html += '<p><strong>Your chosen path:</strong> ' + resistancePath + '</p>';
+            html += '<p><strong>Prophet\'s (ﷺ) Example:</strong> He used patience when weak, migration when oppression became unbearable, defensive treaties when beneficial, armed defense when attacked, and conquest when treaties were broken. Different situations require different responses.</p>';
+            html += '<p><strong>🌍 Real-World Lesson:</strong> The Palestinian struggle continues. The international community has recognized the occupation as unlawful. The path forward requires strategic wisdom (Tadbeer) — knowing when to resist, when to negotiate, and when to seek international solidarity.</p>';
+            html += '</div><button class="restart-btn" onclick="location.reload()">🔄 Play Again</button></div>';
             document.getElementById('gameContent').innerHTML = html;
         }
         
@@ -149,7 +181,7 @@
                 if (choice === 'protect') { rights += 10; unity += 5; showStage2(); }
                 else if (choice === 'welcome') { rights -= 10; support += 10; showStage2(); }
                 else if (choice === 'reject') { rights += 5; unity += 10; support -= 10; showStage2(); }
-                else if (choice === 'secret') { rights -= 20; unity -= 15; endGame('💀 BETRAYAL ENDING', 'You sold land secretly.', 'When revealed, community trust collapsed. Palestinians were divided. The Zionist project accelerated.', 'Quran 8:27: "Do not betray Allah and His messenger, nor knowingly betray your trusts."'); }
+                else if (choice === 'secret') { rights -= 20; unity -= 15; endGame('💀 BETRAYAL ENDING', 'You sold land secretly.', 'When revealed, community trust collapsed. Palestinians were divided. The Zionist project accelerated.', 'Quran 8:27: "Do not betray Allah and His messenger, nor knowingly betray your trusts."', 'Secret land deals (TRAP)'); }
             }
             else if (stageNum === 2) {
                 if (choice === 'diplomacy') { rights += 5; support += 15; showStage3(); }
@@ -157,7 +189,7 @@
                 else if (choice === 'nonviolent') { rights += 10; support += 15; unity += 10; showStage3(); }
             }
             else if (stageNum === 3) {
-                if (choice === 'unilateral') { rights -= 30; support -= 20; unity += 10; endGame('💀 NAKBA ENDING', 'You declared a state unilaterally.', 'War erupted. 750,000 Palestinians were expelled. 500+ villages were destroyed.', 'The Prophet (ﷺ) did not declare unilateral statehood without international consensus. He negotiated treaties even from a weak position (Hudaybiyyah).'); }
+                if (choice === 'unilateral') { rights -= 30; support -= 20; unity += 10; endGame('💀 NAKBA ENDING', 'You declared a state unilaterally.', 'War erupted. 750,000 Palestinians were expelled. 500+ villages were destroyed.', 'The Prophet (ﷺ) did not declare unilateral statehood without international consensus. He negotiated treaties even from a weak position (Hudaybiyyah).', 'Unilateral declaration (Historical path)'); }
                 else if (choice === 'negotiate') { rights -= 5; support += 10; showStage4(); }
                 else if (choice === 'resist') { rights += 5; unity += 15; support -= 5; showStage4(); }
             }
@@ -167,12 +199,11 @@
                 else if (choice === 'bds') { rights += 10; support += 15; unity += 10; showStage5(); }
             }
             else if (stageNum === 5) {
-                if (choice === 'one_state') { endGame('🌟 VICTORY', 'One Democratic State', 'Equal rights for all. Return of refugees. Jerusalem open to all faiths.', 'Quran 49:13: "O mankind, indeed We have created you from male and female and made you peoples and tribes that you may know one another." Justice and equality are Islamic principles.'); }
-                else if (choice === 'two_state') { endGame('⚖️ PARTIAL VICTORY', 'Two-State Compromise', 'A Palestinian state alongside Israel. Unresolved issues: settlements, refugees, Jerusalem.', 'Compromise is permissible when it brings benefit and prevents greater harm. But incomplete justice is not the final goal.'); }
-                else if (choice === 'armed') { endGame('🌟 VICTORY', 'Armed Resistance', 'Legitimate resistance under Islamic and international law continues. International sympathy fluctuates.', 'Quran 22:39-40: "Permission to fight is given to those fought against, because they have been wronged." Armed resistance against occupation is legitimate.'); }
-                else if (choice === 'forgiveness') { endGame('🌟 ULTIMATE VICTORY', 'Forgiveness Path', 'Return of refugees. Truth and reconciliation. Shared society. The hardest path, but the only just one.', 'Forgiveness is praiseworthy when the oppressor repents. If oppression continues, defense is obligatory.'); }
+                if (choice === 'one_state') { endGame('🌟 VICTORY', 'One Democratic State', 'Equal rights for all. Return of refugees. Jerusalem open to all faiths.', 'Quran 49:13: "O mankind, indeed We have created you from male and female and made you peoples and tribes that you may know one another." Justice and equality are Islamic principles.', 'One democratic state'); }
+                else if (choice === 'two_state') { endGame('⚖️ PARTIAL VICTORY', 'Two-State Compromise', 'A Palestinian state alongside Israel. Unresolved issues: settlements, refugees, Jerusalem.', 'Compromise is permissible when it brings benefit and prevents greater harm. But incomplete justice is not the final goal.', 'Two-state solution'); }
+                else if (choice === 'armed') { endGame('🌟 VICTORY', 'Armed Resistance', 'Legitimate resistance under Islamic and international law continues. International sympathy fluctuates.', 'Quran 22:39-40: "Permission to fight is given to those fought against, because they have been wronged." Armed resistance against occupation is legitimate.', 'Armed resistance + international solidarity'); }
+                else if (choice === 'forgiveness') { endGame('🌟 ULTIMATE VICTORY', 'Forgiveness Path', 'Return of refugees. Truth and reconciliation. Shared society. The hardest path, but the only just one.', 'Forgiveness is praiseworthy when the oppressor repents. If oppression continues, defense is obligatory.', 'Return + Reconciliation'); }
             }
-            updateUI();
         }
         
         showStage1();
