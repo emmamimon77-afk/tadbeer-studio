@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Battle of Uhud - Strategic History | Tadbeer Studio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e0f2fe; font-family: 'Inter', sans-serif; }
+        .sim-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        
+        /* Main Panel */
+        .sim-panel { background: #ffffff; border-radius: 28px; padding: 30px; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border: 1px solid #7dd3fc; }
+        
+        /* Stats Boxes */
+        .stat-box { display: inline-block; background: #f0f9ff; padding: 12px 24px; border-radius: 20px; margin: 5px; border: 1px solid #38bdf8; }
+        .stat-label { font-size: 12px; color: #0369a1; font-weight: 600; }
+        .stat-value { font-size: 28px; font-weight: bold; color: #0284c7; }
+        
+        /* Quran Box */
+        .quran-box { background: #f0f9ff; padding: 25px; border-radius: 24px; margin: 25px 0; border-left: 6px solid #0284c7; }
+        .arabic { font-size: 1.5rem; font-family: 'Amiri', serif; color: #0369a1; margin-bottom: 12px; text-align: right; }
+        
+        /* Historical Box */
+        .historical-box { background: #f8fafc; padding: 20px; border-radius: 20px; margin: 20px 0; border-left: 4px solid #f59e0b; }
+        
+        /* Buttons */
+        .choice-btn { display: block; width: 100%; padding: 16px 20px; margin: 12px 0; background: #f0f9ff; border: 2px solid #38bdf8; border-radius: 20px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #0369a1; text-align: center; transition: all 0.2s; }
+        .choice-btn:hover { background: #38bdf8; color: white; transform: scale(1.01); border-color: #0284c7; }
+        
+        /* Stage Title */
+        .stage-title { font-size: 1.6rem; color: #0284c7; margin-bottom: 20px; font-weight: bold; border-bottom: 3px solid #7dd3fc; padding-bottom: 10px; }
+        
+        /* Round Result */
+        .round-result { background: #f8fafc; padding: 20px; border-radius: 20px; margin: 15px 0; border-left: 4px solid #0284c7; }
+        
+        /* Outcome Card */
+        .outcome-card { background: #f0f9ff; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #38bdf8; }
+        
+        /* Restart Button */
+        .restart-btn { background: #0284c7; color: white; border: none; padding: 14px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
+        .restart-btn:hover { background: #0369a1; }
+        
+        /* Back Button */
+        .btn-secondary { background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; padding: 10px 20px; border-radius: 50px; text-decoration: none; display: inline-block; }
+        
+        /* Typography */
+        h1 { color: #0369a1; text-align: center; margin-bottom: 15px; font-size: 2rem; }
+        h2, h3, h4 { color: #0369a1; margin: 20px 0 10px; }
+        p { color: #1e293b; line-height: 1.7; margin-bottom: 15px; }
+        ul, li { color: #1e293b; }
+        
+        /* Responsive */
+        @media (max-width: 768px) { 
+            .sim-container { padding: 12px; } 
+            .choice-btn { padding: 12px; font-size: 0.9rem; } 
+            .stat-box { padding: 6px 15px; } 
+            .stat-value { font-size: 20px; } 
+            .arabic { font-size: 1.1rem; }
+            .stage-title { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <div class="bismillah" style="background: #f0f9ff; padding: 15px; text-align: center; border-bottom: 1px solid #7dd3fc;">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation" style="color: #0369a1;">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+    
+    <div class="sim-container">
+        <h1>⚔️ Battle of Uhud: Strategic Failure & Divine Wisdom</h1>
+        <p style="text-align: center; margin-bottom: 20px; color: #475569;">625 CE (3 AH) • 700 Muslims vs 3,000 Quraysh • A Lesson in Obedience, Consequences, and Redemption</p>
+        
+        <!-- Quranic Foundation -->
+        <div class="quran-box">
+            <div class="arabic">وَلَا تَهِنُوا وَلَا تَحْزَنُوا وَأَنتُمُ الْأَعْلَوْنَ إِن كُنتُم مُّؤْمِنِينَ</div>
+            <p><strong>📖 Quranic Foundation:</strong> "Do not weaken nor grieve, for you are superior if you are believers." (Quran 3:139)</p>
+            <p>Allah revealed an entire section of Surah Al-Imran (verses 152-175) analyzing the Battle of Uhud — teaching the believers that victory is conditional upon obedience, that failure is a test, and that redemption follows sincere repentance.</p>
+        </div>
+
+        <!-- Historical Background -->
+        <div class="historical-box">
+            <h3 style="color: #d97706;">📜 Historical Background</h3>
+            <p><strong>One Year After Badr:</strong> The Quraysh sought revenge for their devastating loss at Badr (624 CE). Abu Sufyan led an army of 3,000 men, including 200 cavalry, 700 wearing armor, and accompanied by women to boost morale.</p>
+            <p><strong>The Muslim Army:</strong> The Prophet (ﷺ) gathered approximately 700 men. A critical decision arose: should they fight inside Medina (urban warfare advantage) or outside on the open field?</p>
+            <p><strong>The Prophet's (ﷺ) Preferred Strategy:</strong> He advised staying inside Medina, using the city's narrow streets as a defensive advantage. However, many young companions, eager for battle, insisted on meeting the enemy outside. The Prophet (ﷺ), demonstrating Shura (consultation), accepted their opinion.</p>
+        </div>
+
+        <!-- The Prophet's Dream -->
+        <div class="quran-box">
+            <div class="arabic">قَدْ كَانَ لَكُمْ آيَةٌ فِي فِئَتَيْنِ الْتَقَتَا</div>
+            <h3>💭 The Prophet's (ﷺ) Dream (Strategic Foresight)</h3>
+            <p>Before the battle, the Prophet (ﷺ) had a dream, which he shared with his companions:</p>
+            <p style="font-style: italic; background: #e0f2fe; padding: 15px; border-radius: 16px;">"I saw that I was in a strong fortress, and I saw that I had a cow that was being slaughtered. And I saw that I placed my hand on a sword, and it broke. And I saw that I put my hand into a coat of arms."</p>
+            <p><strong>Interpretation:</strong></p>
+            <ul style="margin-left: 20px;">
+                <li><strong>The fortress</strong> = staying in Medina (his preferred strategy)</li>
+                <li><strong>The slaughtered cow</strong> = some of his companions would be martyred</li>
+                <li><strong>The broken sword</strong> = a member of his family would be killed (Hamza)</li>
+                <li><strong>The coat of arms</strong> = the community would remain safe despite the setback</li>
+            </ul>
+            <p><strong>Key Lesson:</strong> The Prophet (ﷺ) had prior insight yet followed the majority opinion, demonstrating that <strong>Shura (consultation)</strong> takes precedence even when a leader has special knowledge. This is a profound model of leadership.</p>
+        </div>
+
+        <!-- The Archers' Disobedience (Game Theory) -->
+        <div class="historical-box">
+            <h3 style="color: #d97706;">🎯 The Critical Moment: The Archers' Disobedience</h3>
+            <p>The Prophet (ﷺ) positioned 50 archers on a hill (today known as Jabal al-Rumah) with explicit orders: <strong>"Do not leave this position, whether we win or lose, even if you see us being killed. Protect our backs from the enemy cavalry."</strong> Their commander was Abdullah ibn Jubayr.</p>
+            <p><strong>The Game Theory Breakdown (Prisoner's Dilemma):</strong></p>
+            <ul style="margin-left: 20px;">
+                <li>🤝 <strong>Cooperate (Stay at post):</strong> No spoils, but obey command → Victory maintained</li>
+                <li>⚔️ <strong>Defect (Leave post):</strong> Immediate spoils → Defeat, casualties</li>
+            </ul>
+            <p>Initially, the Muslims defeated the Quraysh, who fled, leaving behind their spoils of war. Seeing this, <strong>40 of the 50 archers abandoned their posts</strong> to collect the spoils, disobeying the Prophet's direct command. Only 10 archers, including Abdullah ibn Jubayr, remained.</p>
+            <p>Khalid ibn al-Walid (then still a Quraysh commander) exploited this gap, attacked the remaining archers, killed them, and struck the Muslim army from behind. Chaos ensued. The Prophet (ﷺ) was injured, and 70 companions were martyred, including Hamza, the Prophet's beloved uncle.</p>
+        </div>
+
+        <!-- The Game Panel -->
+        <div id="gamePanel" class="sim-panel">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span class="stat-box"><div class="stat-label">Stage</div><div class="stat-value" id="stageNum">1</div></span>
+                <span class="stat-box"><div class="stat-label">Army Morale</div><div class="stat-value" id="morale">80</div></span>
+                <span class="stat-box"><div class="stat-label">Obedience Level</div><div class="stat-value" id="obedience">70</div></span>
+                <span class="stat-box"><div class="stat-label">Trust in Leader</div><div class="stat-value" id="trust">85</div></span>
+            </div>
+            <div id="gameContent">
+                <!-- Game content will be loaded here -->
+            </div>
+        </div>
+        
+        <a href="/lessons" class="btn-secondary">← Back to Lessons Hub</a>
+    </div>
+    
+    <div id="footer-placeholder"></div>
+    <script src="/assets/js/components.js"></script>
+    <script>
+        // Game state variables
+        let stage = 1;
+        let morale = 80;
+        let obedience = 70;
+        let trust = 85;
+        let archerChoice = null;
+        let strategyChoice = null;
+        
+        function updateUI() {
+            document.getElementById('stageNum').innerText = stage;
+            document.getElementById('morale').innerText = morale;
+            document.getElementById('obedience').innerText = obedience;
+            document.getElementById('trust').innerText = trust;
+        }
+        
+        function showStage1() {
+            let html = '<div class="stage-title">📜 STAGE 1: The Decision - Fight Inside or Outside?</div>';
+            html += '<div class="historical-box"><p><strong>The Situation:</strong> The Quraysh army of 3,000 men is approaching Medina. The Prophet (ﷺ) advises fighting inside the city, using the narrow streets as a defensive advantage. However, many young companions, eager to meet the enemy, insist on fighting outside.</p>';
+            html += '<p><strong>Quranic Reminder:</strong> "And consult them in the matter." (Quran 3:159)</p></div>';
+            html += '<button class="choice-btn" onclick="makeChoice(1, \'inside\')">🏰 Fight inside Medina (Prophet\'s preference - Strategic patience)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(1, \'outside\')">⚔️ Fight outside Medina (Companions\' preference - Bold but risky)</button>';
+            document.getElementById('gameContent').innerHTML = html;
+        }
+        
+        function showStage2(prevChoice) {
+            stage = 2;
+            updateUI();
+            let html = '<div class="stage-title">🎯 STAGE 2: The Archer Deployment</div>';
+            html += '<div class="historical-box"><p><strong>The Critical Decision:</strong> The Prophet (ﷺ) identifies a hill that protects the army\'s flank. He orders 50 archers to guard it with strict instructions: "Do not leave this position, whether we win or lose, even if you see us being killed."</p>';
+            html += '<p><strong>Game Theory Principle:</strong> This is a collective action problem. Each archer faces a choice: obey (cooperate) or go for spoils (defect).</p></div>';
+            html += '<button class="choice-btn" onclick="makeChoice(2, \'strong_warning\')">📢 Give a strong warning about the consequences of disobedience</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(2, \'trust\')">🤝 Trust them without excessive warning</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(2, \'rotate\')">🔄 Rotate archers to prevent boredom</button>';
+            document.getElementById('gameContent').innerHTML = html;
+        }
+        
+        function showStage3(prevChoice) {
+            stage = 3;
+            updateUI();
+            let html = '<div class="stage-title">💰 STAGE 3: The Spoils of War - The Critical Moment</div>';
+            html += '<div class="historical-box"><p><strong>The Turning Point:</strong> The Muslims have defeated the Quraysh, who flee, leaving behind their spoils. The archers on the hill see the spoils and are tempted to leave their posts to collect them.</p>';
+            html += '<p><strong>Quranic Analysis (3:152):</strong> "Until you lost courage and disputed about the order and disobeyed after He had shown you that which you love."</p>';
+            html += '<p><strong>What do you do?</strong></p></div>';
+            html += '<button class="choice-btn" onclick="makeChoice(3, \'remind\')">🔔 Send a messenger to remind them of their orders</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(3, \'reinforce\')">🛡️ Send reinforcements to hold the hill</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(3, \'ignore\')">😴 Assume they will obey (Historical outcome - leads to disaster)</button>';
+            document.getElementById('gameContent').innerHTML = html;
+        }
+        
+        function showStage4(prevChoice) {
+            stage = 4;
+            updateUI();
+            let html = '<div class="stage-title">💔 STAGE 4: The Aftermath - Responding to Defeat</div>';
+            html += '<div class="historical-box"><p><strong>The Devastation:</strong> Despite your efforts, some archers have left their posts. Khalid ibn al-Walid attacked the hill, killed the remaining archers, and struck the Muslim army from behind. The Muslims are in chaos. The Prophet (ﷺ) is injured. 70 companions, including Hamza, are martyred.</p>';
+            html += '<p><strong>How do you respond?</strong></p></div>';
+            html += '<button class="choice-btn" onclick="makeChoice(4, \'pursue\')">⚔️ Pursue the enemy to show strength (Prophetic response)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(4, \'retreat\')">🏠 Retreat to Medina and regroup</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(4, \'blame\')">😤 Blame the archers publicly</button>';
+            document.getElementById('gameContent').innerHTML = html;
+        }
+        
+        function endGame(outcome, message, details, quranVerse, lesson) {
+            let html = '<div class="outcome-card"><h3 style="color: #0284c7;">' + outcome + '</h3>';
+            html += '<p><strong>' + message + '</strong></p>';
+            html += '<p>' + details + '</p>';
+            html += '<div class="quran-box"><div class="arabic">' + quranVerse.arabic + '</div>';
+            html += '<p><strong>📖 ' + quranVerse.reference + ':</strong> ' + quranVerse.text + '</p>';
+            html += '<p><strong>💡 Lesson:</strong> ' + lesson + '</p></div>';
+            html += '<button class="restart-btn" onclick="location.reload()">🔄 Play Again</button></div>';
+            document.getElementById('gameContent').innerHTML = html;
+        }
+        
+        function makeChoice(stageNum, choice) {
+            if (stageNum === 1) {
+                strategyChoice = choice;
+                if (choice === 'inside') {
+                    morale += 10;
+                    trust += 10;
+                    updateUI();
+                    showStage2(choice);
+                } else {
+                    morale += 5;
+                    trust -= 5;
+                    updateUI();
+                    showStage2(choice);
+                }
+            } 
+            else if (stageNum === 2) {
+                if (choice === 'strong_warning') {
+                    obedience += 10;
+                    trust += 5;
+                    updateUI();
+                    showStage3(choice);
+                } else if (choice === 'trust') {
+                    obedience -= 5;
+                    trust += 10;
+                    updateUI();
+                    showStage3(choice);
+                } else {
+                    obedience += 5;
+                    trust += 5;
+                    updateUI();
+                    showStage3(choice);
+                }
+            }
+            else if (stageNum === 3) {
+                if (choice === 'remind') {
+                    obedience += 5;
+                    updateUI();
+                    endGame('⚖️ PARTIAL SUCCESS', 'You sent a reminder, but some archers still left.', 'The reminder helped, but the temptation of spoils was too great. Some archers abandoned their posts. The enemy exploited the gap, causing casualties but not complete disaster.', 
+                        {arabic: 'وَلَا تَكُونُوا كَالَّذِينَ نَسُوا اللَّهَ', reference: 'Quran 59:19', text: 'And do not be like those who forgot Allah, so He made them forget themselves.'},
+                        'Reminders help, but internal discipline must be cultivated. The love of worldly gain can overcome even clear commands.');
+                } else if (choice === 'reinforce') {
+                    obedience += 15;
+                    morale -= 5;
+                    updateUI();
+                    endGame('🏆 STRATEGIC VICTORY', 'You sent reinforcements! The hill held!', 'By sending reinforcements, you secured the flank. The enemy could not break through. The Muslims won the battle with minimal casualties.', 
+                        {arabic: 'إِنَّ اللَّهَ مَعَ الَّذِينَ اتَّقَوا', reference: 'Quran 16:128', text: 'Indeed, Allah is with those who fear Him and those who are doers of good.'},
+                        'Proactive leadership and anticipating problems prevents disaster. The Prophet (ﷺ) praised foresight (Tadbeer).');
+                } else {
+                    obedience -= 20;
+                    morale -= 30;
+                    trust -= 20;
+                    updateUI();
+                    endGame('💀 HISTORICAL DEFEAT', 'The archers abandoned their posts. Disaster followed.', 'The archers left for the spoils. Khalid ibn al-Walid attacked the hill, killed the remaining archers, and struck from behind. The Prophet (ﷺ) was injured. 70 companions, including Hamza, were martyred.', 
+                        {arabic: 'وَلَقَدْ صَدَقَكُمُ اللَّهُ وَعْدَهُ إِذْ تَحُسُّونَهُم بِإِذْنِهِ', reference: 'Quran 3:152', text: 'And indeed Allah fulfilled His promise to you when you were killing them by His permission until you lost courage and disputed about the order and disobeyed.'},
+                        'Disobedience to legitimate authority has severe consequences. The love of worldly gain can undermine even righteous efforts.');
+                }
+            }
+            else if (stageNum === 4) {
+                if (choice === 'pursue') {
+                    morale += 15;
+                    trust += 20;
+                    updateUI();
+                    endGame('🏆 PROPHETIC RESPONSE', 'You pursued the enemy, showing strength and resilience.', 'Despite the devastating loss, you led a force to Hamra al-Asad, demonstrating that the Muslims were not broken. The Quraysh retreated, and Medina was secure. Allah revealed: "Sufficient for us is Allah, and He is the best Disposer of affairs." (3:173)', 
+                        {arabic: 'حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ', reference: 'Quran 3:173', text: 'Sufficient for us is Allah, and He is the best Disposer of affairs.'},
+                        'True leadership shines in moments of crisis. Failure is not final; how you respond defines you. The Prophet (ﷺ) showed courage, forgiveness, and strategic wisdom after the defeat.');
+                } else if (choice === 'retreat') {
+                    morale -= 20;
+                    trust -= 15;
+                    updateUI();
+                    endGame('⚠️ CAUTIOUS RETREAT', 'You retreated to Medina.', 'The city was safe, but the enemy perceived weakness. The Quraysh boasted of their "victory," and the Muslims morale suffered. However, Medina remained secure.', 
+                        {arabic: 'وَلَا تَيْأَسُوا مِن رَّوْحِ اللَّهِ', reference: 'Quran 12:87', text: 'Do not despair of the mercy of Allah.'},
+                        'Retreat is sometimes wise, but demonstrating resilience after a setback can prevent future aggression.');
+                } else {
+                    morale -= 30;
+                    trust -= 40;
+                    updateUI();
+                    endGame('💀 LEADERSHIP COLLAPSE', 'You blamed the archers publicly.', 'Division spread among the Muslims. The community lost trust in its leaders. The Quraysh exploited the discord, and Medina faced ongoing threats.', 
+                        {arabic: 'وَلَا تَنَازَعُوا فَتَفْشَلُوا وَتَذْهَبَ رِيحُكُمْ', reference: 'Quran 8:46', text: 'And do not dispute and [thus] lose courage and [then] your strength would depart.'},
+                        'Public blame destroys unity. The Prophet (ﷺ) did not publicly shame the archers; Allah Himself revealed their forgiveness.');
+                }
+            }
+        }
+        
+        // Initialize
+        showStage1();
+        updateUI();
+    </script>
+</body>
+</html>
