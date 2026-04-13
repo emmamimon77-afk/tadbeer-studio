@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Strategic History Hub | Tadbeer Studio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e0f2fe; font-family: 'Inter', sans-serif; }
+        .history-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header h1 { color: #0369a1; font-size: 2rem; margin-bottom: 10px; }
+        .page-header p { color: #475569; }
+        
+        /* Lesson Cards */
+        .lessons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin: 30px 0; }
+        .lesson-card { background: #ffffff; border-radius: 24px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #7dd3fc; transition: transform 0.2s; }
+        .lesson-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
+        .lesson-icon { font-size: 2.5rem; color: #0284c7; margin-bottom: 15px; }
+        .lesson-card h3 { color: #0369a1; margin-bottom: 12px; }
+        .lesson-card p { color: #475569; margin-bottom: 20px; line-height: 1.6; }
+        .lesson-status { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: bold; }
+        .status-live { background: #d1fae5; color: #065f46; }
+        .status-coming { background: #fef3c7; color: #92400e; }
+        .status-draft { background: #fee2e2; color: #991b1b; }
+        .btn-lesson { background: #f0f9ff; border: 1px solid #38bdf8; color: #0284c7; padding: 10px 20px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: 500; transition: all 0.2s; }
+        .btn-lesson:hover { background: #0284c7; color: white; }
+        
+        .back-link { display: inline-block; margin-bottom: 20px; color: #0369a1; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        
+        @media (max-width: 768px) { .history-container { padding: 12px; } .lessons-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <div class="bismillah" style="background: #f0f9ff; padding: 15px; text-align: center; border-bottom: 1px solid #7dd3fc;">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation" style="color: #0369a1;">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+    
+    <div class="history-container">
+        <a href="/lessons" class="back-link"><i class="fas fa-arrow-left"></i> Back to Lessons Hub</a>
+        
+        <div class="page-header">
+            <h1><i class="fas fa-history"></i> Strategic History Hub</h1>
+            <p>Game theory analysis of historical conflicts • From the Battle of Uhud to the Cold War to modern geopolitics</p>
+        </div>
+        
+        <div class="lessons-grid">
+            <!-- Lesson 1: Battle of Uhud -->
+            <div class="lesson-card">
+                <div class="lesson-icon"><i class="fas fa-crosshairs"></i></div>
+                <h3>⚔️ Battle of Uhud (625 CE)</h3>
+                <p><span class="lesson-status status-live">LIVE</span> <span style="margin-left: 8px;">🎮 Interactive Simulator</span></p>
+                <p>The critical battle where archers disobeyed orders. Explore the Prisoner's Dilemma, the Prophet's (ﷺ) strategic leadership, and Quranic analysis of victory and defeat.</p>
+                <a href="/lessons/strategy-history/battle-of-uhud.html" class="btn-lesson">View Lesson & Simulator →</a>
+            </div>
+            
+            <!-- Lesson 2: Cold War Deterrence -->
+            <div class="lesson-card">
+                <div class="lesson-icon"><i class="fas fa-biohazard"></i></div>
+                <h3>☢️ Cold War Deterrence (1947-1991)</h3>
+                <p><span class="lesson-status status-coming">COMING SOON</span></p>
+                <p>Mutually Assured Destruction (MAD) as a game theory equilibrium. How nuclear weapons changed strategic thinking forever. The Prisoner's Dilemma on a global scale.</p>
+                <button class="btn-lesson" disabled style="opacity: 0.5;">Coming Soon</button>
+            </div>
+            
+            <!-- Lesson 3: Cuban Missile Crisis -->
+            <div class="lesson-card">
+                <div class="lesson-icon"><i class="fas fa-rocket"></i></div>
+                <h3>🇨🇺 Cuban Missile Crisis (1962)</h3>
+                <p><span class="lesson-status status-coming">COMING SOON</span></p>
+                <p>The ultimate Chicken Game. 13 days of brinkmanship between Kennedy and Khrushchev. Who blinked first? Analysis of pre-commitment and risk-taking.</p>
+                <button class="btn-lesson" disabled style="opacity: 0.5;">Coming Soon</button>
+            </div>
+            
+            <!-- Lesson 4: Modern Geopolitics - Ukraine -->
+            <div class="lesson-card">
+                <div class="lesson-icon"><i class="fas fa-flag"></i></div>
+                <h3>🇺🇦 Russia-Ukraine War (2022-Present)</h3>
+                <p><span class="lesson-status status-draft">IN DEVELOPMENT</span></p>
+                <p>Game theory analysis of escalation, sanctions, and alliance formation. NATO expansion as a security dilemma. Prisoner's Dilemma in multipolar conflict.</p>
+                <button class="btn-lesson" disabled style="opacity: 0.5;">In Development</button>
+            </div>
+            
+            <!-- Lesson 5: Modern Geopolitics - Gaza -->
+            <div class="lesson-card">
+                <div class="lesson-icon"><i class="fas fa-hand-fist"></i></div>
+                <h3>🇵🇸 Gaza & Palestinian Resistance</h3>
+                <p><span class="lesson-status status-draft">IN DEVELOPMENT</span></p>
+                <p>Asymmetric warfare, occupation, and resistance. Game theory analysis of the Israeli-Palestinian conflict. The Jerusalem Coexistence Simulator explores this in depth.</p>
+                <a href="/simulators/jerusalem-simulator/" class="btn-lesson">View Jerusalem Simulator →</a>
+            </div>
+            
+            <!-- Lesson 6: Modern Geopolitics - Taiwan -->
+            <div class="lesson-card">
+                <div class="lesson-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <h3>🇹🇼 Taiwan Strait Crisis</h3>
+                <p><span class="lesson-status status-draft">IN DEVELOPMENT</span></p>
+                <p>US-China strategic competition. Chicken Game in the South China Sea. Pre-commitment, credible threats, and escalation dynamics.</p>
+                <button class="btn-lesson" disabled style="opacity: 0.5;">In Development</button>
+            </div>
+        </div>
+        
+        <!-- Islamic Perspectives Section -->
+        <div class="quran-box" style="background: #f0f9ff; padding: 25px; border-radius: 24px; margin: 30px 0; border-left: 6px solid #0284c7;">
+            <div class="arabic" style="font-size: 1.3rem; font-family: 'Amiri', serif; color: #0369a1; text-align: right; margin-bottom: 12px;">وَأَعِدُّوا لَهُم مَّا اسْتَطَعْتُم مِّن قُوَّةٍ</div>
+            <h3 style="color: #0369a1;">🕌 Islamic Perspectives on Modern Conflicts</h3>
+            <p>Islam provides a framework for understanding conflict and peace:</p>
+            <ul style="margin-left: 20px; color: #1e293b;">
+                <li><strong>Justice ('Adl):</strong> "O you who have believed, be persistently standing firm for Allah, witnesses in justice." (Quran 4:135)</li>
+                <li><strong>Prohibition of Aggression:</strong> "Do not transgress. Indeed, Allah does not like transgressors." (Quran 2:190)</li>
+                <li><strong>Defense of the Oppressed:</strong> "And what is [the matter] with you that you do not fight in the cause of Allah and for the oppressed?" (Quran 4:75)</li>
+                <li><strong>Peace as the Goal:</strong> "If they incline to peace, then incline to it." (Quran 8:61)</li>
+            </ul>
+            <p style="margin-top: 15px;">Modern conflicts must be analyzed through both strategic and ethical lenses. Game theory helps us understand the <em>dynamics</em> of conflict; Islamic ethics guides us toward <em>just</em> resolutions.</p>
+        </div>
+    </div>
+    
+    <div id="footer-placeholder"></div>
+    <script src="/assets/js/components.js"></script>
+</body>
+</html>
