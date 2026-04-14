@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Cuban Missile Crisis Simulator - Brinkmanship & Game Theory | Tadbeer Studio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f3e8ff; font-family: 'Inter', sans-serif; }
+        .sim-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .sim-panel { background: #ffffff; border-radius: 28px; padding: 30px; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); border: 1px solid #d8b4fe; }
+        .stat-box { display: inline-block; background: #f3e8ff; padding: 12px 24px; border-radius: 20px; margin: 5px; border: 1px solid #d8b4fe; }
+        .stat-label { font-size: 12px; color: #6b21a5; font-weight: 600; }
+        .stat-value { font-size: 28px; font-weight: bold; color: #7c3aed; }
+        .quran-box { background: #faf5ff; padding: 25px; border-radius: 24px; margin: 20px 0; border-left: 6px solid #7c3aed; }
+        .arabic { font-size: 1.5rem; font-family: 'Amiri', serif; color: #6b21a5; margin-bottom: 12px; text-align: right; }
+        .stage-title { font-size: 1.6rem; color: #7c3aed; margin-bottom: 20px; font-weight: bold; border-bottom: 3px solid #e9d5ff; padding-bottom: 10px; }
+        .choice-btn { display: block; width: 100%; padding: 16px 20px; margin: 12px 0; background: #faf5ff; border: 2px solid #d8b4fe; border-radius: 20px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #4c1d95; text-align: center; transition: all 0.2s; }
+        .choice-btn:hover { background: #7c3aed; color: white; transform: scale(1.01); border-color: #7c3aed; }
+        .historical-note { background: #faf5ff; padding: 15px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #f59e0b; }
+        .round-result { background: #faf5ff; padding: 20px; border-radius: 20px; margin: 15px 0; border-left: 4px solid #7c3aed; }
+        .outcome-card { background: #faf5ff; border-radius: 24px; padding: 25px; margin-top: 20px; border: 1px solid #d8b4fe; }
+        .restart-btn { background: #7c3aed; color: white; border: none; padding: 14px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }
+        .btn-secondary { background: #faf5ff; border: 1px solid #d8b4fe; color: #7c3aed; padding: 10px 20px; border-radius: 50px; text-decoration: none; display: inline-block; }
+        .rating-stars { font-size: 2rem; color: #fbbf24; margin: 15px 0; }
+        h1 { color: #6b21a5; text-align: center; margin-bottom: 15px; }
+        p, li { color: #1e293b; line-height: 1.7; }
+        @media (max-width: 768px) { .sim-container { padding: 12px; } .choice-btn { padding: 12px; font-size: 0.9rem; } .stat-box { padding: 6px 15px; } .stat-value { font-size: 20px; } .stage-title { font-size: 1.3rem; } .arabic { font-size: 1.1rem; } }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <div class="bismillah" style="background: #faf5ff; padding: 15px; text-align: center; border-bottom: 1px solid #d8b4fe;">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation" style="color: #6b21a5;">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+    
+    <div class="sim-container">
+        <h1>🇨🇺 Cuban Missile Crisis: The Ultimate Chicken Game</h1>
+        <p style="text-align: center; margin-bottom: 20px; color: #475569;">October 1962 • 13 Days • The World on the Brink of Nuclear War</p>
+        
+        <!-- Islamic Foundation -->
+        <div class="quran-box">
+            <div class="arabic">وَإِن جَنَحُوا لِلسَّلْمِ فَاجْنَحْ لَهَا</div>
+            <p><strong>📖 Quranic Foundation:</strong> "If they incline to peace, then incline to it." (Quran 8:61)</p>
+            <p>This simulator explores brinkmanship, deterrence, and crisis management. Islam teaches that peace is the goal, but preparation for defense is obligatory. The Prophet (ﷺ) demonstrated strategic patience (Tadbeer) in the Treaty of Hudaybiyyah — knowing when to negotiate and when to stand firm.</p>
+        </div>
+
+        <!-- Game Panel -->
+        <div id="gamePanel" class="sim-panel">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span class="stat-box"><div class="stat-label">Stage</div><div class="stat-value" id="stageNum">1</div></span>
+                <span class="stat-box"><div class="stat-label">Global Tension</div><div class="stat-value" id="tension">70</div></span>
+                <span class="stat-box"><div class="stat-label">US Reputation</div><div class="stat-value" id="reputation">50</div></span>
+                <span class="stat-box"><div class="stat-label">Crisis Score</div><div class="stat-value" id="score">0</div></span>
+            </div>
+            <div id="gameContent">
+                <!-- Game content will be loaded here -->
+            </div>
+        </div>
+        
+        <a href="/simulators" class="btn-secondary">← Back to Simulators Hub</a>
+    </div>
+    
+    <div id="footer-placeholder"></div>
+    <script src="/assets/js/components.js"></script>
+    <script>
+        let stage = 1;
+        let tension = 70;
+        let reputation = 50;
+        let score = 0;
+        let choices = [];
+        
+        function updateUI() {
+            document.getElementById('stageNum').innerText = stage;
+            document.getElementById('tension').innerText = tension;
+            document.getElementById('reputation').innerText = reputation;
+            document.getElementById('score').innerText = score;
+        }
+        
+        function showFinalRating() {
+            let stars = '';
+            let ratingMessage = '';
+            let starCount = 0;
+            
+            if (score >= 80) {
+                starCount = 5;
+                ratingMessage = '🌟 EXCELLENT! You demonstrated masterful crisis management, strategic patience, and diplomatic wisdom. You embody the principles of Tadbeer.';
+            } else if (score >= 60) {
+                starCount = 4;
+                ratingMessage = '👍 GOOD! You handled the crisis well, with some room for improvement. Your strategic thinking prevented disaster.';
+            } else if (score >= 40) {
+                starCount = 3;
+                ratingMessage = '⚖️ AVERAGE. You made some good choices but also some risky ones. Review the principles of brinkmanship and deterrence.';
+            } else if (score >= 20) {
+                starCount = 2;
+                ratingMessage = '⚠️ BELOW AVERAGE. Many of your choices escalated tension unnecessarily. Study the Cuban Missile Crisis and the art of de-escalation.';
+            } else {
+                starCount = 1;
+                ratingMessage = '💀 POOR. Your choices led to disaster. The world suffered because of reckless brinkmanship. Reflect on Quran 8:61: "If they incline to peace, then incline to it."';
+            }
+            
+            for (let i = 0; i < starCount; i++) stars += '★';
+            for (let i = starCount; i < 5; i++) stars += '☆';
+            
+            return `<div class="rating-stars">${stars}</div><p><strong>Your Rating:</strong> ${starCount}/5 stars</p><p>${ratingMessage}</p>`;
+        }
+        
+        function endGame(outcome, message, details, quranVerse, lesson, points) {
+            score += points;
+            updateUI();
+            const rating = showFinalRating();
+            let html = '<div class="outcome-card"><h3 style="color: #7c3aed;">🏁 CRISIS RESOLVED</h3>';
+            html += '<p><strong>' + outcome + '</strong></p>';
+            html += '<p>' + message + '</p>';
+            html += '<p>' + details + '</p>';
+            html += '<div class="quran-box"><div class="arabic">' + quranVerse.arabic + '</div>';
+            html += '<p><strong>📖 ' + quranVerse.reference + ':</strong> ' + quranVerse.text + '</p>';
+            html += '<p><strong>💡 Lesson:</strong> ' + lesson + '</p></div>';
+            html += '<div style="background: #f3e8ff; padding: 20px; border-radius: 20px; margin: 20px 0; text-align: center;">';
+            html += '<h4 style="color: #7c3aed;">🎭 Your Crisis Management Score</h4>';
+            html += '<p><strong>Total Score:</strong> ' + score + '/100</p>';
+            html += rating;
+            html += '</div>';
+            html += '<button class="restart-btn" onclick="location.reload()">🔄 Play Again</button></div>';
+            document.getElementById('gameContent').innerHTML = html;
+        }
+        
+        function makeChoice(stageNum, choice, pointsChange, tensionChange, repChange) {
+            score += pointsChange;
+            tension += tensionChange;
+            reputation += repChange;
+            tension = Math.min(100, Math.max(0, tension));
+            reputation = Math.min(100, Math.max(0, reputation));
+            choices.push({stage: stageNum, choice: choice});
+            updateUI();
+            
+            if (stageNum === 1) {
+                if (choice === 'airstrike') {
+                    endGame('💀 NUCLEAR WAR', 'You launched an airstrike on the missile sites.', 'Soviet forces retaliated. NATO attacked Cuba. Within hours, nuclear war erupted. Over 100 million died in the first hour. Your legacy is annihilation.', 
+                        {arabic: 'وَلَا تَلْقُوا بِأَيْدِيكُمْ إِلَى التَّهْلُكَةِ', reference: 'Quran 2:195', text: 'Do not throw yourselves into destruction.'},
+                        'Pre-emptive strikes in a nuclear context guarantee mutual destruction. Islam forbids self-destruction.', -50);
+                } 
+                else if (choice === 'blockade') {
+                    showStage2();
+                } 
+                else if (choice === 'negotiate') {
+                    endGame('⚠️ PARTIAL SUCCESS', 'You pursued diplomatic negotiation immediately.', 'Khrushchev agreed to remove missiles in exchange for a U.S. pledge not to invade Cuba. However, the missiles remained in place for months, and the crisis dragged on. Your reputation suffered for appearing weak.', 
+                        {arabic: 'وَإِن جَنَحُوا لِلسَّلْمِ فَاجْنَحْ لَهَا', reference: 'Quran 8:61', text: 'If they incline to peace, then incline to it.'},
+                        'Diplomacy is always preferable, but negotiating from a position of weakness can prolong crises.', 30);
+                } 
+                else if (choice === 'invade') {
+                    endGame('💀 WORLD WAR III', 'You ordered a full invasion of Cuba.', 'Soviet forces responded with nuclear strikes on U.S. cities. NATO launched a counterstrike. The world descended into nuclear winter. Civilization collapsed.', 
+                        {arabic: 'وَلَا تَعْتَدُوا ۚ إِنَّ اللَّهَ لَا يُحِبُّ الْمُعْتَدِينَ', reference: 'Quran 2:190', text: 'Do not transgress. Indeed, Allah does not like transgressors.'},
+                        'Aggression without strategic calculation leads to mutual destruction. Islam prohibits transgression.', -60);
+                }
+            } 
+            else if (stageNum === 2) {
+                if (choice === 'stop_all') {
+                    endGame('💀 CONFRONTATION AT SEA', 'You ordered the Navy to stop and search all ships.', 'A Soviet submarine refused to surface. U.S. destroyers dropped depth charges. The submarine, believing war had started, prepared to launch a nuclear torpedo. At the last moment, the Soviet commander chose not to fire. The world came within minutes of nuclear war.', 
+                        {arabic: 'وَأَعِدُّوا لَهُم مَّا اسْتَطَعْتُم مِّن قُوَّةٍ', reference: 'Quran 8:60', text: 'And prepare against them whatever you are able of power.'},
+                        'Preparation is necessary, but excessive provocation risks accidental war.', 20);
+                } 
+                else if (choice === 'allow_tanker') {
+                    showStage3();
+                } 
+                else if (choice === 'preemptive') {
+                    endGame('💀 NUCLEAR WAR', 'You ordered a pre-emptive strike on the missile sites.', 'Soviet commanders, fearing imminent attack, launched their missiles. The world ended in nuclear fire.', 
+                        {arabic: 'وَلَا تَقْتُلُوا أَنفُسَكُمْ', reference: 'Quran 4:29', text: 'Do not kill yourselves.'},
+                        'Pre-emptive war in the nuclear age is suicidal.', -55);
+                }
+            } 
+            else if (stageNum === 3) {
+                if (choice === 'retaliate') {
+                    endGame('💀 ESCALATION SPIRAL', 'You ordered retaliation against Cuba.', 'The attack on Cuba triggered a Soviet response. NATO forces mobilized. Within hours, the first nuclear weapons were launched.', 
+                        {arabic: 'وَلَا تَنَازَعُوا فَتَفْشَلُوا وَتَذْهَبَ رِيحُكُمْ', reference: 'Quran 8:46', text: 'And do not dispute and [thus] lose courage and [then] your strength would depart.'},
+                        'Retaliation for retaliation leads to endless escalation.', -45);
+                } 
+                else if (choice === 'secret_negotiate') {
+                    showStage4();
+                } 
+                else if (choice === 'accept') {
+                    endGame('⚠️ LOSS OF FACE', 'You accepted the shoot-down without response.', 'The world perceived the U.S. as weak. Khrushchev became emboldened. The missiles remained in Cuba for months. Your presidency was weakened.', 
+                        {arabic: 'وَإِن جَنَحُوا لِلسَّلْمِ فَاجْنَحْ لَهَا', reference: 'Quran 8:61', text: 'If they incline to peace, then incline to it.'},
+                        'Sometimes, accepting loss is wise. But appearing weak can invite further aggression.', 15);
+                }
+            } 
+            else if (stageNum === 4) {
+                if (choice === 'first_letter') {
+                    showStage5();
+                } 
+                else if (choice === 'public_demand') {
+                    endGame('💀 NEGOTIATIONS COLLAPSE', 'You demanded public capitulation from Khrushchev.', 'Khrushchev, humiliated, broke off talks. The crisis escalated. Nuclear war became inevitable.', 
+                        {arabic: 'وَإِن جَنَحُوا لِلسَّلْمِ فَاجْنَحْ لَهَا', reference: 'Quran 8:61', text: 'If they incline to peace, then incline to it.'},
+                        'Pride and public humiliation can destroy the chance for peace.', -30);
+                } 
+                else if (choice === 'turkey_deal') {
+                    showStage5();
+                }
+            } 
+            else if (stageNum === 5) {
+                if (choice === 'declare_victory') {
+                    endGame('🏆 STRATEGIC VICTORY', 'You declared victory and the crisis ended.', 'Khrushchev announced the removal of missiles. The world breathed a sigh of relief. Your approval rating soared. You demonstrated strategic patience (Tadbeer) — knowing when to stand firm and when to allow the opponent to save face.', 
+                        {arabic: 'وَإِن جَنَحُوا لِلسَّلْمِ فَاجْنَحْ لَهَا', reference: 'Quran 8:61', text: 'If they incline to peace, then incline to it.'},
+                        'Strategic wisdom is not about winning every battle — it is about winning without war. The Prophet (ﷺ) at Hudaybiyyah showed that patience leads to victory.', 100);
+                } 
+                else if (choice === 'over_commit') {
+                    endGame('💀 NUCLEAR WAR', 'You over-committed to confrontation.', 'Your demands escalated beyond what Khrushchev could accept. The crisis spiraled out of control. Nuclear war erupted.', 
+                        {arabic: 'وَلَا تَعْتَدُوا', reference: 'Quran 2:190', text: 'Do not transgress.'},
+                        'Knowing when to stop is as important as knowing when to act.', -60);
+                } 
+                else if (choice === 'embrace_diplomacy') {
+                    endGame('🏆 DIPLOMATIC MASTERY', 'You embraced diplomacy and de-escalation.', 'The crisis ended peacefully. Both sides claimed victory. The world avoided nuclear war. Your legacy is one of wisdom and restraint.', 
+                        {arabic: 'وَإِن جَنَحُوا لِلسَّلْمِ فَاجْنَحْ لَهَا', reference: 'Quran 8:61', text: 'If they incline to peace, then incline to it.'},
+                        'Diplomacy is the highest form of strategy. The Prophet (ﷺ) always preferred peace when possible.', 90);
+                }
+            }
+        }
+        
+        function showStage1() {
+            let html = '<div class="stage-title">📅 STAGE 1: The Discovery (October 14-16, 1962)</div>';
+            html += '<div class="historical-note"><p><strong>🛰️ Historical Context:</strong> A U-2 spy plane has photographed Soviet missile sites in Cuba. The missiles can reach Washington, D.C. Kennedy is informed. His military advisors demand an immediate airstrike. Diplomats urge negotiation. The world waits.</p>';
+            html += '<p><strong>🎮 Game Theory:</strong> This is a first-move advantage problem. Whoever acts first can shape the crisis. But acting too aggressively risks nuclear war.</p>';
+            html += '<p><strong>🕌 Islamic Perspective:</strong> "Do not transgress. Indeed, Allah does not like transgressors." (Quran 2:190)</p></div>';
+            html += '<button class="choice-btn" onclick="makeChoice(1, \'airstrike\', -30, 30, -20)">✈️ Launch airstrike on missile sites (Military advisors\' recommendation)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(1, \'blockade\', 0, -10, 10)">🚢 Announce naval blockade (quarantine) (Kennedy\'s actual decision)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(1, \'negotiate\', 10, -20, -10)">🤝 Pursue diplomatic negotiation (Some advisors\' recommendation)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(1, \'invade\', -40, 40, -30)">⚔️ Full invasion of Cuba (Extreme path — likely nuclear war)</button>';
+            document.getElementById('gameContent').innerHTML = html;
+        }
+        
+        function showStage2() {
+            stage = 2;
+            updateUI();
+            let html = '<div class="stage-title">🚢 STAGE 2: The Blockade (October 22-24, 1962)</div>';
+            html += '<div class="historical-note"><p><strong>🌊 Historical Context:</strong> Kennedy announces a naval quarantine (blockade) of Cuba. Soviet ships are approaching the quarantine line. The military demands authorization to stop and search them. Khrushchev sends conflicting signals.</p>';
+            html += '<p><strong>🎮 Game Theory:</strong> This is a game of chicken. Each side must decide how far to push without causing a crash. Pre-commitment makes backing down costly.</p>';
+            html += '<p><strong>🕌 Islamic Perspective:</strong> "And prepare against them whatever you are able of power." (Quran 8:60)</p></div>';
+            html += '<button class="choice-btn" onclick="makeChoice(2, \'stop_all\', -10, 20, -5)">🛑 Stop and search all ships (High risk of confrontation)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(2, \'allow_tanker\', 10, -15, 5)">⛴️ Allow Soviet tanker through (De-escalation — historical path)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(2, \'preemptive\', -30, 30, -20)">💣 Pre-emptive strike on missile sites (Extreme — likely nuclear war)</button>';
+            document.getElementById('gameContent').innerHTML = html;
+        }
+        
+        function showStage3() {
+            stage = 3;
+            updateUI();
+            let html = '<div class="stage-title">🛩️ STAGE 3: The U-2 Incident (October 27, 1962)</div>';
+            html += '<div class="historical-note"><p><strong>⚠️ Historical Context:</strong> A U-2 spy plane is shot down over Cuba. The pilot is killed. The military demands retaliation. Khrushchev sends a second letter demanding removal of U.S. missiles from Turkey.</p>';
+            html += '<p><strong>🎮 Game Theory:</strong> This is the most dangerous moment of the crisis. Retaliation could trigger escalation. Restraint could be seen as weakness.</p>';
+            html += '<p><strong>🕌 Islamic Perspective:</strong> "If they incline to peace, then incline to it." (Quran 8:61)</p></div>';
+            html += '<button class="choice-btn" onclick="makeChoice(3, \'retaliate\', -20, 30, -15)">⚔️ Retaliate against Cuba (Military\'s demand)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(3, \'secret_negotiate\', 15, -10, 10)">🤫 Secretly negotiate with Khrushchev (Kennedy\'s actual decision)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(3, \'accept\', 0, -5, -10)">😔 Accept the shoot-down without response</button>';
+            document.getElementById('gameContent').innerHTML = html;
+        }
+        
+        function showStage4() {
+            stage = 4;
+            updateUI();
+            let html = '<div class="stage-title">✉️ STAGE 4: The Negotiations (October 26-27, 1962)</div>';
+            html += '<div class="historical-note"><p><strong>📜 Historical Context:</strong> Khrushchev sends two letters: one proposing a deal (remove missiles in exchange for no invasion), the second demanding removal of U.S. missiles from Turkey. Kennedy must decide how to respond.</p>';
+            html += '<p><strong>🎮 Game Theory:</strong> Khrushchev needs a way to save face. The secret Turkey missile deal gives him an exit without public humiliation.</p>';
+            html += '<p><strong>🕌 Islamic Perspective:</strong> "And consult them in the matter." (Quran 3:159)</p></div>';
+            html += '<button class="choice-btn" onclick="makeChoice(4, \'first_letter\', 10, -10, 5)">📝 Accept Khrushchev\'s first letter (Remove missiles for no invasion — historical path)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(4, \'public_demand\', -20, 20, -15)">📢 Demand public capitulation (Risk humiliating Khrushchev)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(4, \'turkey_deal\', 20, -20, 15)">🤝 Secretly offer to remove Jupiter missiles from Turkey (Face-saving deal — Kennedy\'s actual decision)</button>';
+            document.getElementById('gameContent').innerHTML = html;
+        }
+        
+        function showStage5() {
+            stage = 5;
+            updateUI();
+            let html = '<div class="stage-title">🏁 STAGE 5: The Resolution (October 28, 1962)</div>';
+            html += '<div class="historical-note"><p><strong>🕊️ Historical Context:</strong> Khrushchev announces the missiles will be removed. The crisis ends. The world avoids nuclear war. But how do you claim victory?</p>';
+            html += '<p><strong>🎮 Game Theory:</strong> Both sides need to claim victory. Allowing the opponent to save face is essential for long-term stability.</p>';
+            html += '<p><strong>🕌 Islamic Perspective:</strong> "The best of people are those who benefit others most." (Prophet Muhammad ﷺ)</p></div>';
+            html += '<button class="choice-btn" onclick="makeChoice(5, \'declare_victory\', 30, -20, 20)">🏆 Declare victory and move on (Kennedy\'s actual decision)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(5, \'over_commit\', -20, 30, -15)">⚔️ Over-commit to confrontation (Demand more concessions)</button>';
+            html += '<button class="choice-btn" onclick="makeChoice(5, \'embrace_diplomacy\', 25, -15, 15)">🕊️ Embrace diplomacy and de-escalation (Pursue lasting peace)</button>';
+            document.getElementById('gameContent').innerHTML = html;
+        }
+        
+        showStage1();
+        updateUI();
+    </script>
+</body>
+</html>
