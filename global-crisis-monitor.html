@@ -83,23 +83,36 @@
     </div>
     
     <div id="footer-placeholder"></div>
+
     <script src="/assets/js/components.js"></script>
     <script>
-        // GNews API Key - Replace with your actual key
-        const API_KEY = '22cbe507380c980762e11568a6effa22';
-        
         // Define search queries for each region
         const regions = [
             { id: 'ukraine', name: '🇺🇦 Russia-Ukraine War', query: 'Ukraine war OR Russia war', icon: 'fa-flag' },
-            { id: 'iran', name: '🇮🇷 Iran-US-Israel & Hormuz', query: 'Iran war OR Hormuz OR Strait of Hormuz OR Iran US Israel', icon: 'fa-oil-can' },
+            { id: 'iran', name: '🇮🇷 Iran-US-Israel & Hormuz', query: 'Iran war OR Hormuz OR Strait of Hormuz', icon: 'fa-oil-can' },
             { id: 'gaza', name: '🇵🇸 Gaza & Palestine', query: 'Gaza OR Palestine OR Israel war', icon: 'fa-hand-fist' },
-            { id: 'realignment', name: '🌍 Global Realignment', query: 'BRICS OR de-dollarization OR petrodollar OR yuan', icon: 'fa-globe' }
+            { id: 'realignment', name: '🌍 Global Realignment', query: 'BRICS OR de-dollarization OR petrodollar', icon: 'fa-globe' }
         ];
         
+        // Cache to store news data
+        let cachedData = {};
+        
         async function fetchNewsForRegion(region) {
+            // Check cache first (5 minutes)
+            const cacheKey = region.id;
+            if (cachedData[cacheKey] && (Date.now() - cachedData[cacheKey].timestamp) < 300000) {
+                return { region, articles: cachedData[cacheKey].articles, error: null };
+            }
+            
             try {
-                const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(region.query)}&lang=en&max=8&apikey=${API_KEY}`;
+                // Use our server-side proxy instead of calling GNews directly
+                const url = `/api/news?q=${encodeURIComponent(region.query)}`;
                 const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
                 const data = await response.json();
                 
                 if (data.errors) {
@@ -107,9 +120,19 @@
                     return { region, articles: [], error: data.errors };
                 }
                 
+                // Cache the result
+                cachedData[cacheKey] = {
+                    articles: data.articles || [],
+                    timestamp: Date.now()
+                };
+                
                 return { region, articles: data.articles || [], error: null };
             } catch (error) {
                 console.error(`Failed to fetch ${region.name}:`, error);
+                // Return cached data if available
+                if (cachedData[cacheKey]) {
+                    return { region, articles: cachedData[cacheKey].articles, error: null, fromCache: true };
+                }
                 return { region, articles: [], error: error.message };
             }
         }
@@ -118,7 +141,14 @@
             const container = document.getElementById('newsContainer');
             container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading latest news...</div>';
             
-            const results = await Promise.all(regions.map(region => fetchNewsForRegion(region)));
+            // Fetch sequentially to avoid rate limits (1 request per second)
+            const results = [];
+            for (const region of regions) {
+                const result = await fetchNewsForRegion(region);
+                results.push(result);
+                // Wait 1 second between requests to respect API rate limit
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
             
             // Update timestamp
             const now = new Date();
@@ -128,10 +158,12 @@
             let html = '';
             
             for (const result of results) {
-                const { region, articles, error } = result;
+                const { region, articles, error, fromCache } = result;
                 
                 html += `<div class="region-card">`;
-                html += `<h2 class="region-title"><i class="fas ${region.icon}"></i> ${region.name}</h2>`;
+                html += `<h2 class="region-title"><i class="fas ${region.icon}"></i> ${region.name}`;
+                if (fromCache) html += ` <span style="font-size: 0.7rem; color: #64748b;">(cached)</span>`;
+                html += `</h2>`;
                 
                 if (error) {
                     html += `<div class="error">⚠️ Error fetching news: ${error}. Please try again later.</div>`;
@@ -169,5 +201,6 @@
         // Refresh every 5 minutes (300,000 ms)
         setInterval(fetchAllNews, 300000);
     </script>
+
 </body>
 </html>
