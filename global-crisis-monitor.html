@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Global Crisis Monitor - Live Updates | Tadbeer Studio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e0f2fe; font-family: 'Inter', sans-serif; }
+        .monitor-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .region-card { background: #ffffff; border-radius: 24px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #7dd3fc; }
+        .region-title { font-size: 1.5rem; color: #0369a1; margin-bottom: 15px; border-bottom: 2px solid #7dd3fc; padding-bottom: 8px; }
+        .news-list { list-style: none; margin-top: 15px; }
+        .news-item { padding: 12px 0; border-bottom: 1px solid #e2e8f0; display: flex; align-items: flex-start; gap: 10px; }
+        .news-item:last-child { border-bottom: none; }
+        .news-icon { color: #0284c7; margin-top: 2px; min-width: 20px; }
+        .news-content { flex: 1; }
+        .news-title { font-weight: 600; color: #1e293b; margin-bottom: 5px; }
+        .news-title a { color: #1e293b; text-decoration: none; transition: color 0.2s; }
+        .news-title a:hover { color: #0284c7; text-decoration: underline; }
+        .news-meta { font-size: 0.75rem; color: #64748b; display: flex; flex-wrap: wrap; gap: 15px; }
+        .source-badge { background: #f1f5f9; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; }
+        .refresh-btn { background: #0284c7; color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: 600; margin-bottom: 20px; transition: background 0.2s; }
+        .refresh-btn:hover { background: #0369a1; }
+        .last-updated { color: #64748b; font-size: 0.8rem; margin-bottom: 20px; }
+        .independent-section { background: #f0f9ff; border-radius: 20px; padding: 20px; margin-top: 30px; border: 1px solid #7dd3fc; }
+        .independent-links { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; }
+        .independent-link { background: #ffffff; padding: 10px 15px; border-radius: 12px; text-decoration: none; color: #0369a1; font-weight: 500; border: 1px solid #7dd3fc; transition: all 0.2s; }
+        .independent-link:hover { background: #0284c7; color: white; }
+        .loading { text-align: center; padding: 40px; color: #64748b; }
+        .error { background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 16px; margin: 15px 0; }
+        .btn-back { display: inline-block; margin-bottom: 20px; color: #0369a1; text-decoration: none; }
+        @media (max-width: 768px) { .monitor-container { padding: 12px; } .region-title { font-size: 1.2rem; } .news-item { flex-direction: column; gap: 5px; } }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <div class="bismillah" style="background: #f0f9ff; padding: 15px; text-align: center; border-bottom: 1px solid #7dd3fc;">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation" style="color: #0369a1;">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+    
+    <div class="monitor-container">
+        <a href="/" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        
+        <h1 style="color: #0369a1; margin-bottom: 10px;">🌍 Global Crisis Monitor</h1>
+        <p style="color: #475569; margin-bottom: 20px;">Live news updates from independent and mainstream sources. Updated automatically on each refresh.</p>
+        
+        <button class="refresh-btn" onclick="fetchAllNews()"><i class="fas fa-sync-alt"></i> Refresh Now</button>
+        <div class="last-updated" id="lastUpdated">Last updated: Loading...</div>
+        
+        <div id="newsContainer">
+            <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading latest news...</div>
+        </div>
+        
+        <!-- Independent Sources Section -->
+        <div class="independent-section">
+            <h3 style="color: #0369a1;"><i class="fas fa-shield-alt"></i> Independent & Truth-Seeking Sources</h3>
+            <p style="color: #475569; margin-top: 5px;">These sources operate outside mainstream corporate media. Visit them directly for alternative perspectives and investigative journalism.</p>
+            <div class="independent-links">
+                <a href="https://brightnews.ai/" target="_blank" class="independent-link"><i class="fas fa-external-link-alt"></i> BrightNews.ai</a>
+                <a href="https://thegrayzone.com/" target="_blank" class="independent-link"><i class="fas fa-external-link-alt"></i> The Grayzone</a>
+                <a href="https://www.mintpressnews.com/" target="_blank" class="independent-link"><i class="fas fa-external-link-alt"></i> MintPress News</a>
+                <a href="https://www.zerohedge.com/" target="_blank" class="independent-link"><i class="fas fa-external-link-alt"></i> ZeroHedge</a>
+                <a href="https://www.caitlinjohnst.one/" target="_blank" class="independent-link"><i class="fas fa-external-link-alt"></i> Caitlin Johnstone</a>
+            </div>
+            <p style="font-size: 0.75rem; color: #64748b; margin-top: 15px;"><strong>Note:</strong> These sources are independent. Readers are encouraged to verify claims and cross-reference with multiple sources.</p>
+        </div>
+        
+        <div class="independent-section" style="margin-top: 15px;">
+            <h3 style="color: #0369a1;"><i class="fas fa-book"></i> Your Hub's Strategic Analysis</h3>
+            <p style="color: #475569;">For in-depth game theory analysis of these conflicts, visit our Strategic History lessons:</p>
+            <div class="independent-links">
+                <a href="/lessons/strategy-history/russia-ukraine/war.html" class="independent-link">🇺🇦 Russia-Ukraine Analysis</a>
+                <a href="/lessons/strategy-history/iran-us-israel.html" class="independent-link">🇮🇷 Iran-US-Israel Analysis</a>
+                <a href="/lessons/strategy-history/battle-of-uhud.html" class="independent-link">⚔️ Battle of Uhud</a>
+                <a href="/simulators/jerusalem-simulator/" class="independent-link">🕊️ Jerusalem Simulator</a>
+            </div>
+        </div>
+    </div>
+    
+    <div id="footer-placeholder"></div>
+    <script src="/assets/js/components.js"></script>
+    <script>
+        // GNews API Key - Replace with your actual key
+        const API_KEY = '22cbe507380c980762e11568a6effa22';
+        
+        // Define search queries for each region
+        const regions = [
+            { id: 'ukraine', name: '🇺🇦 Russia-Ukraine War', query: 'Ukraine war OR Russia war', icon: 'fa-flag' },
+            { id: 'iran', name: '🇮🇷 Iran-US-Israel & Hormuz', query: 'Iran war OR Hormuz OR Strait of Hormuz OR Iran US Israel', icon: 'fa-oil-can' },
+            { id: 'gaza', name: '🇵🇸 Gaza & Palestine', query: 'Gaza OR Palestine OR Israel war', icon: 'fa-hand-fist' },
+            { id: 'realignment', name: '🌍 Global Realignment', query: 'BRICS OR de-dollarization OR petrodollar OR yuan', icon: 'fa-globe' }
+        ];
+        
+        async function fetchNewsForRegion(region) {
+            try {
+                const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(region.query)}&lang=en&max=8&apikey=${API_KEY}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.errors) {
+                    console.error(`Error for ${region.name}:`, data.errors);
+                    return { region, articles: [], error: data.errors };
+                }
+                
+                return { region, articles: data.articles || [], error: null };
+            } catch (error) {
+                console.error(`Failed to fetch ${region.name}:`, error);
+                return { region, articles: [], error: error.message };
+            }
+        }
+        
+        async function fetchAllNews() {
+            const container = document.getElementById('newsContainer');
+            container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading latest news...</div>';
+            
+            const results = await Promise.all(regions.map(region => fetchNewsForRegion(region)));
+            
+            // Update timestamp
+            const now = new Date();
+            document.getElementById('lastUpdated').innerHTML = `Last updated: ${now.toLocaleString()}`;
+            
+            // Build HTML
+            let html = '';
+            
+            for (const result of results) {
+                const { region, articles, error } = result;
+                
+                html += `<div class="region-card">`;
+                html += `<h2 class="region-title"><i class="fas ${region.icon}"></i> ${region.name}</h2>`;
+                
+                if (error) {
+                    html += `<div class="error">⚠️ Error fetching news: ${error}. Please try again later.</div>`;
+                } else if (articles.length === 0) {
+                    html += `<p style="color: #64748b; padding: 15px;">No recent news found for this region.</p>`;
+                } else {
+                    html += `<ul class="news-list">`;
+                    for (const article of articles) {
+                        const pubDate = new Date(article.publishedAt).toLocaleString();
+                        html += `
+                            <li class="news-item">
+                                <div class="news-icon"><i class="fas fa-newspaper"></i></div>
+                                <div class="news-content">
+                                    <div class="news-title"><a href="${article.url}" target="_blank">${article.title}</a></div>
+                                    <div class="news-meta">
+                                        <span><i class="fas fa-building"></i> ${article.source.name || 'Unknown'}</span>
+                                        <span><i class="far fa-clock"></i> ${pubDate}</span>
+                                    </div>
+                                </div>
+                            </li>
+                        `;
+                    }
+                    html += `</ul>`;
+                }
+                
+                html += `</div>`;
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        // Initial load
+        fetchAllNews();
+        
+        // Refresh every 5 minutes (300,000 ms)
+        setInterval(fetchAllNews, 300000);
+    </script>
+</body>
+</html>
