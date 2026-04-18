@@ -85,11 +85,9 @@
     <div id="footer-placeholder"></div>
 
 
+
     <script src="/assets/js/components.js"></script>
     <script>
-        // CORS proxy to bypass GNews API CORS restrictions
-        const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-        
         // Define search queries for each region
         const regions = [
             { id: 'ukraine', name: '🇺🇦 Russia-Ukraine War', query: 'Ukraine war OR Russia war', icon: 'fa-flag' },
@@ -98,7 +96,6 @@
             { id: 'realignment', name: '🌍 Global Realignment', query: 'BRICS OR de-dollarization OR petrodollar', icon: 'fa-globe' }
         ];
         
-        const API_KEY = '22cbe507380c980762e11568a6effa22';
         let cachedData = {};
         
         async function fetchNewsForRegion(region) {
@@ -108,9 +105,8 @@
             }
             
             try {
-                // Use CORS proxy to bypass GNews restrictions
-                const url = `${CORS_PROXY}https://gnews.io/api/v4/search?q=${encodeURIComponent(region.query)}&lang=en&max=6&apikey=${API_KEY}`;
-                const response = await fetch(url);
+                // Use your own server endpoint (no CORS issues)
+                const response = await fetch(`/api/news?q=${encodeURIComponent(region.query)}`);
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
@@ -146,7 +142,8 @@
             for (const region of regions) {
                 const result = await fetchNewsForRegion(region);
                 results.push(result);
-                await new Promise(resolve => setTimeout(resolve, 1500));
+                // Wait 1 second between requests to avoid rate limits
+                await new Promise(resolve => setTimeout(resolve, 1000));
             }
             
             const now = new Date();
@@ -193,6 +190,7 @@
         fetchAllNews();
         setInterval(fetchAllNews, 300000);
     </script>
+
 
 </body>
 </html>

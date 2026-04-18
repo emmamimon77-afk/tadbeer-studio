@@ -1,45 +1,50 @@
 const express = require('express');
-const cors = require('cors');
-const fetch = require('node-fetch');
 const path = require('path');
+const fetch = require('node-fetch');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Enable CORS for your frontend
-app.use(cors());
-
-// Serve static files
+// Serve static files (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname)));
 
-// News proxy endpoint
+// News API proxy endpoint
 app.get('/api/news', async (req, res) => {
-    const { q } = req.query;
+    const query = req.query.q;
     const apiKey = '22cbe507380c980762e11568a6effa22';
     
-    if (!q) {
+    if (!query) {
         return res.status(400).json({ error: 'Missing search query' });
     }
     
     try {
-        const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(q)}&lang=en&max=8&apikey=${apiKey}`;
+        const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&max=6&apikey=${apiKey}`;
+        console.log(`Fetching news for: ${query}`);
+        
         const response = await fetch(url);
         const data = await response.json();
         
-        // Add cache headers to reduce API calls
-        res.set('Cache-Control', 'public, max-age=300'); // Cache for 5 minutes
+        // Set cache headers to reduce API calls
+        res.set('Cache-Control', 'public, max-age=300');
         res.json(data);
+        
     } catch (error) {
         console.error('News API error:', error);
         res.status(500).json({ error: 'Failed to fetch news' });
     }
 });
 
-// Serve the main page
+// Serve the Global Crisis Monitor page
 app.get('/global-crisis-monitor', (req, res) => {
     res.sendFile(path.join(__dirname, 'global-crisis-monitor.html'));
 });
 
+// Serve all other static pages
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, req.path));
+});
+
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`✅ Server running on port ${PORT}`);
+    console.log(`🌍 Global Crisis Monitor: http://localhost:${PORT}/global-crisis-monitor`);
 });
