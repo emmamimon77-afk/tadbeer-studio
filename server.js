@@ -39,10 +39,9 @@ app.get('/global-crisis-monitor', (req, res) => {
     res.sendFile(path.join(__dirname, 'global-crisis-monitor.html'));
 });
 
-// Serve all other static pages
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, req.path));
-});
+// Serve all other static pages - FIXED: removed the wildcard that caused the error
+// Express automatically serves static files from the public directory
+// No need for a catch-all route that conflicts with static serving
 
 app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
