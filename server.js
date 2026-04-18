@@ -5,6 +5,38 @@ const fetch = require('node-fetch');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ========== CORS MIDDLEWARE ==========
+// This allows your main site to fetch from this API
+app.use((req, res, next) => {
+    // Allow requests from your main site
+    const allowedOrigins = [
+        'https://tadbeer-studio.onrender.com',
+        'http://localhost:3000',
+        'http://localhost:5173'
+    ];
+    
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    
+    // Allow credentials if needed
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    
+    // Allow specific headers
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    
+    // Allow specific methods
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    
+    // Handle preflight OPTIONS requests
+    if (req.method === 'OPTIONS') {
+        return res.status(204).end();
+    }
+    
+    next();
+});
+
 // Serve static files (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname)));
 
@@ -38,10 +70,6 @@ app.get('/api/news', async (req, res) => {
 app.get('/global-crisis-monitor', (req, res) => {
     res.sendFile(path.join(__dirname, 'global-crisis-monitor.html'));
 });
-
-// Serve all other static pages - FIXED: removed the wildcard that caused the error
-// Express automatically serves static files from the public directory
-// No need for a catch-all route that conflicts with static serving
 
 app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
