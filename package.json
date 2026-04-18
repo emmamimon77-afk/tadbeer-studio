@@ -1,6 +1,12 @@
 {
   "name": "tadbeer-studio",
   "version": "1.0.0",
+  "description": "Prophetic Game Theory & Eschatology Studio"
+}
+
+{
+  "name": "tadbeer-studio",
+  "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -26,6 +32,3 @@
   }
 }
 
-"scripts": {
-    "start": "node server.js"
-}

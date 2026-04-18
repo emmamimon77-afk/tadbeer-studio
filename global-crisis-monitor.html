@@ -84,8 +84,12 @@
     
     <div id="footer-placeholder"></div>
 
+
     <script src="/assets/js/components.js"></script>
     <script>
+        // CORS proxy to bypass GNews API CORS restrictions
+        const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+        
         // Define search queries for each region
         const regions = [
             { id: 'ukraine', name: '🇺🇦 Russia-Ukraine War', query: 'Ukraine war OR Russia war', icon: 'fa-flag' },
@@ -94,19 +98,18 @@
             { id: 'realignment', name: '🌍 Global Realignment', query: 'BRICS OR de-dollarization OR petrodollar', icon: 'fa-globe' }
         ];
         
-        // Cache to store news data
+        const API_KEY = '22cbe507380c980762e11568a6effa22';
         let cachedData = {};
         
         async function fetchNewsForRegion(region) {
-            // Check cache first (5 minutes)
             const cacheKey = region.id;
             if (cachedData[cacheKey] && (Date.now() - cachedData[cacheKey].timestamp) < 300000) {
-                return { region, articles: cachedData[cacheKey].articles, error: null };
+                return { region, articles: cachedData[cacheKey].articles, error: null, fromCache: true };
             }
             
             try {
-                // Use our server-side proxy instead of calling GNews directly
-                const url = `/api/news?q=${encodeURIComponent(region.query)}`;
+                // Use CORS proxy to bypass GNews restrictions
+                const url = `${CORS_PROXY}https://gnews.io/api/v4/search?q=${encodeURIComponent(region.query)}&lang=en&max=6&apikey=${API_KEY}`;
                 const response = await fetch(url);
                 
                 if (!response.ok) {
@@ -120,7 +123,6 @@
                     return { region, articles: [], error: data.errors };
                 }
                 
-                // Cache the result
                 cachedData[cacheKey] = {
                     articles: data.articles || [],
                     timestamp: Date.now()
@@ -129,7 +131,6 @@
                 return { region, articles: data.articles || [], error: null };
             } catch (error) {
                 console.error(`Failed to fetch ${region.name}:`, error);
-                // Return cached data if available
                 if (cachedData[cacheKey]) {
                     return { region, articles: cachedData[cacheKey].articles, error: null, fromCache: true };
                 }
@@ -141,22 +142,17 @@
             const container = document.getElementById('newsContainer');
             container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading latest news...</div>';
             
-            // Fetch sequentially to avoid rate limits (1 request per second)
             const results = [];
             for (const region of regions) {
                 const result = await fetchNewsForRegion(region);
                 results.push(result);
-                // Wait 1 second between requests to respect API rate limit
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                await new Promise(resolve => setTimeout(resolve, 1500));
             }
             
-            // Update timestamp
             const now = new Date();
             document.getElementById('lastUpdated').innerHTML = `Last updated: ${now.toLocaleString()}`;
             
-            // Build HTML
             let html = '';
-            
             for (const result of results) {
                 const { region, articles, error, fromCache } = result;
                 
@@ -188,17 +184,13 @@
                     }
                     html += `</ul>`;
                 }
-                
                 html += `</div>`;
             }
             
             container.innerHTML = html;
         }
         
-        // Initial load
         fetchAllNews();
-        
-        // Refresh every 5 minutes (300,000 ms)
         setInterval(fetchAllNews, 300000);
     </script>
 
