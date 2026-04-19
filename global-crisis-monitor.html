@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Global Crisis Monitor - Live Updates | Tadbeer Studio</title>
+    <title>Global Crisis Monitor - RSS News Feed | Tadbeer Studio</title>
     <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -21,8 +21,7 @@
         .news-title { font-weight: 600; color: #1e293b; margin-bottom: 5px; }
         .news-title a { color: #1e293b; text-decoration: none; transition: color 0.2s; }
         .news-title a:hover { color: #0284c7; text-decoration: underline; }
-        .news-meta { font-size: 0.75rem; color: #64748b; display: flex; flex-wrap: wrap; gap: 15px; }
-        .source-badge { background: #f1f5f9; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; }
+        .news-meta { font-size: 0.75rem; color: #64748b; display: flex; flex-wrap: wrap; gap: 15px; margin-top: 5px; }
         .refresh-btn { background: #0284c7; color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: 600; margin-bottom: 20px; transition: background 0.2s; }
         .refresh-btn:hover { background: #0369a1; }
         .last-updated { color: #64748b; font-size: 0.8rem; margin-bottom: 20px; }
@@ -47,9 +46,9 @@
         <a href="/" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Home</a>
         
         <h1 style="color: #0369a1; margin-bottom: 10px;">🌍 Global Crisis Monitor</h1>
-        <p style="color: #475569; margin-bottom: 20px;">Live news updates from independent and mainstream sources. Updated automatically on each refresh.</p>
+        <p style="color: #475569; margin-bottom: 20px;">Live news updates from independent and mainstream sources. Refreshes automatically.</p>
         
-        <button class="refresh-btn" onclick="fetchAllNews()"><i class="fas fa-sync-alt"></i> Refresh Now</button>
+        <button class="refresh-btn" onclick="fetchAllFeeds()"><i class="fas fa-sync-alt"></i> Refresh Now</button>
         <div class="last-updated" id="lastUpdated">Last updated: Loading...</div>
         
         <div id="newsContainer">
@@ -59,7 +58,7 @@
         <!-- Independent Sources Section -->
         <div class="independent-section">
             <h3 style="color: #0369a1;"><i class="fas fa-shield-alt"></i> Independent & Truth-Seeking Sources</h3>
-            <p style="color: #475569; margin-top: 5px;">These sources operate outside mainstream corporate media. Visit them directly for alternative perspectives and investigative journalism.</p>
+            <p style="color: #475569; margin-top: 5px;">These sources operate outside mainstream corporate media. Visit them directly for alternative perspectives.</p>
             <div class="independent-links">
                 <a href="https://brightnews.ai/" target="_blank" class="independent-link"><i class="fas fa-external-link-alt"></i> BrightNews.ai</a>
                 <a href="https://thegrayzone.com/" target="_blank" class="independent-link"><i class="fas fa-external-link-alt"></i> The Grayzone</a>
@@ -67,11 +66,11 @@
                 <a href="https://www.zerohedge.com/" target="_blank" class="independent-link"><i class="fas fa-external-link-alt"></i> ZeroHedge</a>
                 <a href="https://www.caitlinjohnst.one/" target="_blank" class="independent-link"><i class="fas fa-external-link-alt"></i> Caitlin Johnstone</a>
             </div>
-            <p style="font-size: 0.75rem; color: #64748b; margin-top: 15px;"><strong>Note:</strong> These sources are independent. Readers are encouraged to verify claims and cross-reference with multiple sources.</p>
         </div>
         
+        <!-- Tadbeer Studio Analysis Section -->
         <div class="independent-section" style="margin-top: 15px;">
-            <h3 style="color: #0369a1;"><i class="fas fa-book"></i> Your Hub's Strategic Analysis</h3>
+            <h3 style="color: #0369a1;"><i class="fas fa-book"></i> Tadbeer Studio Strategic Analysis</h3>
             <p style="color: #475569;">For in-depth game theory analysis of these conflicts, visit our Strategic History lessons:</p>
             <div class="independent-links">
                 <a href="/lessons/strategy-history/russia-ukraine/war.html" class="independent-link">🇺🇦 Russia-Ukraine Analysis</a>
@@ -83,98 +82,150 @@
     </div>
     
     <div id="footer-placeholder"></div>
-
-
-
     <script src="/assets/js/components.js"></script>
     <script>
-        // Define search queries for each region
+        // RSS feeds for each region (using rss2json.com proxy - no CORS issues!)
+        // rss2json.com is a free service that converts RSS to JSON
+        // Free tier: ~500 requests/day - enough for this page
+        
         const regions = [
-            { id: 'ukraine', name: '🇺🇦 Russia-Ukraine War', query: 'Ukraine war OR Russia war', icon: 'fa-flag' },
-            { id: 'iran', name: '🇮🇷 Iran-US-Israel & Hormuz', query: 'Iran war OR Hormuz OR Strait of Hormuz', icon: 'fa-oil-can' },
-            { id: 'gaza', name: '🇵🇸 Gaza & Palestine', query: 'Gaza OR Palestine OR Israel war', icon: 'fa-hand-fist' },
-            { id: 'realignment', name: '🌍 Global Realignment', query: 'BRICS OR de-dollarization OR petrodollar', icon: 'fa-globe' }
+            { 
+                id: 'ukraine', 
+                name: '🇺🇦 Russia-Ukraine War', 
+                rss: 'https://www.aljazeera.com/xml/rss/ukraine-war.xml',
+                fallbackRss: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
+                icon: 'fa-flag'
+            },
+            { 
+                id: 'iran', 
+                name: '🇮🇷 Iran-US-Israel & Hormuz', 
+                rss: 'https://www.aljazeera.com/xml/rss/middle-east.xml',
+                fallbackRss: 'https://www.bbc.co.uk/news/world/middle_east/rss.xml',
+                icon: 'fa-oil-can'
+            },
+            { 
+                id: 'gaza', 
+                name: '🇵🇸 Gaza & Palestine', 
+                rss: 'https://www.aljazeera.com/xml/rss/palestine.xml',
+                fallbackRss: 'https://www.aljazeera.com/xml/rss/middle-east.xml',
+                icon: 'fa-hand-fist'
+            },
+            { 
+                id: 'realignment', 
+                name: '🌍 Global Realignment', 
+                rss: 'https://www.aljazeera.com/xml/rss/economy.xml',
+                fallbackRss: 'https://feeds.bloomberg.com/markets/news.rss',
+                icon: 'fa-globe'
+            }
         ];
         
+        // Cache to store news data
         let cachedData = {};
+        let feedsLoaded = 0;
         
-        async function fetchNewsForRegion(region) {
+        async function fetchFeed(region) {
             const cacheKey = region.id;
+            
+            // Check cache (5 minutes)
             if (cachedData[cacheKey] && (Date.now() - cachedData[cacheKey].timestamp) < 300000) {
-                return { region, articles: cachedData[cacheKey].articles, error: null, fromCache: true };
+                return { region, items: cachedData[cacheKey].items, error: null, fromCache: true };
             }
             
             try {
-                // Use your own server endpoint (no CORS issues)
-                const response = await fetch(`https://tadbeer-studio-api.onrender.com/api/news?q=${encodeURIComponent(region.query)}`);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                
+                // Use rss2json.com to convert RSS to JSON - no CORS issues!
+                const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(region.rss)}`;
+                const response = await fetch(proxyUrl);
                 const data = await response.json();
                 
-                if (data.errors) {
-                    console.error(`Error for ${region.name}:`, data.errors);
-                    return { region, articles: [], error: data.errors };
+                if (data.status === 'ok' && data.items && data.items.length > 0) {
+                    const items = data.items.slice(0, 8);
+                    cachedData[cacheKey] = {
+                        items: items,
+                        timestamp: Date.now()
+                    };
+                    return { region, items: items, error: null };
+                } else {
+                    throw new Error('No items returned');
                 }
-                
-                cachedData[cacheKey] = {
-                    articles: data.articles || [],
-                    timestamp: Date.now()
-                };
-                
-                return { region, articles: data.articles || [], error: null };
             } catch (error) {
-                console.error(`Failed to fetch ${region.name}:`, error);
-                if (cachedData[cacheKey]) {
-                    return { region, articles: cachedData[cacheKey].articles, error: null, fromCache: true };
+                console.error(`Error fetching ${region.name}:`, error);
+                
+                // Try fallback RSS if available
+                if (region.fallbackRss) {
+                    try {
+                        const fallbackUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(region.fallbackRss)}`;
+                        const fallbackResponse = await fetch(fallbackUrl);
+                        const fallbackData = await fallbackResponse.json();
+                        
+                        if (fallbackData.status === 'ok' && fallbackData.items && fallbackData.items.length > 0) {
+                            const items = fallbackData.items.slice(0, 6);
+                            cachedData[cacheKey] = {
+                                items: items,
+                                timestamp: Date.now()
+                            };
+                            return { region, items: items, error: null, fromCache: false, usingFallback: true };
+                        }
+                    } catch (fallbackError) {
+                        console.error(`Fallback also failed for ${region.name}`);
+                    }
                 }
-                return { region, articles: [], error: error.message };
+                
+                // Return cached data if available
+                if (cachedData[cacheKey]) {
+                    return { region, items: cachedData[cacheKey].items, error: null, fromCache: true };
+                }
+                
+                return { region, items: [], error: error.message };
             }
         }
         
-        async function fetchAllNews() {
+        async function fetchAllFeeds() {
             const container = document.getElementById('newsContainer');
             container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading latest news...</div>';
             
             const results = [];
             for (const region of regions) {
-                const result = await fetchNewsForRegion(region);
+                const result = await fetchFeed(region);
                 results.push(result);
-                // Wait 1 second between requests to avoid rate limits
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                // Small delay between requests to avoid rate limiting
+                await new Promise(resolve => setTimeout(resolve, 500));
             }
             
+            // Update timestamp
             const now = new Date();
-            document.getElementById('lastUpdated').innerHTML = `Last updated: ${now.toLocaleString()}`;
+            document.getElementById('lastUpdated').innerHTML = `Last updated: ${now.toLocaleString()} (All times local)`;
             
+            // Build HTML
             let html = '';
             for (const result of results) {
-                const { region, articles, error, fromCache } = result;
+                const { region, items, error, fromCache, usingFallback } = result;
                 
                 html += `<div class="region-card">`;
                 html += `<h2 class="region-title"><i class="fas ${region.icon}"></i> ${region.name}`;
                 if (fromCache) html += ` <span style="font-size: 0.7rem; color: #64748b;">(cached)</span>`;
+                if (usingFallback) html += ` <span style="font-size: 0.7rem; color: #f59e0b;">(alternate source)</span>`;
                 html += `</h2>`;
                 
-                if (error) {
-                    html += `<div class="error">⚠️ Error fetching news: ${error}. Please try again later.</div>`;
-                } else if (articles.length === 0) {
+                if (error && (!items || items.length === 0)) {
+                    html += `<div class="error">⚠️ Unable to load news at this time. Please try again later.</div>`;
+                } else if (!items || items.length === 0) {
                     html += `<p style="color: #64748b; padding: 15px;">No recent news found for this region.</p>`;
                 } else {
                     html += `<ul class="news-list">`;
-                    for (const article of articles) {
-                        const pubDate = new Date(article.publishedAt).toLocaleString();
+                    for (const item of items) {
+                        const pubDate = item.pubDate ? new Date(item.pubDate).toLocaleString() : 'Recent';
+                        // Clean HTML from description
+                        const cleanDescription = item.description ? item.description.replace(/<[^>]*>/g, '').substring(0, 120) + '...' : '';
                         html += `
                             <li class="news-item">
                                 <div class="news-icon"><i class="fas fa-newspaper"></i></div>
                                 <div class="news-content">
-                                    <div class="news-title"><a href="${article.url}" target="_blank">${article.title}</a></div>
+                                    <div class="news-title"><a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a></div>
                                     <div class="news-meta">
-                                        <span><i class="fas fa-building"></i> ${article.source.name || 'Unknown'}</span>
+                                        <span><i class="fas fa-building"></i> ${item.author || 'News Source'}</span>
                                         <span><i class="far fa-clock"></i> ${pubDate}</span>
                                     </div>
+                                    ${cleanDescription ? `<div style="font-size: 0.8rem; color: #475569; margin-top: 5px;">${cleanDescription}</div>` : ''}
                                 </div>
                             </li>
                         `;
@@ -187,10 +238,11 @@
             container.innerHTML = html;
         }
         
-        fetchAllNews();
-        setInterval(fetchAllNews, 300000);
+        // Initial load
+        fetchAllFeeds();
+        
+        // Refresh every 10 minutes (600,000 ms)
+        setInterval(fetchAllFeeds, 600000);
     </script>
-
-
 </body>
 </html>
