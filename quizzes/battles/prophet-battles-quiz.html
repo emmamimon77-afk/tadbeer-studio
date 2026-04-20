@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Battles & Expeditions Quiz - Tadbeer Studio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e8f5e9; font-family: 'Inter', sans-serif; }
+        .quiz-container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .quiz-header { text-align: center; margin-bottom: 30px; }
+        .quiz-header h1 { color: #1a472a; margin-bottom: 10px; }
+        .quiz-header p { color: #475569; }
+        .quiz-question { background: #ffffff; border-radius: 24px; padding: 25px; margin-bottom: 25px; border-left: 6px solid #2e7d32; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .question-text { font-weight: 700; font-size: 1.1rem; color: #1a472a; margin-bottom: 15px; }
+        .quiz-option { display: block; margin: 12px 0; padding: 12px 15px; background: #f8fafc; border-radius: 12px; cursor: pointer; transition: all 0.2s; border: 1px solid #e2e8f0; }
+        .quiz-option:hover { background: #e8f5e9; border-color: #2e7d32; }
+        .quiz-option input { margin-right: 12px; }
+        .quiz-option.correct-highlight { background: #d1fae5; border-color: #10b981; }
+        .quiz-option.incorrect-highlight { background: #fee2e2; border-color: #ef4444; }
+        .submit-btn { background: #2e7d32; color: white; border: none; padding: 14px 40px; border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 1rem; margin: 20px auto; display: block; transition: background 0.2s; }
+        .submit-btn:hover { background: #1b5e20; }
+        .result-container { margin-top: 30px; padding: 25px; border-radius: 24px; display: none; background: #ffffff; border: 1px solid #a5d6a7; }
+        .score-display { font-size: 1.8rem; font-weight: bold; text-align: center; color: #1a472a; margin-bottom: 20px; }
+        .feedback-item { background: #f8fafc; padding: 15px; margin-bottom: 12px; border-radius: 16px; border-left: 4px solid; }
+        .feedback-correct { border-left-color: #10b981; background: #f0fdf4; }
+        .feedback-incorrect { border-left-color: #ef4444; background: #fef2f2; }
+        .feedback-question { font-weight: 600; margin-bottom: 8px; }
+        .feedback-explanation { font-size: 0.9rem; color: #475569; margin-top: 5px; }
+        .restart-btn { background: #2e7d32; color: white; border: none; padding: 12px 30px; border-radius: 50px; cursor: pointer; font-weight: 600; margin-top: 20px; width: 100%; }
+        .progress-bar { background: #e2e8f0; border-radius: 10px; height: 8px; margin: 20px 0; overflow: hidden; }
+        .progress-fill { background: #2e7d32; height: 100%; width: 0%; transition: width 0.3s; }
+        .btn-back { display: inline-block; margin-bottom: 20px; color: #2e7d32; text-decoration: none; }
+        @media (max-width: 768px) { .quiz-container { padding: 12px; } .quiz-question { padding: 18px; } .question-text { font-size: 1rem; } .quiz-option { padding: 10px 12px; font-size: 0.9rem; } }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <div class="bismillah" style="background: #e8f5e9; padding: 15px; text-align: center; border-bottom: 1px solid #a5d6a7;">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation" style="color: #1a472a;">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+    
+    <div class="quiz-container">
+        <a href="/lessons/strategy-history/" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Strategic History Hub</a>
+        
+        <div class="quiz-header">
+            <h1>⚔️ Battles & Expeditions Quiz</h1>
+            <p>Test your knowledge of the Prophet's (ﷺ) military campaigns, expeditions, and strategic wisdom</p>
+        </div>
+        
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        
+        <form id="quizForm">
+            <!-- ==================== MAJOR BATTLES (Questions 1-15) ==================== -->
+            
+            <!-- Q1: Badr -->
+            <div class="quiz-question">
+                <div class="question-text">1. What was the ratio of Muslims to Quraysh at the Battle of Badr?</div>
+                <label class="quiz-option"><input type="radio" name="q1" value="a"> A) 1:2 (Muslims outnumbered 2 to 1)</label>
+                <label class="quiz-option"><input type="radio" name="q1" value="b"> B) 1:3 (Muslims outnumbered 3 to 1)</label>
+                <label class="quiz-option"><input type="radio" name="q1" value="c"> C) 1:1 (Equal numbers)</label>
+                <label class="quiz-option"><input type="radio" name="q1" value="d"> D) 2:1 (Muslims had the advantage)</label>
+            </div>
+            
+            <!-- Q2: Badr Significance -->
+            <div class="quiz-question">
+                <div class="question-text">2. Why is the Battle of Badr called "Yawm al-Furqan" (The Day of Distinction)?</div>
+                <label class="quiz-option"><input type="radio" name="q2" value="a"> A) Because the Muslims first used cavalry</label>
+                <label class="quiz-option"><input type="radio" name="q2" value="b"> B) Because it distinguished truth from falsehood</label>
+                <label class="quiz-option"><input type="radio" name="q2" value="c"> C) Because it was the longest battle</label>
+                <label class="quiz-option"><input type="radio" name="q2" value="d"> D) Because it ended in a draw</label>
+            </div>
+            
+            <!-- Q3: Uhud Archers -->
+            <div class="quiz-question">
+                <div class="question-text">3. What was the fatal mistake made by the archers at the Battle of Uhud?</div>
+                <label class="quiz-option"><input type="radio" name="q3" value="a"> A) They ran out of arrows</label>
+                <label class="quiz-option"><input type="radio" name="q3" value="b"> B) They abandoned their posts to collect spoils</label>
+                <label class="quiz-option"><input type="radio" name="q3" value="c"> C) They fired too early</label>
+                <label class="quiz-option"><input type="radio" name="q3" value="d"> D) They were positioned incorrectly</label>
+            </div>
+            
+            <!-- Q4: Uhud Martyr -->
+            <div class="quiz-question">
+                <div class="question-text">4. Which beloved companion of the Prophet (ﷺ) was martyred at Uhud, and Hind mutilated his body?</div>
+                <label class="quiz-option"><input type="radio" name="q4" value="a"> A) Ali ibn Abi Talib</label>
+                <label class="quiz-option"><input type="radio" name="q4" value="b"> B) Abu Bakr al-Siddiq</label>
+                <label class="quiz-option"><input type="radio" name="q4" value="c"> C) Hamza ibn Abd al-Muttalib</label>
+                <label class="quiz-option"><input type="radio" name="q4" value="d"> D) Umar ibn al-Khattab</label>
+            </div>
+            
+            <!-- Q5: Trench Suggestion -->
+            <div class="quiz-question">
+                <div class="question-text">5. Who suggested digging the trench at the Battle of the Trench (Khandaq)?</div>
+                <label class="quiz-option"><input type="radio" name="q5" value="a"> A) Ali ibn Abi Talib</label>
+                <label class="quiz-option"><input type="radio" name="q5" value="b"> B) Abu Bakr al-Siddiq</label>
+                <label class="quiz-option"><input type="radio" name="q5" value="c"> C) Salman al-Farsi (the Persian)</label>
+                <label class="quiz-option"><input type="radio" name="q5" value="d"> D) Umar ibn al-Khattab</label>
+            </div>
+            
+            <!-- Q6: Trench Outcome -->
+            <div class="quiz-question">
+                <div class="question-text">6. How did the Battle of the Trench end?</div>
+                <label class="quiz-option"><input type="radio" name="q6" value="a"> A) The Muslims attacked and defeated the confederates</label>
+                <label class="quiz-option"><input type="radio" name="q6" value="b"> B) A windstorm struck the enemy camp, causing them to withdraw</label>
+                <label class="quiz-option"><input type="radio" name="q6" value="c"> C) The confederates breached the trench and entered Medina</label>
+                <label class="quiz-option"><input type="radio" name="q6" value="d"> D) A peace treaty was signed</label>
+            </div>
+            
+            <!-- Q7: Khaybar Champion -->
+            <div class="quiz-question">
+                <div class="question-text">7. Who killed the Jewish champion Marhab at the Battle of Khaybar?</div>
+                <label class="quiz-option"><input type="radio" name="q7" value="a"> A) Khalid ibn al-Walid</label>
+                <label class="quiz-option"><input type="radio" name="q7" value="b"> B) Abu Bakr al-Siddiq</label>
+                <label class="quiz-option"><input type="radio" name="q7" value="c"> C) Ali ibn Abi Talib</label>
+                <label class="quiz-option"><input type="radio" name="q7" value="d"> D) Zayd ibn Haritha</label>
+            </div>
+            
+            <!-- Q8: Khaybar Miracle -->
+            <div class="quiz-question">
+                <div class="question-text">8. What miraculous event occurred before the final assault on Khaybar?</div>
+                <label class="quiz-option"><input type="radio" name="q8" value="a"> A) The sun stood still</label>
+                <label class="quiz-option"><input type="radio" name="q8" value="b"> B) The Prophet (ﷺ) healed Ali's eye ailment</label>
+                <label class="quiz-option"><input type="radio" name="q8" value="c"> C) Water sprang from the ground</label>
+                <label class="quiz-option"><input type="radio" name="q8" value="d"> D) The walls of the fort collapsed</label>
+            </div>
+            
+            <!-- Q9: Conquest of Mecca Amnesty -->
+            <div class="quiz-question">
+                <div class="question-text">9. What did the Prophet (ﷺ) declare to the people of Mecca after the conquest?</div>
+                <label class="quiz-option"><input type="radio" name="q9" value="a"> A) "You will all be executed for your crimes"</label>
+                <label class="quiz-option"><input type="radio" name="q9" value="b"> B) "Go, for you are free" (General amnesty)</label>
+                <label class="quiz-option"><input type="radio" name="q9" value="c"> C) "Convert to Islam or leave Mecca"</label>
+                <label class="quiz-option"><input type="radio" name="q9" value="d"> D) "Pay a heavy ransom for your lives"</label>
+            </div>
+            
+            <!-- Q10: Hunayn Quran Verse -->
+            <div class="quiz-question">
+                <div class="question-text">10. Which Quranic verse was revealed about the Battle of Hunayn?</div>
+                <label class="quiz-option"><input type="radio" name="q10" value="a"> A) Quran 8:60 — "Prepare against them whatever you are able of power"</label>
+                <label class="quiz-option"><input type="radio" name="q10" value="b"> B) Quran 9:25 — "When you took pride in your great numbers, but they proved of no advantage to you"</label>
+                <label class="quiz-option"><input type="radio" name="q10" value="c"> C) Quran 3:123 — "Allah gave you victory at Badr"</label>
+                <label class="quiz-option"><input type="radio" name="q10" value="d"> D) Quran 33:10 — "When they came at you from above you"</label>
+            </div>
+            
+            <!-- Q11: Mu'tah Commanders -->
+            <div class="quiz-question">
+                <div class="question-text">11. How many appointed commanders were martyred at the Battle of Mu'tah before Khalid ibn al-Walid took command?</div>
+                <label class="quiz-option"><input type="radio" name="q11" value="a"> A) One</label>
+                <label class="quiz-option"><input type="radio" name="q11" value="b"> B) Two</label>
+                <label class="quiz-option"><input type="radio" name="q11" value="c"> C) Three</label>
+                <label class="quiz-option"><input type="radio" name="q11" value="d"> D) Four</label>
+            </div>
+            
+            <!-- Q12: Tabuk Hypocrites -->
+            <div class="quiz-question">
+                <div class="question-text">12. What was significant about the Expedition of Tabuk regarding the hypocrites?</div>
+                <label class="quiz-option"><input type="radio" name="q12" value="a"> A) They fought bravely and were martyred</label>
+                <label class="quiz-option"><input type="radio" name="q12" value="b"> B) They made excuses to avoid the expedition, exposing their hypocrisy</label>
+                <label class="quiz-option"><input type="radio" name="q12" value="c"> C) They converted to Islam during the expedition</label>
+                <label class="quiz-option"><input type="radio" name="q12" value="d"> D) They led the Muslim army to victory</label>
+            </div>
+            
+            <!-- Q13: Largest Muslim Army -->
+            <div class="quiz-question">
+                <div class="question-text">13. Which campaign had the largest Muslim army assembled under the Prophet's (ﷺ) direct command?</div>
+                <label class="quiz-option"><input type="radio" name="q13" value="a"> A) Battle of Badr</label>
+                <label class="quiz-option"><input type="radio" name="q13" value="b"> B) Battle of Uhud</label>
+                <label class="quiz-option"><input type="radio" name="q13" value="c"> C) Battle of the Trench</label>
+                <label class="quiz-option"><input type="radio" name="q13" value="d"> D) Expedition of Tabuk</label>
+            </div>
+            
+            <!-- Q14: Conquest of Mecca Quran -->
+            <div class="quiz-question">
+                <div class="question-text">14. Which Surah was revealed after the Conquest of Mecca?</div>
+                <label class="quiz-option"><input type="radio" name="q14" value="a"> A) Surah Al-Fath (48)</label>
+                <label class="quiz-option"><input type="radio" name="q14" value="b"> B) Surah Al-Nasr (110)</label>
+                <label class="quiz-option"><input type="radio" name="q14" value="c"> C) Surah Al-Tawbah (9)</label>
+                <label class="quiz-option"><input type="radio" name="q14" value="d"> D) Surah Al-Ahzab (33)</label>
+            </div>
+            
+            <!-- Q15: Prophet's Last Campaign -->
+            <div class="quiz-question">
+                <div class="question-text">15. Which was the Prophet's (ﷺ) last military campaign?</div>
+                <label class="quiz-option"><input type="radio" name="q15" value="a"> A) Battle of Hunayn</label>
+                <label class="quiz-option"><input type="radio" name="q15" value="b"> B) Conquest of Mecca</label>
+                <label class="quiz-option"><input type="radio" name="q15" value="c"> C) Expedition of Tabuk</label>
+                <label class="quiz-option"><input type="radio" name="q15" value="d"> D) Battle of Mu'tah</label>
+            </div>
+            
+            <!-- ==================== EXPEDITIONS (Questions 16-25) ==================== -->
+            
+            <!-- Q16: Banu Qaynuqa Treaty -->
+            <div class="quiz-question">
+                <div class="question-text">16. What crime did the Banu Qaynuqa commit that led to their expulsion?</div>
+                <label class="quiz-option"><input type="radio" name="q16" value="a"> A) They plotted to assassinate the Prophet (ﷺ)</label>
+                <label class="quiz-option"><input type="radio" name="q16" value="b"> B) They killed a Muslim and refused to hand over the killer</label>
+                <label class="quiz-option"><input type="radio" name="q16" value="c"> C) They broke the treaty during the Battle of the Trench</label>
+                <label class="quiz-option"><input type="radio" name="q16" value="d"> D) They refused to pay taxes</label>
+            </div>
+            
+            <!-- Q17: Banu Nadir Plot -->
+            <div class="quiz-question">
+                <div class="question-text">17. How did the Prophet (ﷺ) learn of the Banu Nadir's assassination plot?</div>
+                <label class="quiz-option"><input type="radio" name="q17" value="a"> A) A spy informed him</label>
+                <label class="quiz-option"><input type="radio" name="q17" value="b"> B) Divine revelation (the Prophet was warned by Allah)</label>
+                <label class="quiz-option"><input type="radio" name="q17" value="c"> C) A companion overheard the plot</label>
+                <label class="quiz-option"><input type="radio" name="q17" value="d"> D) The Banu Nadir confessed</label>
+            </div>
+            
+            <!-- Q18: Banu Qurayza Judge -->
+            <div class="quiz-question">
+                <div class="question-text">18. Who did the Banu Qurayza choose as their judge after surrendering?</div>
+                <label class="quiz-option"><input type="radio" name="q18" value="a"> A) Ali ibn Abi Talib</label>
+                <label class="quiz-option"><input type="radio" name="q18" value="b"> B) Abu Bakr al-Siddiq</label>
+                <label class="quiz-option"><input type="radio" name="q18" value="c"> C) Sa'd ibn Mu'adh</label>
+                <label class="quiz-option"><input type="radio" name="q18" value="d"> D) Umar ibn al-Khattab</label>
+            </div>
+            
+            <!-- Q19: Banu Qurayza Punishment -->
+            <div class="quiz-question">
+                <div class="question-text">19. Under which law were the Banu Qurayza judged?</div>
+                <label class="quiz-option"><input type="radio" name="q19" value="a"> A) Islamic law (Shariah)</label>
+                <label class="quiz-option"><input type="radio" name="q19" value="b"> B) Roman law</label>
+                <label class="quiz-option"><input type="radio" name="q19" value="c"> C) Their own Torah law</label>
+                <label class="quiz-option"><input type="radio" name="q19" value="d"> D) Arabian tribal custom</label>
+            </div>
+            
+            <!-- Q20: Dhat al-Riqa -->
+            <div class="quiz-question">
+                <div class="question-text">20. Against which tribe was the Expedition of Dhat al-Riqa directed?</div>
+                <label class="quiz-option"><input type="radio" name="q20" value="a"> A) Banu Qurayza</label>
+                <label class="quiz-option"><input type="radio" name="q20" value="b"> B) Banu Mustaliq</label>
+                <label class="quiz-option"><input type="radio" name="q20" value="c"> C) Ghatafan tribes</label>
+                <label class="quiz-option"><input type="radio" name="q20" value="d"> D) Banu Nadir</label>
+            </div>
+            
+            <!-- Q21: Al-Muraysi' Hypocrisy -->
+            <div class="quiz-question">
+                <div class="question-text">21. What major event occurred during the Expedition of Al-Muraysi'?</div>
+                <label class="quiz-option"><input type="radio" name="q21" value="a"> A) The Muslims suffered a major defeat</label>
+                <label class="quiz-option"><input type="radio" name="q21" value="b"> B) The incident of ifk (slander against Aisha) and exposure of hypocrisy</label>
+                <label class="quiz-option"><input type="radio" name="q21" value="c"> C) The Prophet (ﷺ) was injured</label>
+                <label class="quiz-option"><input type="radio" name="q21" value="d"> D) A peace treaty was signed</label>
+            </div>
+            
+            <!-- Q22: First Jewish Tribe Expelled -->
+            <div class="quiz-question">
+                <div class="question-text">22. Which Jewish tribe was the first to be expelled from Medina?</div>
+                <label class="quiz-option"><input type="radio" name="q22" value="a"> A) Banu Nadir</label>
+                <label class="quiz-option"><input type="radio" name="q22" value="b"> B) Banu Qurayza</label>
+                <label class="quiz-option"><input type="radio" name="q22" value="c"> C) Banu Qaynuqa</label>
+                <label class="quiz-option"><input type="radio" name="q22" value="d"> D) Banu Mustaliq</label>
+            </div>
+            
+            <!-- Q23: Banu Nadir Destination -->
+            <div class="quiz-question">
+                <div class="question-text">23. Where did the Banu Nadir migrate after their expulsion?</div>
+                <label class="quiz-option"><input type="radio" name="q23" value="a"> A) Syria</label>
+                <label class="quiz-option"><input type="radio" name="q23" value="b"> B) Khaybar</label>
+                <label class="quiz-option"><input type="radio" name="q23" value="c"> C) Egypt</label>
+                <label class="quiz-option"><input type="radio" name="q23" value="d"> D) Yemen</label>
+            </div>
+            
+            <!-- Q24: Banu Qurayza Treason Timing -->
+            <div class="quiz-question">
+                <div class="question-text">24. During which battle did Banu Qurayza commit treason?</div>
+                <label class="quiz-option"><input type="radio" name="q24" value="a"> A) Battle of Badr</label>
+                <label class="quiz-option"><input type="radio" name="q24" value="b"> B) Battle of Uhud</label>
+                <label class="quiz-option"><input type="radio" name="q24" value="c"> C) Battle of the Trench</label>
+                <label class="quiz-option"><input type="radio" name="q24" value="d"> D) Battle of Khaybar</label>
+            </div>
+            
+            <!-- Q25: Hypocrite Leader -->
+            <div class="quiz-question">
+                <div class="question-text">25. Who was the leader of the hypocrites (Munafiqun) who supported the Jewish tribes?</div>
+                <label class="quiz-option"><input type="radio" name="q25" value="a"> A) Abu Jahl</label>
+                <label class="quiz-option"><input type="radio" name="q25" value="b"> B) Abu Sufyan</label>
+                <label class="quiz-option"><input type="radio" name="q25" value="c"> C) Abd Allah ibn Ubayy</label>
+                <label class="quiz-option"><input type="radio" name="q25" value="d"> D) Utbah ibn Rabi'ah</label>
+            </div>
+            
+            <!-- ==================== KEY FIGURES & CONCEPTS (Questions 26-30) ==================== -->
+            
+            <!-- Q26: Khalid's Title -->
+            <div class="quiz-question">
+                <div class="question-text">26. What title did the Prophet (ﷺ) give to Khalid ibn al-Walid after the Battle of Mu'tah?</div>
+                <label class="quiz-option"><input type="radio" name="q26" value="a"> A) "The Conqueror"</label>
+                <label class="quiz-option"><input type="radio" name="q26" value="b"> B) "The Sword of Allah" (Saif Allah)</label>
+                <label class="quiz-option"><input type="radio" name="q26" value="c"> C) "The Lion of Allah"</label>
+                <label class="quiz-option"><input type="radio" name="q26" value="d"> D) "The Trustworthy"</label>
+            </div>
+            
+            <!-- Q27: Hudaybiyyah Payoff -->
+            <div class="quiz-question">
+                <div class="question-text">27. The Conquest of Mecca was the strategic payoff of which earlier event?</div>
+                <label class="quiz-option"><input type="radio" name="q27" value="a"> A) The Battle of Badr</label>
+                <label class="quiz-option"><input type="radio" name="q27" value="b"> B) The Treaty of Hudaybiyyah</label>
+                <label class="quiz-option"><input type="radio" name="q27" value="c"> C) The Battle of the Trench</label>
+                <label class="quiz-option"><input type="radio" name="q27" value="d"> D) The Expedition of Tabuk</label>
+            </div>
+            
+            <!-- Q28: Game Theory Concept - Uhud -->
+            <div class="quiz-question">
+                <div class="question-text">28. The archers' disobedience at Uhud is an example of which game theory concept?</div>
+                <label class="quiz-option"><input type="radio" name="q28" value="a"> A) Chicken Game</label>
+                <label class="quiz-option"><input type="radio" name="q28" value="b"> B) Prisoner's Dilemma</label>
+                <label class="quiz-option"><input type="radio" name="q28" value="c"> C) War of Attrition</label>
+                <label class="quiz-option"><input type="radio" name="q28" value="d"> D) Zero-sum Game</label>
+            </div>
+            
+            <!-- Q29: Quran Verse on Preparation -->
+            <div class="quiz-question">
+                <div class="question-text">29. Which Quranic verse commands believers to prepare military power?</div>
+                <label class="quiz-option"><input type="radio" name="q29" value="a"> A) Quran 2:190</label>
+                <label class="quiz-option"><input type="radio" name="q29" value="b"> B) Quran 8:60</label>
+                <label class="quiz-option"><input type="radio" name="q29" value="c"> C) Quran 4:75</label>
+                <label class="quiz-option"><input type="radio" name="q29" value="d"> D) Quran 22:39</label>
+            </div>
+            
+            <!-- Q30: Tabuk Deterrence -->
+            <div class="quiz-question">
+                <div class="question-text">30. What strategic purpose did the Expedition of Tabuk primarily serve?</div>
+                <label class="quiz-option"><input type="radio" name="q30" value="a"> A) To capture territory</label>
+                <label class="quiz-option"><input type="radio" name="q30" value="b"> B) To demonstrate strength and deter Byzantine aggression</label>
+                <label class="quiz-option"><input type="radio" name="q30" value="c"> C) To spread Islam by force</label>
+                <label class="quiz-option"><input type="radio" name="q30" value="d"> D) To capture prisoners of war</label>
+            </div>
+        </form>
+        
+        <button class="submit-btn" onclick="checkQuiz()">Submit Answers</button>
+        <div id="resultContainer" class="result-container"></div>
+    </div>
+    
+    <div id="footer-placeholder"></div>
+    <script src="/assets/js/components.js"></script>
+    <script>
+        const correctAnswers = {
+            q1: 'b', q2: 'b', q3: 'b', q4: 'c', q5: 'c', q6: 'b', q7: 'c', q8: 'b', q9: 'b', q10: 'b',
+            q11: 'c', q12: 'b', q13: 'd', q14: 'b', q15: 'c', q16: 'b', q17: 'b', q18: 'c', q19: 'c', q20: 'c',
+            q21: 'b', q22: 'c', q23: 'b', q24: 'c', q25: 'c', q26: 'b', q27: 'b', q28: 'b', q29: 'b', q30: 'b'
+        };
+        
+        const explanations = {
+            q1: 'The Muslims had 313-317 men against 950-1,000 Quraysh — outnumbered approximately 3 to 1.',
+            q2: 'Badr is called "Yawm al-Furqan" because it clearly distinguished between truth (the Muslims) and falsehood (the Quraysh).',
+            q3: '40 of the 50 archers abandoned their posts to collect spoils, allowing Khalid ibn al-Walid to attack from behind.',
+            q4: 'Hamza, the Prophet\'s uncle, was martyred at Uhud. Hind bint Utbah mutilated his body.',
+            q5: 'Salman al-Farsi, a Persian companion, suggested digging a trench — a tactic unfamiliar to the Arabs.',
+            q6: 'A violent windstorm struck the confederate camp, terrifying them. They withdrew in disarray.',
+            q7: 'Ali ibn Abi Talib killed the Jewish champion Marhab during the final assault on the fort of Qamus.',
+            q8: 'The Prophet (ﷺ) applied his saliva to Ali\'s infected eyes, and they were instantly healed.',
+            q9: 'The Prophet (ﷺ) declared a general amnesty: "Go, for you are free." This converted enemies into allies.',
+            q10: 'Quran 9:25 was revealed: "When you took pride in your great numbers, but they proved of no advantage to you."',
+            q11: 'Zayd, Ja\'far, and Abd Allah were martyred in succession before Khalid took command.',
+            q12: 'The hypocrites made various excuses to avoid the difficult summer expedition, exposing their true nature.',
+            q13: '30,000 men marched to Tabuk — the largest Muslim army under the Prophet\'s direct command.',
+            q14: 'Surah Al-Nasr (110) was revealed after the conquest: "When the victory of Allah has come and the conquest."',
+            q15: 'The Expedition of Tabuk (9 AH) was the Prophet\'s last military campaign before his passing in 11 AH.',
+            q16: 'A Jewish goldsmith killed a Muslim and the tribe refused to hand him over, violating the treaty.',
+            q17: 'The Prophet (ﷺ) was informed by divine revelation and left the Banu Nadir territory immediately.',
+            q18: 'Sa\'d ibn Mu\'adh, a companion wounded in the battle, was chosen by the Banu Qurayza themselves.',
+            q19: 'Sa\'d judged them according to the Torah law of Deuteronomy 20:10-14 — the punishment for treason.',
+            q20: 'The expedition was against the Ghatafan tribes to demonstrate Muslim strength.',
+            q21: 'The incident of ifk (slander against Aisha) occurred, and the hypocrites were exposed.',
+            q22: 'Banu Qaynuqa were expelled first (2 AH), followed by Banu Nadir (4 AH), then Banu Qurayza (5 AH).',
+            q23: 'The Banu Nadir migrated to Khaybar, where they later instigated the Battle of the Trench.',
+            q24: 'They conspired with the Quraysh during the Battle of the Trench (5 AH).',
+            q25: 'Abd Allah ibn Ubayy was the chief hypocrite who supported the Jewish tribes but failed to help them.',
+            q26: 'The Prophet (ﷺ) gave Khalid the title "Saif Allah" (The Sword of Allah) after his tactical withdrawal at Mu\'tah.',
+            q27: 'The Treaty of Hudaybiyyah (2 years earlier) allowed Islam to spread peacefully, leading to the conquest.',
+            q28: 'The archers faced a Prisoner\'s Dilemma: individual defection (leaving for spoils) led to collective disaster.',
+            q29: 'Quran 8:60 commands: "And prepare against them whatever you are able of power."',
+            q30: 'The expedition was a deterrence mission to show Byzantine Empire that Muslims were strong and ready.'
+        };
+        
+        function checkQuiz() {
+            let score = 0;
+            let total = 30;
+            let resultHtml = '<h3 style="color: #1a472a; margin-bottom: 20px; text-align: center;">📊 Your Results</h3>';
+            resultHtml += '<div class="score-display" id="scoreDisplay"></div>';
+            resultHtml += '<div id="feedbackList"></div>';
+            resultHtml += '<button class="restart-btn" onclick="location.reload()">🔄 Take Quiz Again</button>';
+            
+            document.getElementById('resultContainer').innerHTML = resultHtml;
+            document.getElementById('resultContainer').style.display = 'block';
+            
+            let feedbackHtml = '';
+            let correctCount = 0;
+            
+            for (let i = 1; i <= total; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const isCorrect = selected && selected.value === correctAnswers[`q${i}`];
+                if (isCorrect) correctCount++;
+                
+                const selectedLetter = selected ? selected.value : 'none';
+                let selectedText = '';
+                if (selected) {
+                    const parent = selected.closest('.quiz-option');
+                    selectedText = parent.innerText.trim();
+                }
+                
+                let correctLetter = correctAnswers[`q${i}`];
+                let correctText = '';
+                const allOptions = document.querySelectorAll(`input[name="q${i}"]`);
+                for (let opt of allOptions) {
+                    if (opt.value === correctLetter) {
+                        const label = opt.closest('.quiz-option');
+                        correctText = label.innerText.trim();
+                        break;
+                    }
+                }
+                
+                const questionText = document.querySelector(`.quiz-question:nth-of-type(${i}) .question-text`).innerText;
+                
+                feedbackHtml += `<div class="feedback-item ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}">`;
+                feedbackHtml += `<div class="feedback-question">${i}. ${questionText}</div>`;
+                if (isCorrect) {
+                    feedbackHtml += `<div style="color: #10b981;">✅ Correct!</div>`;
+                } else {
+                    feedbackHtml += `<div style="color: #ef4444;">❌ Incorrect. You selected: ${selectedText || 'Nothing'}</div>`;
+                    feedbackHtml += `<div>✅ Correct answer: ${correctText}</div>`;
+                }
+                feedbackHtml += `<div class="feedback-explanation">💡 ${explanations[`q${i}`]}</div>`;
+                feedbackHtml += `</div>`;
+                
+                // Highlight correct/incorrect options in the form
+                const options = document.querySelectorAll(`input[name="q${i}"]`);
+                options.forEach(opt => {
+                    const label = opt.closest('.quiz-option');
+                    label.classList.remove('correct-highlight', 'incorrect-highlight');
+                    if (opt.value === correctAnswers[`q${i}`]) {
+                        label.classList.add('correct-highlight');
+                    }
+                    if (selected && opt.value === selected.value && opt.value !== correctAnswers[`q${i}`]) {
+                        label.classList.add('incorrect-highlight');
+                    }
+                });
+            }
+            
+            const percentage = (correctCount / total) * 100;
+            let message = '';
+            if (percentage >= 90) message = '🎉 Excellent! You have mastered the battles and expeditions!';
+            else if (percentage >= 70) message = '📚 Good effort! Review the lessons to improve further.';
+            else if (percentage >= 50) message = '📖 Not bad! Study the lessons and try again.';
+            else message = '📖 Review the battles and expeditions lessons carefully, then try again.';
+            
+            document.getElementById('scoreDisplay').innerHTML = `${correctCount}/${total} - ${percentage}%<br><span style="font-size: 1rem;">${message}</span>`;
+            document.getElementById('feedbackList').innerHTML = feedbackHtml;
+            document.getElementById('progressFill').style.width = `${(correctCount / total) * 100}%`;
+            
+            // Scroll to results
+            document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
