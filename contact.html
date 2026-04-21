@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Contact Us - Tadbeer Studio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e8f5e9; font-family: 'Inter', sans-serif; }
+        .contact-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .contact-card { background: #ffffff; border-radius: 28px; padding: 35px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #a5d6a7; }
+        .quran-box { background: #ffffff; padding: 25px; border-radius: 24px; margin: 25px 0; border-left: 6px solid #2e7d32; }
+        .arabic { font-size: 1.5rem; font-family: 'Amiri', serif; color: #1a472a; margin-bottom: 12px; text-align: right; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; color: #1a472a; margin-bottom: 8px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 15px; border: 2px solid #c8e6c9; border-radius: 16px; font-size: 1rem; font-family: inherit; transition: border 0.2s; background: #f8fafc; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #2e7d32; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; margin: 15px 0; }
+        .checkbox-group input { width: 20px; height: 20px; }
+        .submit-btn { background: #2e7d32; color: white; border: none; padding: 14px 30px; border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: background 0.2s; width: 100%; }
+        .submit-btn:hover { background: #1b5e20; }
+        .btn-back { display: inline-block; margin-bottom: 20px; color: #2e7d32; text-decoration: none; }
+        h1 { color: #1a472a; text-align: center; margin-bottom: 15px; }
+        p { color: #1e293b; line-height: 1.7; margin-bottom: 15px; }
+        .success-message { text-align: center; padding: 20px; background: #d1fae5; border-radius: 16px; color: #065f46; margin-top: 20px; }
+        @media (max-width: 768px) { .contact-container { padding: 12px; } .contact-card { padding: 20px; } .arabic { font-size: 1.1rem; } }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <div class="bismillah" style="background: #e8f5e9; padding: 15px; text-align: center; border-bottom: 1px solid #a5d6a7;">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div class="bismillah-translation" style="color: #1a472a;">In the name of Allah, the Most Gracious, the Most Merciful</div>
+    </div>
+    
+    <div class="contact-container">
+        <a href="/" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        
+        <h1>📬 Contact Us</h1>
+        <p style="text-align: center; margin-bottom: 30px;">Have questions, feedback, or suggestions? We'd love to hear from you.</p>
+        
+        <div class="quran-box">
+            <div class="arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</div>
+            <p><strong>📖 Quran 20:114:</strong> "And say: My Lord, increase me in knowledge."</p>
+            <p>We are always seeking to improve and expand this hub. Your input is valuable.</p>
+        </div>
+        
+        <div class="contact-card">
+            <!-- Check if form was submitted successfully -->
+            <div id="successMessage" style="display: none;" class="success-message">
+                ✅ Thank you for your message! We will review and respond soon, in sha Allah.
+            </div>
+            
+            <form id="contactForm" action="https://formspree.io/f/mnjlgjyy" method="POST">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Your Name</label>
+                    <input type="text" name="name" required placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" name="_replyto" required placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Subject</label>
+                    <select name="subject">
+                        <option value="General Inquiry">General Inquiry</option>
+                        <option value="Content Suggestion">Content Suggestion</option>
+                        <option value="Technical Issue">Technical Issue</option>
+                        <option value="Correction">Correction / Error Report</option>
+                        <option value="Collaboration">Collaboration</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-pencil-alt"></i> Your Message</label>
+                    <textarea name="message" rows="6" required placeholder="Write your message here..."></textarea>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" name="_cc" value="true">
+                    <label>Send me a copy of this message</label>
+                </div>
+                
+                <input type="hidden" name="_subject" value="New message from Tadbeer Studio Contact Form">
+                <input type="hidden" name="_next" value="https://tadbeer-studio.onrender.com/contact?success=true">
+                
+                <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Send Message</button>
+            </form>
+        </div>
+        
+        <div class="contact-card" style="margin-top: 20px;">
+            <h3 style="color: #1a472a; margin-bottom: 15px;"><i class="fas fa-shield-alt"></i> Privacy Note</h3>
+            <p>We do not collect any personal data. Your messages are sent directly to our secure Formspree account and only accessed by the site administrator. Your privacy is respected.</p>
+        </div>
+    </div>
+    
+    <div id="footer-placeholder"></div>
+    <script src="/assets/js/components.js"></script>
+    <script>
+        // Check if the form was submitted successfully via URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === 'true') {
+            document.getElementById('contactForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
