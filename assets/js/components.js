@@ -1,7 +1,7 @@
 // Load navbar and footer dynamically
 document.addEventListener('DOMContentLoaded', function() {
     // Load navbar
-    fetch('/assets/js/navbar-v2.html')
+    fetch('/assets/js/navbar-v3.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('navbar-placeholder').innerHTML = data;
