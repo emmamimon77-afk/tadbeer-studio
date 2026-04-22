@@ -5,12 +5,185 @@
         </div>
         <div class="nav-links">
             <a href="/">Home</a>
-            <a href="/lessons">Lessons</a>
-            <a href="/quizzes">Quizzes</a>
-            <a href="/simulators">Simulators</a>
+            <a href="/about">About</a>
+            
+            <!-- Lessons Dropdown with Nested Strategic History -->
+            <div class="dropdown">
+                <a href="/lessons">Lessons ▼</a>
+                <div class="dropdown-content">
+                    <a href="/lessons/eschatology/islamic/major-signs.html">📖 Islamic Eschatology</a>
+                    <a href="/lessons/eschatology/christian/major-signs.html">⛪ Christian Eschatology</a>
+                    <a href="/lessons/eschatology/jewish/major-signs.html">🕎 Jewish Eschatology</a>
+                    <a href="/lessons/game-theory/tadbeer-strategy.html">♟️ Game Theory & Tadbeer</a>
+                    
+                    <!-- Strategic History Nested Dropdown -->
+                    <div class="nested-dropdown">
+                        <a href="/lessons/strategy-history/">📜 Strategic History ▶</a>
+                        <div class="nested-dropdown-content">
+                            <a href="/lessons/strategy-history/iran-us-israel.html">🇮🇷 Iran-US-Israel: The New Great Game</a>
+                            <a href="/lessons/strategy-history/cold-war/deterrence.html">☢️ Cold War Deterrence</a>
+                            <a href="/simulators/cuban-missile-crisis/">🇨🇺 Cuban Missile Crisis</a>
+                            <a href="/lessons/strategy-history/russia-ukraine/war.html">🇺🇦 Russia-Ukraine War</a>
+                            <a href="/lessons/strategy-history/gaza-palestine/resistance.html">🇵🇸 Gaza & Palestinian Resistance</a>
+                            <a href="/lessons/strategy-history/taiwan-crisis/strait.html">🇹🇼 Taiwan Strait Crisis</a>
+                            <a href="/lessons/strategy-history/battles/">⚔️ Battles of the Prophet</a>
+                            <a href="/lessons/strategy-history/expeditions/">📜 Expeditions of the Prophet</a>
+                        </div>
+                    </div>
+                    
+                    <a href="/lessons/eschatology/comparative/convergence-divergence.html">🕊️ Comparative Eschatology</a>
+                </div>
+            </div>
+            
+            <!-- Quizzes Dropdown -->
+            <div class="dropdown">
+                <a href="/quizzes">Quizzes ▼</a>
+                <div class="dropdown-content">
+                    <a href="/quizzes/islamic-eschatology-quiz.html">🕌 Islamic Eschatology</a>
+                    <a href="/quizzes/christian-eschatology-quiz.html">⛪ Christian Eschatology</a>
+                    <a href="/quizzes/jewish-eschatology-quiz.html">🕎 Jewish Eschatology</a>
+                    <a href="/quizzes/game-theory-quiz.html">♟️ Game Theory & Tadbeer</a>
+                    <a href="/quizzes/battles/prophet-battles-quiz.html">⚔️ Battles & Expeditions</a>
+                </div>
+            </div>
+            
+            <!-- Simulators Dropdown -->
+            <div class="dropdown">
+                <a href="/simulators">Simulators ▼</a>
+                <div class="dropdown-content">
+                    <a href="/simulators/prisoner-dilemma/">🔓 Prisoner's Dilemma</a>
+                    <a href="/simulators/chicken-game/">🐔 Chicken Game</a>
+                    <a href="/simulators/treaty-simulator/">⚔️ Treaty of Hudaybiyyah</a>
+                    <a href="/simulators/jerusalem-simulator/">🕊️ Jerusalem Coexistence</a>
+                    <a href="/lessons/strategy-history/battle-of-uhud.html">⚔️ Battle of Uhud</a>
+                    <a href="/simulators/cuban-missile-crisis/">🇨🇺 Cuban Missile Crisis</a>
+                </div>
+            </div>
+            
             <a href="/global-crisis-monitor">📰 Crisis Monitor</a>
             <a href="/resources">📚 Resources</a>
             <a href="/contact">📬 Contact</a>
         </div>
     </div>
 </nav>
+
+<style>
+    /* Dropdown Styles */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #ffffff;
+        min-width: 220px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        z-index: 1000;
+        border: 1px solid #a5d6a7;
+        overflow: hidden;
+    }
+    
+    .dropdown-content a {
+        color: #1a472a !important;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        font-size: 0.9rem;
+        border-bottom: 1px solid #e8f5e9;
+    }
+    
+    .dropdown-content a:hover {
+        background-color: #e8f5e9;
+        color: #2e7d32 !important;
+    }
+    
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    
+    /* Mobile responsive dropdown */
+    @media (max-width: 768px) {
+        .dropdown {
+            width: 100%;
+        }
+        .dropdown-content {
+            position: static;
+            display: none;
+            width: 100%;
+            margin-top: 5px;
+        }
+        .dropdown:hover .dropdown-content {
+            display: none;
+        }
+        /* For mobile, we need click to open - we'll handle with JavaScript */
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+    }
+    
+    /* Nested Dropdown Styles */
+    .nested-dropdown {
+        position: relative;
+    }
+    
+    .nested-dropdown > a {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .nested-dropdown-content {
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: 0;
+        background-color: #ffffff;
+        min-width: 250px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        z-index: 1000;
+        border: 1px solid #a5d6a7;
+    }
+    
+    .nested-dropdown:hover .nested-dropdown-content {
+        display: block;
+    }
+    
+    .nested-dropdown-content a {
+        padding: 10px 16px;
+        display: block;
+        border-bottom: 1px solid #e8f5e9;
+    }
+    
+    /* Mobile: nested dropdowns stack */
+    @media (max-width: 768px) {
+        .nested-dropdown-content {
+            position: static;
+            left: auto;
+            width: 100%;
+            margin-left: 15px;
+            display: none;
+        }
+        .nested-dropdown.active .nested-dropdown-content {
+            display: block;
+        }
+    }
+</style>
+
+
+<script>
+    // Mobile dropdown toggle (handles nested)
+    document.querySelectorAll('.dropdown > a, .nested-dropdown > a').forEach(function(dropdownLink) {
+        dropdownLink.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                var parent = this.parentElement;
+                parent.classList.toggle('active');
+            }
+        });
+    });
+</script>
