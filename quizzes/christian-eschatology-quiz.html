@@ -484,6 +484,9 @@
             resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     </script>
+        if (typeof recordQuizCompletion === 'function') {
+            recordQuizCompletion();
+        }
 
 </body>
 </html>

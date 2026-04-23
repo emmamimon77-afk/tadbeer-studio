@@ -343,5 +343,9 @@
             document.getElementById('progressFill').style.width = `${(score / total) * 100}%`;
         }
     </script>
+        if (typeof recordQuizCompletion === 'function') {
+            recordQuizCompletion();
+        }
+
 </body>
 </html>

@@ -205,5 +205,13 @@
         startGame();
         updateUI();
     </script>
+    <script>
+        if (typeof recordSimulatorPlay === 'function') {
+            recordSimulatorPlay();
+        } else {
+            console.log('Simulator play recorded (admin tracking not loaded)');
+        }
+    </script>
+
 </body>
 </html>

@@ -109,5 +109,8 @@
             document.getElementById('successMessage').style.display = 'block';
         }
     </script>
+        if (response.ok && typeof recordContactMessage === 'function') {
+            recordContactMessage();
+        }
 </body>
 </html>
