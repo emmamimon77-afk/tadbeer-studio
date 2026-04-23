@@ -98,6 +98,7 @@
     </div>
     
     <div id="footer-placeholder"></div>
+
     <script src="/assets/js/components.js"></script>
     <script>
         const ADMIN_CODE = 'fatimah-admin-2026';
@@ -113,46 +114,21 @@
             }
         }
         
-        async function loadStats() {
-            // Using a free counter API for anonymous visit counts
-            try {
-                // Total visits counter
-                const totalRes = await fetch('https://api.countapi.xyz/get/tadbeer-studio/total_visits');
-                const totalData = await totalRes.json();
-                document.getElementById('totalVisits').innerText = totalData.value || 0;
-            } catch (e) {
-                document.getElementById('totalVisits').innerText = 'Unable to load';
-            }
+        function loadStats() {
+            // Load from localStorage
+            const totalVisits = localStorage.getItem('tb_total_visits') || 0;
+            const todayVisits = localStorage.getItem('tb_today_visits') || 0;
+            const thisMonth = localStorage.getItem('tb_month_visits') || 0;
+            const simulatorPlays = localStorage.getItem('tb_simulator_plays') || 0;
+            const quizCompletions = localStorage.getItem('tb_quiz_completions') || 0;
+            const contactMessages = localStorage.getItem('tb_contact_messages') || 0;
             
-            // Today's visits (using date-based key)
-            const today = new Date().toISOString().slice(0, 10);
-            try {
-                const todayRes = await fetch(`https://api.countapi.xyz/get/tadbeer-studio/visits_${today}`);
-                const todayData = await todayRes.json();
-                document.getElementById('todayVisits').innerText = todayData.value || 0;
-            } catch (e) {
-                document.getElementById('todayVisits').innerText = '0';
-            }
-            
-            // This month visits
-            const thisMonth = new Date().toISOString().slice(0, 7);
-            try {
-                const monthRes = await fetch(`https://api.countapi.xyz/get/tadbeer-studio/visits_${thisMonth}`);
-                const monthData = await monthRes.json();
-                document.getElementById('thisMonth').innerText = monthData.value || 0;
-            } catch (e) {
-                document.getElementById('thisMonth').innerText = '0';
-            }
-            
-            // Simulator plays (estimated from page views)
-            try {
-                const simRes = await fetch('https://api.countapi.xyz/get/tadbeer-studio/simulator_plays');
-                const simData = await simRes.json();
-                document.getElementById('simulatorPlays').innerText = simData.value || 0;
-            } catch (e) {
-                document.getElementById('simulatorPlays').innerText = '0';
-            }
-            
+            document.getElementById('totalVisits').innerText = totalVisits;
+            document.getElementById('todayVisits').innerText = todayVisits;
+            document.getElementById('thisMonth').innerText = thisMonth;
+            document.getElementById('simulatorPlays').innerText = simulatorPlays;
+            document.getElementById('quizCompletions').innerText = quizCompletions;
+            document.getElementById('contactMessages').innerText = contactMessages;
             document.getElementById('lastUpdated').innerHTML = `Last updated: ${new Date().toLocaleString()}`;
         }
         
@@ -160,15 +136,70 @@
             loadStats();
         }
         
-        // Increment visit counter when page loads (only once per session)
-        if (!sessionStorage.getItem('visitCounted')) {
-            sessionStorage.setItem('visitCounted', 'true');
-            fetch('https://api.countapi.xyz/hit/tadbeer-studio/total_visits');
-            const today = new Date().toISOString().slice(0, 10);
-            fetch(`https://api.countapi.xyz/hit/tadbeer-studio/visits_${today}`);
-            const thisMonth = new Date().toISOString().slice(0, 7);
-            fetch(`https://api.countapi.xyz/hit/tadbeer-studio/visits_${thisMonth}`);
+        // Track visit (only on admin page itself)
+        function trackVisit() {
+            if (!sessionStorage.getItem('tb_admin_visit_counted')) {
+                sessionStorage.setItem('tb_admin_visit_counted', 'true');
+                
+                let total = parseInt(localStorage.getItem('tb_total_visits') || 0);
+                total++;
+                localStorage.setItem('tb_total_visits', total);
+                
+                const today = new Date().toISOString().slice(0, 10);
+                let todayCount = parseInt(localStorage.getItem(`tb_visits_${today}`) || 0);
+                todayCount++;
+                localStorage.setItem(`tb_visits_${today}`, todayCount);
+                localStorage.setItem('tb_today_visits', todayCount);
+                
+                const thisMonth = new Date().toISOString().slice(0, 7);
+                let monthCount = parseInt(localStorage.getItem(`tb_visits_${thisMonth}`) || 0);
+                monthCount++;
+                localStorage.setItem(`tb_visits_${thisMonth}`, monthCount);
+                localStorage.setItem('tb_month_visits', monthCount);
+            }
         }
+        
+        // Record simulator play (call this from simulators)
+        function recordSimulatorPlay() {
+            let plays = parseInt(localStorage.getItem('tb_simulator_plays') || 0);
+            plays++;
+            localStorage.setItem('tb_simulator_plays', plays);
+        }
+        
+        // Record quiz completion (call this from quizzes)
+        function recordQuizCompletion() {
+            let completions = parseInt(localStorage.getItem('tb_quiz_completions') || 0);
+            completions++;
+            localStorage.setItem('tb_quiz_completions', completions);
+        }
+        
+        // Record contact message
+        function recordContactMessage() {
+            let messages = parseInt(localStorage.getItem('tb_contact_messages') || 0);
+            messages++;
+            localStorage.setItem('tb_contact_messages', messages);
+        }
+        
+        // Track visit when page loads
+        trackVisit();
+        
+        // If already logged in from previous session, show dashboard
+        if (sessionStorage.getItem('tb_admin_logged_in')) {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('dashboardSection').style.display = 'block';
+            loadStats();
+        }
+        
+        // Remember login for session
+        const originalCheckAccess = checkAccess;
+        window.checkAccess = function() {
+            originalCheckAccess();
+            if (document.getElementById('dashboardSection').style.display === 'block') {
+                sessionStorage.setItem('tb_admin_logged_in', 'true');
+            }
+        };
     </script>
+    
+
 </body>
 </html>
