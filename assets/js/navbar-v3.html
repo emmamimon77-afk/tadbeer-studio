@@ -142,10 +142,10 @@
         left: 100%;
         top: 0;
         background-color: #ffffff;
-        min-width: 250px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        min-width: 260px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         border-radius: 12px;
-        z-index: 1000;
+        z-index: 1001;
         border: 1px solid #a5d6a7;
     }
     
@@ -157,8 +157,15 @@
         padding: 10px 16px;
         display: block;
         border-bottom: 1px solid #e8f5e9;
+        white-space: nowrap;
     }
     
+    /* Make sure parent dropdown stays above */
+    .dropdown-content {
+        z-index: 1000;
+    }    
+
+
     /* Mobile: nested dropdowns stack */
     @media (max-width: 768px) {
         .nested-dropdown-content {
