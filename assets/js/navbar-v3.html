@@ -127,44 +127,51 @@
     
     /* Nested Dropdown Styles */
     .nested-dropdown {
-        position: relative;
+        position: relative !important;
     }
     
     .nested-dropdown > a {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
     }
     
     .nested-dropdown-content {
-        display: none;
-        position: absolute;
-        left: 100%;
-        top: 0;
-        background-color: #ffffff;
-        min-width: 260px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-        border-radius: 12px;
-        z-index: 1001;
-        border: 1px solid #a5d6a7;
+        display: none !important;
+        position: absolute !important;
+        left: 100% !important;
+        top: 0 !important;
+        background-color: #ffffff !important;
+        min-width: 260px !important;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15) !important;
+        border-radius: 12px !important;
+        z-index: 10000 !important;
+        border: 1px solid #a5d6a7 !important;
     }
     
     .nested-dropdown:hover .nested-dropdown-content {
-        display: block;
+        display: block !important;
     }
     
     .nested-dropdown-content a {
-        padding: 10px 16px;
-        display: block;
-        border-bottom: 1px solid #e8f5e9;
-        white-space: nowrap;
+        padding: 10px 16px !important;
+        display: block !important;
+        border-bottom: 1px solid #e8f5e9 !important;
+        white-space: nowrap !important;
+        color: #1a472a !important;
+        text-decoration: none !important;
+    }
+    
+    .nested-dropdown-content a:hover {
+        background-color: #e8f5e9 !important;
+        color: #2e7d32 !important;
     }
     
     /* Make sure parent dropdown stays above */
     .dropdown-content {
-        z-index: 1000;
-    }    
-
+        z-index: 1000 !important;
+        overflow: visible !important;
+    }
 
     /* Mobile: nested dropdowns stack */
     @media (max-width: 768px) {
